@@ -13,6 +13,12 @@ class Area(models.Model):
 class Administrador(User):
     siape = models.CharField(verbose_name='siape', primary_key=True, max_length=20, null=False)
 
+    # def add_administrador(siape, nome, email, password):
+    #     user = User.objects.create_user(nome, email, password)
+    #     user.siape = siape
+    #     user.save()
+
+
     class Meta:
         ordering = ('first_name',)
     def __str__(self):
