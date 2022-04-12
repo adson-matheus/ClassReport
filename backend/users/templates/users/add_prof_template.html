@@ -12,8 +12,13 @@
         <label for="siape">Siape: </label>
         <input id="siape" type="text" name="siape">
 
-        <label for="idArea">Área: </label>
-        <input id="idArea" type="text" name="idArea">
+        <label for="selectArea">Área: </label>
+        <select id="selectArea" onchange='document.getElementById("idArea").value = this.value' required>
+            <option value="">--------</option>
+            {% for area in areas %}
+            <option value="{{area.id}}">{{area.nome}}</option>
+            {% endfor %}
+        <input type='hidden' id="idArea" type="text" name="idArea">
         
         <label for="first_name">Nome: </label>
         <input id="first_name" type="text" name="first_name">
