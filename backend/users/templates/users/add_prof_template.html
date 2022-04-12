@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adicionar Administrador</title>
+    <title>Adicionar Professor</title>
 </head>
 <body>
     <form method="post">
         {% csrf_token %}
         <label for="siape">Siape: </label>
         <input id="siape" type="text" name="siape">
+
+        <label for="idArea">Área: </label>
+        <input id="idArea" type="text" name="idArea">
         
         <label for="first_name">Nome: </label>
         <input id="first_name" type="text" name="first_name">
