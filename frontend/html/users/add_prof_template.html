@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Adicionar Professor {% endblock %}
+{% block h1 %}Adicionar Professor{% endblock h1 %}
+{% block active__link_prof %}active{% endblock %}"
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="siape">Siape: </label>
+            <input id="siape" type="text" name="siape" class="form-control">
+        </div>
+
+        <div class="form-group">    
+            <label for="first_name">Nome: </label>
+            <input id="first_name" type="text" name="first_name" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="last_name">Sobrenome: </label>
+            <input id="last_name" type="text" name="last_name" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="selectArea">Área*: </label>
+            <select id="selectArea" class="form-control" onchange='document.getElementById("idArea").value = this.value' required>
+                <option value="">--------</option>
+                {% for area in areas %}
+                <option value="{{area.id}}">{{area.nome}}</option>
+                {% endfor %}
+            <input type='hidden' id="idArea" type="text" name="idArea" value="">
+        </div>
+
+        <div class="form-group">
+            <label for="username">Username: </label>
+            <input id="username" type="text" name="username" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email: </label>
+            <input id="email" type="email" name="email" class="form-control">
+        </div>
+
+        <div class="form-group">    
+            <label for="password">Senha: </label>
+            <input id="password" type="password" name="password" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </form>
+{% endblock %}
+{% block footer %}
+    *Se sua área não estiver aqui, peça ao seu administrador para que adicione antes de efetuar seu cadastro. 
+{% endblock %}
