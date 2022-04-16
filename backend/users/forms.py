@@ -1,13 +1,18 @@
 from django import forms
-
 from .models import Administrador, Professor
+from django.contrib.auth.models import User
 
-class AddAdministradorForm(forms.ModelForm):
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'password', 'email', 'first_name', 'last_name']
+
+class AdministradorForm(forms.ModelForm):
     class Meta:
         model = Administrador
-        fields = ['siape', 'first_name', 'last_name', 'username', 'email', 'password']
+        fields = ['siape',]
 
-class AddProfessorForm(forms.ModelForm):
+class ProfessorForm(forms.ModelForm):
     class Meta:
         model = Professor
-        fields = ['siape', 'idArea', 'first_name', 'last_name', 'username', 'email', 'password']
+        fields = '__all__'
