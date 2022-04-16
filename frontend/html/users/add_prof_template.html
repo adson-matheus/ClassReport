@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}Adicionar Professor {% endblock %}
 {% block h1 %}Adicionar Professor{% endblock h1 %}
-{% block active__link_prof %}active{% endblock %}"
+{% block active_link_prof %}active{% endblock %}
+{% block active_cadastro_nav %}active{% endblock %}
+{% block menu_cadastro_open %}menu-open{% endblock %}
+{% block card-title %}Professor{% endblock %}
 {% block content %}
     <form method="post">
         {% csrf_token %}

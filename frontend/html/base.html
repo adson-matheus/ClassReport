@@ -165,20 +165,11 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
             <div class="text-center">
-                <a href="#" class="brand-link">
+                <a href="{% url 'login:index' %}" class="brand-link">
                     <img src="{% static 'img/emcm_logo_vert.png' %}" alt="EMCM Logo" width="30" height="40" class="d-inline-block align-text-top">
                 </a>
             </div>
             <div class="sidebar">
-
-                {% comment %} <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-                    </div>
-                    <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
-                    </div>
-                </div> {% endcomment %}
 
                 <div class="form-inline">
                     <div class="input-group" data-widget="sidebar-search">
@@ -234,8 +225,8 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item menu-open">
-                            <a href="#" class="nav-link active">
+                        <li class="nav-item {% block menu_cadastro_open %}{% endblock %}">
+                            <a href="#" class="nav-link {% block active_cadastro_nav %}{% endblock %}">
                                 <i class="nav-icon fas fa-copy"></i>
                                 <p>
                                     Cadastro
@@ -250,7 +241,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{% url 'users:add_prof_template' %}" class="nav-link {% block active__link_prof %}{% endblock %}">
+                                    <a href="{% url 'users:add_prof_template' %}" class="nav-link {% block active_link_prof %}{% endblock %}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Professor</p>
                                     </a>
@@ -290,15 +281,11 @@
 
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Title</h3>
+                                    <h3 class="card-title">{% block card-title %}{% endblock %}</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse"
                                             title="Collapse">
                                             <i class="fas fa-minus"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-tool" data-card-widget="remove"
-                                            title="Remove">
-                                            <i class="fas fa-times"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -323,7 +310,7 @@
             <div class="float-right d-none d-sm-block">
                 <b>Version</b> 0.0.1
             </div>
-            <strong>Copyright &copy; 2022 <a href="http://emcm.ufrn.br/site" target="_blank">EMCM</a>.</strong> All rights
+            <strong>Copyright &copy; 2022 <a href="http://emcm.ufrn.br/site" target="_blank">UFRN-EMCM</a>.</strong> All rights
             reserved.
         </footer>
 

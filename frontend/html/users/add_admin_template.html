@@ -2,39 +2,41 @@
 {% block title %}Adicionar Administrador {% endblock %}
 {% block h1 %}Adicionar Administrador{% endblock h1 %}
 {% block active_link_admin %}active{% endblock %}
+{% block active_cadastro_nav %}active{% endblock %}
+{% block menu_cadastro_open %}menu-open{% endblock %}
+{% block card-title %}Administrador{% endblock %}
 {% block content %}
     <form method="post">
         {% csrf_token %}
         <div class="form-group">
             <label for="siape">Siape: </label>
-            <input id="siape" type="text" name="siape" class="form-control">
+            <input id="siape" type="text" name="siape" class="form-control" required placeholder="Siape">
         </div>
         
         <div class="form-group">
             <label for="first_name">Nome: </label>
-            <input id="first_name" type="text" name="first_name" class="form-control">
+            <input id="first_name" type="text" name="first_name" class="form-control" required placeholder="Primeiro Nome">
         </div>
         
         <div class="form-group">
             <label for="last_name">Sobrenome: </label>
-            <input id="last_name" type="text" name="last_name" class="form-control">
+            <input id="last_name" type="text" name="last_name" class="form-control" required placeholder="Sobrenome">
         </div>
         
         <div class="form-group">
             <label for="username">Username: </label>
-            <input id="username" type="text" name="username" class="form-control">
+            <input id="username" type="text" name="username" class="form-control" required placeholder="Nome de usuário">
         </div>
-
+        
         <div class="form-group">
-            <label for="email">Email: </label>
-            <input id="email" type="email" name="email" class="form-control">
+            <label for="email">E-mail: </label>
+            <input id="email" type="email" name="email" class="form-control" required placeholder="E-mail">
         </div>
         
         <div class="form-group">
             <label for="password">Senha: </label>
-            <input id="password" type="password" name="password" class="form-control">
+            <input id="password" type="password" name="password" class="form-control" required placeholder="Senha">
         </div>
-        
         <button type="submit" class="btn btn-primary">Cadastrar</button>
     </form>
 {% endblock %}
