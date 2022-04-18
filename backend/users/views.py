@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
-from .models import Area, Administrador
+from .models import Area, Administrador, Professor
 from .forms import AdministradorForm, ProfessorForm, UserForm
 
 def add_admin_controlador(form_user, form_admin):
@@ -30,7 +30,34 @@ def add_admin_template(request):
     }
     return render(request, 'users/add_admin_template.html', context)
 
+def add_prof_controlador(form_user, form_prof):
+    '''
+        Cria professor adicionando o respectivo siape e id da Area que atua.
+    '''
+    if form_user.is_valid() and form_prof.is_valid():
+        get_siape = form_prof.cleaned_data['siape']
+        get_area = form_prof.cleaned_data['idArea']
+        user = add_user_generico(form_user=form_user)
+        Professor(user=user, siape=get_siape, idArea=get_area).save()
+        return True
 
+def add_prof_template(request):
+    areas = Area.objects.all()
+    if request.method == 'POST':
+        form_user = UserForm(request.POST)
+        form_prof = ProfessorForm(request.POST)
+        criou = add_prof_controlador(form_user=form_user, form_prof=form_prof)
+        if criou:
+            return redirect('login:index')
+        form = ProfessorForm(request.POST)
+    else:
+        form = ProfessorForm()
+
+    context = {
+        'form': form,
+        'areas': areas
+    }
+    return render(request, 'users/add_prof_template.html', context)
 
 def add_user_generico(form_user):
     '''
@@ -44,14 +71,3 @@ def add_user_generico(form_user):
         last_name = form_user.cleaned_data['last_name'],
     )
     return user
-
-def add_prof_template(request):
-    areas = Area.objects.all()
-    if request.method == 'POST':
-        form = ProfessorForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('users:index')
-    else:
-        form = ProfessorForm()
-    return render(request, 'users/add_prof_template.html', {'form': form, 'areas': areas})
