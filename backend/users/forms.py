@@ -15,4 +15,4 @@ class AdministradorForm(forms.ModelForm):
 class ProfessorForm(forms.ModelForm):
     class Meta:
         model = Professor
-        fields = '__all__'
+        fields = ['siape', 'idArea',]
