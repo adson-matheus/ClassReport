@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block breadcrumb %}
+    {% autoescape off %}
+        <li class="breadcrumb-item active">Login</li>
+    {% endautoescape %}
+{% endblock %}
 {% block title %}Login - ClassReport{% endblock %}
 {% block card-title %}Login{% endblock %}
 {% block content %}

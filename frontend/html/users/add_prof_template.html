@@ -1,4 +1,10 @@
 {% extends 'base.html' %}
+{% block breadcrumb %}
+    {% autoescape off %}
+        <li class="breadcrumb-item">Usuários</li>
+        <li class="breadcrumb-item active">Adicionar Professor</li>
+    {% endautoescape %}
+{% endblock %}
 {% block title %}Adicionar Professor {% endblock %}
 {% block h1 %}Adicionar Professor{% endblock h1 %}
 {% block active_link_prof %}active{% endblock %}

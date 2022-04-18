@@ -1,4 +1,10 @@
 {% extends "base.html" %}
+{% block breadcrumb %}
+    {% autoescape off %}
+    <li class="breadcrumb-item">Usuários</li>
+    <li class="breadcrumb-item active">Adicionar Administrador</li>
+    {% endautoescape %}
+{% endblock %}
 {% block title %}Adicionar Administrador {% endblock %}
 {% block h1 %}Adicionar Administrador{% endblock h1 %}
 {% block active_link_admin %}active{% endblock %}
