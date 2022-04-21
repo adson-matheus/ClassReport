@@ -81,8 +81,8 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
             <div class="text-center">
-                <a href="{% url 'login:index' %}" class="brand-link">
-                    <img src="{% static 'img/emcm_logo_vert.png' %}" alt="EMCM Logo" width="30" height="40" class="d-inline-block align-text-top">
+                <a href="{% url 'login:index' %}" class="brand-link no-border-bottom">
+                    <img src="{% static 'img/emcm_logo_vert.png' %}" alt="EMCM Logo" width="59" height="80" class="d-inline-block align-text-top">
                 </a>
             </div>
             <div class="sidebar">
@@ -142,7 +142,7 @@
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="{% url 'login:index' %}">Início</a></li>
+                                <li class="breadcrumb-item"><a href="{% url 'login:index' %}" class="teal-color">Início</a></li>
                                 {% block breadcrumb %}{% endblock %}
                             </ol>
                         </div>
@@ -186,7 +186,7 @@
             <div class="float-right d-none d-sm-block">
                 <b>Version</b> 0.0.1
             </div>
-            <strong>Copyright &copy; 2022 <a href="http://emcm.ufrn.br/site" target="_blank">UFRN-EMCM</a>.</strong> All rights
+            <strong>Copyright &copy; 2022 <a href="http://emcm.ufrn.br/site" target="_blank"  class="teal-color">UFRN-EMCM</a>.</strong> All rights
             reserved.
         </footer>
 
