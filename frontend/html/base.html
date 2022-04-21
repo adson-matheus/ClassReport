@@ -7,15 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% endblock %}</title>
 
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-
-    <link rel="stylesheet" href="{% static 'js/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css' %}">
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+   
     <link rel="stylesheet" href="{% static 'js/AdminLTE-3.2.0/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
-
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
 
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -91,8 +89,8 @@
 
                 <div class="form-inline">
                     <div class="input-group" data-widget="sidebar-search">
-                        <input class="form-control form-control-sidebar" type="search" placeholder="Search"
-                            aria-label="Search">
+                        <input class="form-control form-control-sidebar" type="search" placeholder="Pesquisar"
+                            aria-label="Pesquisar">
                         <div class="input-group-append">
                             <button class="btn btn-sidebar">
                                 <i class="fas fa-search fa-fw"></i>
@@ -115,14 +113,13 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{% url 'users:add_admin_template' %}" class="nav-link {% block active_link_admin %}{% endblock %}">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fa-solid fa-id-card nav-icon"></i>
                                         <p>Administrador</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{% url 'users:add_prof_template' %}" class="nav-link {% block active_link_prof %}{% endblock %}">
-                                        <i class="fa-person-chalkboard"></i>
-                                        <!-- <i class="fa-chalkboard-user nav-icon"></i> -->
+                                        <i class="fa-solid fa-person-chalkboard nav-icon"></i>
                                         <p>Professor</p>
                                     </a>
                                 </li>
@@ -145,7 +142,7 @@
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Início</a></li>
+                                <li class="breadcrumb-item"><a href="{% url 'login:index' %}">Início</a></li>
                                 {% block breadcrumb %}{% endblock %}
                             </ol>
                         </div>
@@ -206,6 +203,8 @@
     <script src="{% static 'js/AdminLTE-3.2.0/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+
+    <script src="https://kit.fontawesome.com/e4293cedeb.js" crossorigin="anonymous"></script>
 
     <!-- <script src="{% static 'js/AdminLTE-3.2.0/dist/js/demo.js' %}"></script> -->
 </body>
