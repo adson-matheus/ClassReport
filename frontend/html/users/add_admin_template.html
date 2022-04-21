@@ -8,7 +8,7 @@
 {% block title %}Adicionar Administrador {% endblock %}
 {% block h1 %}Adicionar Administrador{% endblock h1 %}
 {% block active_link_admin %}active{% endblock %}
-{% block active_cadastro_nav %}active{% endblock %}
+{% block active_cadastro_nav %}active-teal{% endblock %}
 {% block menu_cadastro_open %}menu-open{% endblock %}
 {% block card-title %}Administrador{% endblock %}
 {% block content %}
@@ -43,6 +43,9 @@
             <label for="password">Senha: </label>
             <input id="password" type="password" name="password" class="form-control" required placeholder="Senha">
         </div>
-        <button type="submit" class="btn btn-primary">Cadastrar</button>
+        
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-outline-primary">Cadastrar</button>
+        </div>
     </form>
 {% endblock %}
