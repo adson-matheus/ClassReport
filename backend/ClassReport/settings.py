@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'relatorio.apps.RelatorioConfig',
     'aula.apps.AulaConfig',
     'login.apps.LoginConfig',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
