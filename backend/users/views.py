@@ -2,6 +2,8 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from .models import Area, Administrador, Professor
 from .forms import AdministradorForm, ProfessorForm, UserForm
+from .serializers import AreaSerializer
+from rest_framework import generics, permissions
 
 def add_admin_controlador(form_user, form_admin):
     '''
@@ -71,3 +73,19 @@ def add_user_generico(form_user):
         last_name = form_user.cleaned_data['last_name'],
     )
     return user
+
+class ListarAreas(generics.ListCreateAPIView):
+    """
+        View que retorna a API responsável por criar e listar as áreas
+    """
+    queryset = Area.objects.all()
+    serializer_class = AreaSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+class DetalhesAreas(generics.RetrieveUpdateDestroyAPIView):
+    """
+        View que retorna a API responsável por buscar, atualizar e/ou deletar uma área
+    """
+    queryset = Area.objects.all()
+    serializer_class = AreaSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
