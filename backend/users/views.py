@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from .models import Area, Administrador, Professor
 from .forms import AdministradorForm, ProfessorForm, UserForm
 from .serializers import AreaSerializer
-from rest_framework import generics
+from rest_framework import generics, permissions
 
 def add_admin_controlador(form_user, form_admin):
     '''
@@ -80,10 +80,12 @@ class ListarAreas(generics.ListCreateAPIView):
     """
     queryset = Area.objects.all()
     serializer_class = AreaSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 class DetalhesAreas(generics.RetrieveUpdateDestroyAPIView):
     """
-        View que retorna a API responsável por atualizar e deletar as áreas
+        View que retorna a API responsável por buscar, atualizar e/ou deletar uma área
     """
     queryset = Area.objects.all()
     serializer_class = AreaSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
