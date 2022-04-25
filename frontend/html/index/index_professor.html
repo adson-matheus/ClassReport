@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block breadcrumb %}
+    {% autoescape off %}
+        <li class="breadcrumb-item">Usuários</li>
+        <li class="breadcrumb-item active">Professor {{full_name}}</li>
+    {% endautoescape %}
+{% endblock %}
+{% block title %}ClassReport - {{full_name}} {% endblock %}
+{% block h1 %}Olá, {{full_name}}{% endblock h1 %}
+{% block card-title %}Professor{% endblock %}
+{% block content %}
+{% endblock %}

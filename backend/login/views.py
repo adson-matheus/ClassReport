@@ -16,7 +16,7 @@ def index(request):
         #return render
         return HttpResponse('adm')
     else:
-        return render(request, 'index/index.html', context)
+        return render(request, 'index/index_professor.html', context)
         #return HttpResponse('prof')
 
 
