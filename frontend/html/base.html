@@ -74,6 +74,15 @@
                         <a href="#" class="dropdown-item dropdown-footer">Ver todas as notificações</a>
                     </div>
                 </li>
+                {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a href="#">
+                        <button type="button" class="btn btn-outline-danger">
+                            <i class="fa-solid fa-arrow-right-from-bracket color-red"></i>
+                        </button>
+                    </a>
+                </li>
+                {% endif %}
             </ul>
         </nav>
 
@@ -113,18 +122,33 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{% url 'users:add_admin_template' %}" class="nav-link {% block active_link_admin %}{% endblock %}">
-                                        <i class="fa-solid fa-id-card nav-icon"></i>
+                                        <i class="fas fa-id-card nav-icon"></i>
                                         <p>Administrador</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{% url 'users:add_prof_template' %}" class="nav-link {% block active_link_prof %}{% endblock %}">
-                                        <i class="fa-solid fa-person-chalkboard nav-icon"></i>
+                                        <i class="fas fa-person-chalkboard nav-icon"></i>
                                         <p>Professor</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
+                        
+                        {% if request.user.is_authenticated %}
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-graduation-cap nav-icon"></i>
+                                <p>Aulas</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-list nav-icon"></i>
+                                <p>Avaliações</p>
+                            </a>
+                        </li>
+                        {% endif %}
                     </ul>
                 </nav>
 
