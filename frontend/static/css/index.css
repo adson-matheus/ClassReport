@@ -1,0 +1,21 @@
+.active-teal {
+    background-color: teal !important;
+}
+.teal-color {
+    color: teal !important;
+}
+.card-teal{
+    border-top: 3px solid teal !important;
+}
+.no-border-bottom{
+    border-bottom: 0 !important;
+}
+.btn-outline-teal {
+    color: teal !important;
+    border-color: teal !important;
+}
+.btn-outline-teal:hover {
+    color: #fff !important;
+    background-color: teal !important;
+    border-color: teal !important;
+}

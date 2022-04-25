@@ -1,8 +1,14 @@
 {% extends 'base.html' %}
+{% block breadcrumb %}
+    {% autoescape off %}
+        <li class="breadcrumb-item">Usuários</li>
+        <li class="breadcrumb-item active">Adicionar Professor</li>
+    {% endautoescape %}
+{% endblock %}
 {% block title %}Adicionar Professor {% endblock %}
 {% block h1 %}Adicionar Professor{% endblock h1 %}
 {% block active_link_prof %}active{% endblock %}
-{% block active_cadastro_nav %}active{% endblock %}
+{% block active_cadastro_nav %}active-teal{% endblock %}
 {% block menu_cadastro_open %}menu-open{% endblock %}
 {% block card-title %}Professor{% endblock %}
 {% block content %}
@@ -48,7 +54,9 @@
             <input id="password" type="password" name="password" class="form-control" required placeholder="Senha">
         </div>
 
-        <button type="submit" class="btn btn-primary">Cadastrar</button>
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-outline-primary btn-outline-teal">Cadastrar</button>
+        </div>
     </form>
 {% endblock %}
 {% block footer %}
