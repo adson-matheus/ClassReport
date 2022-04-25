@@ -19,3 +19,9 @@
     background-color: teal !important;
     border-color: teal !important;
 }
+.bg-teal{
+    background-color: teal !important;
+}
+.bg-teal:hover{
+    border-color: teal !important;
+}
