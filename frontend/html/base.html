@@ -76,7 +76,7 @@
                 </li>
                 {% if request.user.is_authenticated %}
                 <li class="nav-item">
-                    <a href="#">
+                    <a href="{% url 'login:logout_usuario' %}">
                         <button type="button" class="btn btn-outline-danger">
                             <i class="fa-solid fa-arrow-right-from-bracket color-red"></i>
                         </button>

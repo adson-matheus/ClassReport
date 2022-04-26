@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 
@@ -32,3 +32,7 @@ def login_usuario(request):
             return redirect('login:login_usuario')
 
     return render(request, 'login/login.html')
+
+def logout_usuario(request):
+    logout(request)
+    return redirect('login:index')
