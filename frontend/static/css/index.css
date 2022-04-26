@@ -25,3 +25,9 @@
 .bg-teal:hover{
     border-color: teal !important;
 }
+input:-webkit-autofill {
+    -webkit-text-fill-color: #000 !important;
+}
+input:autofill {
+    -webkit-text-fill-color: #000 !important;
+}
