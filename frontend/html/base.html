@@ -16,11 +16,11 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini dark-mode layout-fixed">
 
     <div class="wrapper">
 
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <nav class="main-header navbar navbar-expand navbar-dark navbar-light">
 
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -74,6 +74,15 @@
                         <a href="#" class="dropdown-item dropdown-footer">Ver todas as notificações</a>
                     </div>
                 </li>
+                {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a href="{% url 'login:logout_usuario' %}">
+                        <button type="button" class="btn btn-outline-danger">
+                            <i class="fa-solid fa-arrow-right-from-bracket color-red"></i>
+                        </button>
+                    </a>
+                </li>
+                {% endif %}
             </ul>
         </nav>
 
@@ -113,18 +122,33 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{% url 'users:add_admin_template' %}" class="nav-link {% block active_link_admin %}{% endblock %}">
-                                        <i class="fa-solid fa-id-card nav-icon"></i>
+                                        <i class="fas fa-id-card nav-icon"></i>
                                         <p>Administrador</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{% url 'users:add_prof_template' %}" class="nav-link {% block active_link_prof %}{% endblock %}">
-                                        <i class="fa-solid fa-person-chalkboard nav-icon"></i>
+                                        <i class="fas fa-person-chalkboard nav-icon"></i>
                                         <p>Professor</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
+                        
+                        {% if request.user.is_authenticated %}
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-graduation-cap nav-icon"></i>
+                                <p>Aulas</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-list nav-icon"></i>
+                                <p>Avaliações</p>
+                            </a>
+                        </li>
+                        {% endif %}
                     </ul>
                 </nav>
 
@@ -155,7 +179,7 @@
                     <div class="row">
                         <div class="col-12">
 
-                            <div class="card">
+                            <div class="card card-outline card-teal">
                                 <div class="card-header">
                                     <h3 class="card-title">{% block card-title %}{% endblock %}</h3>
                                     <div class="card-tools">

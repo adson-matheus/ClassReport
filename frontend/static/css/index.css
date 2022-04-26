@@ -19,3 +19,15 @@
     background-color: teal !important;
     border-color: teal !important;
 }
+.bg-teal{
+    background-color: teal !important;
+}
+.bg-teal:hover{
+    border-color: teal !important;
+}
+input:-webkit-autofill {
+    -webkit-text-fill-color: #000 !important;
+}
+input:autofill {
+    -webkit-text-fill-color: #000 !important;
+}

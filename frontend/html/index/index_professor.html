@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block breadcrumb %}
+    {% autoescape off %}
+        <li class="breadcrumb-item">Usuários</li>
+        <li class="breadcrumb-item active">{{full_name}}</li>
+    {% endautoescape %}
+{% endblock %}
+{% block title %}ClassReport - {{full_name}} {% endblock %}
+{% block h1 %}Olá, {{full_name}}{% endblock h1 %}
+{% block card-title %}Cadastrar{% endblock %}
+{% block content %}
+<a class="btn btn-app">
+    <i class="fas fa-graduation-cap"></i> Aula
+</a>
+<a class="btn btn-app">
+    <i class="fas fa-list"></i> Avaliação
+</a>
+{% endblock %}
