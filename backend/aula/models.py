@@ -5,7 +5,7 @@ from users.models import Professor, Aluno, Area
 class Aula(models.Model):
     idArea = models.ForeignKey(Area, verbose_name='Área', on_delete=models.CASCADE, null=False)
     idProfessor = models.ForeignKey(Professor, on_delete=models.CASCADE)
-    assunto = models.CharField(verbose_name='Assunto da aula', max_length=50, null=False)
+    assunto = models.CharField(verbose_name='Assunto da aula', max_length=255, null=False)
     datetime = models.DateTimeField(auto_now=False, auto_now_add=False)
 
     class Meta:
