@@ -35,22 +35,22 @@
                             colspan="1" aria-sort="ascending"
                             aria-label="id: ativar para ordenar descendente" style="">#</th>
                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                            aria-label="Informações da aula: ativar para ordenar ascendente" style="">Informações da aula</th>
+                            aria-label="Data da aula: ativar para ordenar ascendente" style="">Data da aula</th>
+                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                            aria-label="Informações da aula: ativar para ordenar ascendente" style="">Assunto da aula</th>
                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                             aria-label="Alunos: ativar para ordenar ascendente">Alunos</th>
-                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                            aria-label="Status: ativar para ordenar ascendente" style="">Status
-                        </th>
                         <th tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                             aria-label="Ações: consultar, editar e excluir" style="">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
+                {% for aula in queryset %}
                     <tr class="odd">
-                        <td class="sorting_1 dtr-control" tabindex="0" style="">1</td>
-                        <td style="" class="">Aula sobre o corpo humano</td>
+                        <td class="sorting_1 dtr-control text-center" tabindex="0">{{aula.id}}</td>
+                        <td class="">{{aula.datetime|date:'SHORT_DATE_FORMAT'}}<br>{{aula.datetime|time:'H:i'}}</td>
+                        <td class="">{{aula.assunto}}</td>
                         <td class="">José, Maria e João</td>
-                        <td style="">Concluída</td>
                         <td class="text-center" style="">
                             <a class="btn btn-primary btn-sm" href="#">
                                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -63,13 +63,14 @@
                             </a>
                         </td>
                     </tr>
+                    {% endfor %}
                 </tbody>
                 <tfoot>
-                    <tr>
+                    <tr class="text-center">
                         <th rowspan="1" colspan="1" style="">#</th>
-                        <th rowspan="1" colspan="1" style="">Informações da aula</th>
+                        <th rowspan="1" colspan="1" style="">Data da Aula</th>
+                        <th rowspan="1" colspan="1" style="">Assunto da aula</th>
                         <th rowspan="1" colspan="1">Alunos</th>
-                        <th rowspan="1" colspan="1" style="">Status</th>
                         <th rowspan="1" colspan="1" style="">Ações</th>
                     </tr>
                 </tfoot>
