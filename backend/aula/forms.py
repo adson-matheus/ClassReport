@@ -8,9 +8,9 @@ class AulaForm(ModelForm):
     class Meta:
         model = Aula
         exclude = ['idProfessor', 'datetime']
-        widgets = {
-            'assunto': Textarea(attrs={'cols': 50, 'rows': 15}),
-        }
+        # widgets = {
+        #     'assunto': Textarea(attrs={'cols': 50, 'rows': 15}),
+        # }
         # help_texts = {
         #     'assunto': _('O assunto/descrição da aula'),
         # }
