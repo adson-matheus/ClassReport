@@ -7,12 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% endblock %}</title>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-   
-    <link rel="stylesheet" href="{% static 'js/AdminLTE-3.2.0/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
-    
+    {% block css %}{% endblock %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">   
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
-
+    <link rel="stylesheet" href="{% static 'js/AdminLTE-3.2.0/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
 </head>
 
@@ -137,7 +135,7 @@
                         
                         {% if request.user.is_authenticated %}
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{% url 'aulas:aulas' request.user.username %}" class="nav-link {% block active_link_aulas %}{% endblock %}">
                                 <i class="nav-icon fas fa-graduation-cap nav-icon"></i>
                                 <p>Aulas</p>
                             </a>
@@ -221,14 +219,16 @@
     </div>
 
     <script src="{% static 'js/AdminLTE-3.2.0/plugins/jquery/jquery.min.js' %}"></script>
-    
-    <script src="{% static 'js/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
+    <script src="{% static 'js/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    
     <script src="{% static 'js/AdminLTE-3.2.0/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
 
     <script src="https://kit.fontawesome.com/e4293cedeb.js" crossorigin="anonymous"></script>
+
+    {% block scripts %}{% endblock %}
 
     <!-- <script src="{% static 'js/AdminLTE-3.2.0/dist/js/demo.js' %}"></script> -->
 </body>

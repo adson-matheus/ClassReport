@@ -7,12 +7,12 @@
 {% endblock %}
 {% block title %}ClassReport - {{full_name}} {% endblock %}
 {% block h1 %}Olá, {{full_name}}{% endblock h1 %}
-{% block card-title %}Cadastrar{% endblock %}
+{% block card-title %}Menu{% endblock %}
 {% block content %}
-<a class="btn btn-app">
-    <i class="fas fa-graduation-cap"></i> Aula
+<a class="btn btn-app" href="{% url 'aulas:aulas' request.user.username %}">
+    <i class="fas fa-graduation-cap"></i> Aulas
 </a>
-<a class="btn btn-app">
-    <i class="fas fa-list"></i> Avaliação
+<a class="btn btn-app" href="#">
+    <i class="fas fa-list"></i> Avaliações
 </a>
 {% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}{{full_name}} - Adicionar Aula{% endblock %}
+{% block breadcrumb %}
+    {% autoescape off %}
+    <li class="breadcrumb-item">Usuários</li>
+    <li class="breadcrumb-item">{{full_name}}</li>
+    <li class="breadcrumb-item"><a href="{% url 'aulas:aulas' request.user.username %}" class="teal-color">Minhas Aulas</a></li>
+    <li class="breadcrumb-item active">Adicionar Aula</li>
+    {% endautoescape %}
+{% endblock %}
+{% block content %}
+<form method='POST'>
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="selectArea">Área*: </label>
+        <select id="selectArea" class="form-control" onchange='document.getElementById("idArea").value = this.value' required>
+            <option value="">--------</option>
+            {% for area in areas %}
+            <option value="{{area.id}}">{{area.nome}}</option>
+            {% endfor %}
+        <input type='hidden' id="idArea" type="text" name="idArea" value="">
+    </div>
+
+    <div class="form-group">
+        <label for="assunto">Assunto: </label>
+        <input id="assunto" type="text" name="assunto" class="form-control" required placeholder="Assunto">
+    </div>
+
+    <div class="form-group">
+        <label for="dataAula">Data da aula: </label>
+        <input id="dataAula" type="date" name="dataAula" class="form-control" required placeholder="Data da aula">
+    </div>
+
+    <div class="form-group">
+        <label for="horario">Horário da aula: </label>
+        <input id="horario" type="time" name="horario" class="form-control" required placeholder="Horário da aula">
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-outline-primary btn-outline-teal">Cadastrar</button>
+    </div>
+</form>
+{% endblock %}
