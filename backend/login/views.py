@@ -13,10 +13,11 @@ def index(request):
     }
     group = Group.objects.get(name='grp_administradores')
     if group in request.user.groups.all():
+        context.update({'is_admin':True})
         return render(request, 'index/index_administrador.html', context)
     else:
+        context.update({'is_admin':False})
         return render(request, 'index/index_professor.html', context)
-        #return HttpResponse('prof')
 
 
 def login_usuario(request):
