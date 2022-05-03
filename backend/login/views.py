@@ -13,8 +13,7 @@ def index(request):
     }
     group = Group.objects.get(name='grp_administradores')
     if group in request.user.groups.all():
-        #return render
-        return HttpResponse('adm')
+        return render(request, 'index/index_administrador.html', context)
     else:
         return render(request, 'index/index_professor.html', context)
         #return HttpResponse('prof')
