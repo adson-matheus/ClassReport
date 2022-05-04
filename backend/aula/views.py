@@ -40,3 +40,11 @@ class AulaTemplate:
             'areas': Area.objects.all()
         }
         return render(request, 'aula/add_aula.html', context)
+    def get_aula(request, username, id):
+        aula = Aula.objects.get(pk=id)
+        context = {
+            'username': username,
+            'full_name': request.user.get_full_name(),
+            'aula': aula
+        }
+        return render(request, 'aula/get_aula.html', context)
