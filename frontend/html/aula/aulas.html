@@ -36,8 +36,6 @@
                             aria-label="id: ativar para ordenar descendente" style="">#</th>
                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                             aria-label="Data da aula: ativar para ordenar ascendente" style="">Data da aula</th>
-                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                            aria-label="Alunos: ativar para ordenar ascendente">Alunos</th>
                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                             aria-label="Informações da aula: ativar para ordenar ascendente" style="">Assunto da aula</th>
                         <th tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
@@ -49,10 +47,9 @@
                     <tr class="odd">
                         <td class="sorting_1 dtr-control text-center" tabindex="0">{{aula.id}}</td>
                         <td class="">{{aula.datetime|date:'SHORT_DATE_FORMAT'}}<br>{{aula.datetime|time:'H:i'}}</td>
-                        <td class="">José, Maria e João</td>
                         <td class="">{{aula.assunto}}</td>
                         <td class="text-center" style="min-width:150px">
-                            <a class="btn btn-primary btn-sm" href="#">
+                            <a class="btn btn-primary btn-sm" href="{% url 'aulas:get_aula' request.user.username aula.id %}">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </a>
                             <a class="btn btn-info btn-sm" href="#">
@@ -69,7 +66,6 @@
                     <tr>
                         <th rowspan="1" colspan="1" style="">#</th>
                         <th rowspan="1" colspan="1" style="">Data da Aula</th>
-                        <th rowspan="1" colspan="1">Alunos</th>
                         <th rowspan="1" colspan="1" style="">Assunto da aula</th>
                         <th rowspan="1" colspan="1" style="">Ações</th>
                     </tr>
