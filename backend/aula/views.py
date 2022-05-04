@@ -35,7 +35,8 @@ class AulaTemplate:
         else:
             form_aula = AulaForm()
         context = {
-            'form_aula':form_aula,
+            'username': username,
+            'form_aula': form_aula,
             'full_name': request.user.get_full_name(),
             'areas': Area.objects.all()
         }
