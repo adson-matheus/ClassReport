@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}{{full_name}} - Adicionar Aula{% endblock %}
+{% block breadcrumb %}
+    {% autoescape off %}
+    <li class="breadcrumb-item">Usuários</li>
+    <li class="breadcrumb-item">{{full_name}}</li>
+    <li class="breadcrumb-item"><a href="{% url 'aulas:aulas' request.user.username %}" class="teal-color">Minhas Aulas</a></li>
+    <li class="breadcrumb-item active">Detalhar Aula</li>
+    {% endautoescape %}
+{% endblock %}
+{% block content %}
+{{aula}}
+{% endblock %}
