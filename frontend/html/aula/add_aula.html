@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}{{full_name}} - Adicionar Aula{% endblock %}
+{% block active_link_aulas %}active-teal{% endblock %}
 {% block breadcrumb %}
     {% autoescape off %}
     <li class="breadcrumb-item">Usuários</li>
@@ -23,7 +24,15 @@
 
     <div class="form-group">
         <label for="assunto">Assunto: </label>
-        <input id="assunto" type="text" name="assunto" class="form-control" required placeholder="Assunto">
+        <textarea
+            id="assunto"
+            type="text"
+            name="assunto"
+            class="form-control"
+            rows=10
+            maxlength=255
+            required
+            placeholder="Assunto da aula, observações, etc..."></textarea>
     </div>
 
     <div class="form-group">
