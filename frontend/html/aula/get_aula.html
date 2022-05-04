@@ -19,5 +19,81 @@
     Aula do dia {{aula.datetime|date:'SHORT_DATE_FORMAT'}}
 {% endblock %}
 {% block content %}
-{{aula}}
+<div class="card-body">
+    <div class="row">
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-teal">
+                <div class="inner">
+                    <h3>Adicionar</h3>
+                    <h5>Aluno</h5>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    Adicionar <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-teal">
+                <div class="inner">
+                    <h3>Avaliar</h3>
+                    <h5>Aluno</h5>
+                </div>
+                <div class="icon">
+                    <i class="fa-solid fa-clipboard-check"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    Avaliar <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-teal">
+                <div class="inner">
+                    <h3>Editar</h3>
+                    <h5>Aula</h5>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-pen-to-square"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    Editar <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <h3>Excluir</h3>
+                    <h5>Aula</h5>
+                </div>
+                <div class="icon">
+                    <i class="fa-solid fa-trash-can"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    Excluir <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3 class="mt-2">Área: {{aula.idArea}}</h3>
+            <h4>Data da Aula: {{aula.datetime|date:'SHORT_DATE_FORMAT'}} às {{aula.datetime|time:'H:i'}}</h4>
+            <div class="post mb-5">
+                <p>{{aula.assunto}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 border-top border-teal">
+            <a class="btn btn-outline-light mt-3 float-right" href="#">
+                <i class="fa-solid fa-file-pdf"></i>
+                Exportar PDF
+            </a>
+        </div>
+    </div>
+</div>
 {% endblock %}
