@@ -138,7 +138,7 @@
                         {% elif request.user.is_authenticated and not is_admin %}
                         <li class="nav-header">AÇÕES</li>
                         <li class="nav-item">
-                            <a href="{% url 'aulas:aulas' request.user.username %}" class="nav-link {% block active_link_aulas %}{% endblock %}">
+                            <a href="{% url 'aula:index_aula' request.user.username %}" class="nav-link {% block active_link_aulas %}{% endblock %}">
                                 <i class="nav-icon fas fa-graduation-cap nav-icon"></i>
                                 <p>Aulas</p>
                             </a>
