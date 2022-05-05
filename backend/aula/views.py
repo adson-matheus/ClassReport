@@ -14,6 +14,7 @@ class AulaTemplate:
             'full_name': request.user.get_full_name()
         }
         return render(request, 'aula/aulas.html', context)
+
     def add_aula(request, username):
         if request.method == 'POST':
             form_aula = AulaForm(request.POST)
@@ -47,3 +48,32 @@ class AulaTemplate:
             'aula': aula
         }
         return render(request, 'aula/get_aula.html', context)
+
+    def edit_aula(request, username, id):
+        aula = Aula.objects.get(pk=id)
+        if request.method == 'POST':
+            form_aula = AulaFormEdit(request.POST, instance=aula)
+            if form_aula.is_valid():
+                dados = form_aula.clean()
+                dataAula = dados['dataAula']
+                horario = dados['horario']
+
+                dt = converter_para_datetime(data=dataAula, horario=horario)
+                Aula(id=id,
+                     idProfessor=Professor.objects.get(user=request.user),
+                     idArea=dados['idArea'],
+                     assunto=dados['assunto'],
+                     datetime=dt).save()
+                # msg
+                return redirect('aula:get_aula', request.user.username, id)
+            else:
+                # msg
+                return redirect('aula:index_aula', request.user.username)
+        else:
+            form_aula = AulaFormEdit(instance=aula)
+        context = {
+            'form_aula': form_aula,
+            'full_name': request.user.get_full_name(),
+            'username': username,
+        }
+        return render(request, 'aula/edit_aula.html', context)
