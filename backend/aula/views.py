@@ -1,11 +1,12 @@
 from django.shortcuts import redirect, render
+from .utils import converter_para_datetime
 from users.models import Professor, Area
-from .forms import AulaForm
+from .forms import AulaForm, AulaFormEdit
 from .models import Aula
 from datetime import datetime
 
 class AulaTemplate:
-    def index(request, username):
+    def index_aula(request, username):
         prof = Professor.objects.get(user=request.user)
         context = {
             'queryset': Aula.objects.filter(idProfessor = prof),
@@ -17,18 +18,14 @@ class AulaTemplate:
         if request.method == 'POST':
             form_aula = AulaForm(request.POST)
             if form_aula.is_valid():
-                idArea = form_aula.cleaned_data['idArea']
-                assunto = form_aula.cleaned_data['assunto']
-                dataAula = form_aula.cleaned_data['dataAula']
-                horario = form_aula.cleaned_data['horario']
-                dt = datetime(year=dataAula.year,
-                              month=dataAula.month,
-                              day=dataAula.day,
-                              hour=horario.hour,
-                              minute=horario.minute)
-
+                dados = form_aula.clean()
+                idArea = dados['idArea']
+                assunto = dados['assunto']
+                dataAula = dados['dataAula']
+                horario = dados['horario']
+                dt = converter_para_datetime(data=dataAula, horario=horario)
                 Aula(idProfessor=Professor.objects.get(user=request.user), idArea=idArea, assunto=assunto, datetime=dt).save()
-                return redirect('aulas:aulas', request.user.username)
+                return redirect('aula:index_aula', request.user.username)
             else:
                 pass
                 #message
@@ -41,6 +38,7 @@ class AulaTemplate:
             'areas': Area.objects.all()
         }
         return render(request, 'aula/add_aula.html', context)
+
     def get_aula(request, username, id):
         aula = Aula.objects.get(pk=id)
         context = {
