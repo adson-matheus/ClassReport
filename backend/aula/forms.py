@@ -10,8 +10,8 @@ class AulaForm(ModelForm):
         exclude = ['idProfessor', 'datetime']
 
 class AulaFormEdit(ModelForm):
-    dataAula = DateField(required=True, label='Data da aula', initial=Aula.datetime)
+    dataAula = DateField(required=True, label='Data da aula')
     horario = TimeField(required=True, label='Horário da aula')
     class Meta:
         model = Aula
-        exclude = ['idProfessor',]
+        exclude = ['idProfessor', 'datetime',]
