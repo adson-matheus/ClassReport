@@ -13,6 +13,15 @@
 .no-border-bottom{
     border-bottom: 0 !important;
 }
+.btn-teal {
+    background-color: teal !important;
+    border-color: teal !important;
+}
+.btn-teal:hover {
+    color: teal !important;
+    border-color: teal !important;
+    background-color: #343a40 !important;
+}
 .btn-outline-teal {
     color: teal !important;
     border-color: teal !important;
