@@ -50,6 +50,7 @@ class AulaTemplate:
         return render(request, 'aula/get_aula.html', context)
 
     def edit_aula(request, username, id):
+        areas = Area.objects.all()
         aula = Aula.objects.get(pk=id)
         if request.method == 'POST':
             form_aula = AulaFormEdit(request.POST, instance=aula)
@@ -73,6 +74,8 @@ class AulaTemplate:
             form_aula = AulaFormEdit(instance=aula)
         context = {
             'form_aula': form_aula,
+            'aula': aula,
+            'areas': areas,
             'full_name': request.user.get_full_name(),
             'username': username,
         }
