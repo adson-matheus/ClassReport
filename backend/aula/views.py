@@ -77,3 +77,17 @@ class AulaTemplate:
             'username': username,
         }
         return render(request, 'aula/edit_aula.html', context)
+
+    def delete_aula_template(request, username, id):
+        aula = Aula.objects.get(pk=id)
+        context = {
+            'username': username,
+            'full_name': request.user.get_full_name(),
+            'aula': aula,
+        }
+        return render(request, 'aula/delete_aula.html', context)
+
+    def delete_aula(request, username, id):
+        aula = Aula.objects.get(pk=id)
+        aula.delete()
+        return redirect('aula:index_aula', username)
