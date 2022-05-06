@@ -7,4 +7,6 @@ urlpatterns = [
     path("prof/<username>/add", views.AulaTemplate.add_aula, name='add_aula'),
     path("prof/<username>/detail/<int:id>", views.AulaTemplate.get_aula, name='get_aula'),
     path("prof/<username>/edit/<int:id>", views.AulaTemplate.edit_aula, name='edit_aula'),
+    path("prof/<username>/delete/<int:id>", views.AulaTemplate.delete_aula_template, name='delete_aula_template'),
+    path("prof/<username>/delete/<int:id>/confirm", views.AulaTemplate.delete_aula, name='delete_aula'),
 ]
