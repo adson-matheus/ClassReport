@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
-{% block title %}{{full_name}} - Adicionar Aula{% endblock %}
+{% block title %}{{full_name}} - Editar Aula{% endblock %}
 {% block active_link_aulas %}active-teal{% endblock %}
 {% block breadcrumb %}
     {% autoescape off %}
     <li class="breadcrumb-item">Usuários</li>
     <li class="breadcrumb-item">{{full_name}}</li>
     <li class="breadcrumb-item"><a href="{% url 'aula:index_aula' request.user.username %}" class="teal-color">Minhas Aulas</a></li>
-    <li class="breadcrumb-item active">Adicionar Aula</li>
+    <li class="breadcrumb-item active">Editar Aula</li>
     {% endautoescape %}
 {% endblock %}
 {% block content %}
@@ -21,7 +21,6 @@
             {% endfor %}
         <input type='hidden' id="idArea" type="text" name="idArea" value="">
     </div>
-
     <div class="form-group">
         <label for="assunto">Assunto: </label>
         <textarea
@@ -32,17 +31,17 @@
             rows=10
             maxlength=255
             required
-            placeholder="Assunto da aula, observações, etc..."></textarea>
+            placeholder="Assunto da aula, observações, etc...">{{ aula.assunto }}</textarea>
     </div>
 
     <div class="form-group">
         <label for="dataAula">Data da aula: </label>
-        <input id="dataAula" type="date" name="dataAula" class="form-control" required placeholder="Data da aula">
+        <input id="dataAula" type="date" name="dataAula" class="form-control" required placeholder="Data da aula" value="{{aula.datetime.date|date:"Y-m-d"}}">
     </div>
 
     <div class="form-group">
         <label for="horario">Horário da aula: </label>
-        <input id="horario" type="time" name="horario" class="form-control" required placeholder="Horário da aula">
+        <input id="horario" type="time" name="horario" class="form-control" required placeholder="Horário da aula" value="{{aula.datetime.time}}">
     </div>
 
     <div class="d-flex justify-content-center">

@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block title %}{{full_name}} - Adicionar Aula{% endblock %}
+{% block breadcrumb %}
+    {% autoescape off %}
+        <li class="breadcrumb-item">Usuários</li>
+        <li class="breadcrumb-item">{{full_name}}</li>
+        <li class="breadcrumb-item"><a href="{% url 'aula:index_aula' request.user.username %}" class="teal-color">Minhas Aulas</a></li>
+        <li class="breadcrumb-item active">Detalhar Aula</li>
+    {% endautoescape %}
+{% endblock %}
+{% block h1 %}Detalhar Aula{% endblock h1 %}
+{% block active_link_aulas %}active-teal{% endblock %}
+{% block card-title %}
+    {% autoescape off %}
+        <a href="{% url 'aula:index_aula' request.user.username %}">
+            <i class="fa-solid fa-circle-arrow-left teal-color"></i>
+        </a>&nbsp
+    {% endautoescape %}
+    Aula do dia {{aula.datetime|date:'SHORT_DATE_FORMAT'}}
+{% endblock %}
+{% block content %}
+<div class="card-body">
+    <div class="row">
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-teal">
+                <div class="inner">
+                    <h3>Adicionar</h3>
+                    <h5>Aluno</h5>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    Adicionar <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-teal">
+                <div class="inner">
+                    <h3>Avaliar</h3>
+                    <h5>Aluno</h5>
+                </div>
+                <div class="icon">
+                    <i class="fa-solid fa-clipboard-check"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    Avaliar <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-teal">
+                <div class="inner">
+                    <h3>Editar</h3>
+                    <h5>Aula</h5>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-pen-to-square"></i>
+                </div>
+                <a href="{% url 'aula:edit_aula' request.user.username aula.id %}" class="small-box-footer">
+                    Editar <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <h3>Excluir</h3>
+                    <h5>Aula</h5>
+                </div>
+                <div class="icon">
+                    <i class="fa-solid fa-trash-can"></i>
+                </div>
+                {% comment %} add alerta javascript {% endcomment %}
+                <a href="{% url 'aula:delete_aula_template' request.user.username aula.id %}" class="small-box-footer">
+                    Excluir <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3 class="mt-2 text-center">Área: {{aula.idArea}}</h3>
+            <p class="text-right">Horário da Aula: {{aula.datetime|date:'SHORT_DATE_FORMAT'}} às {{aula.datetime|time:'H:i'}}</p>
+            <div class="post mb-5">
+                <p class="text-justify">{{aula.assunto}}</p>
+                <p class="text-right">Alunos: Sem alunos cadastrados</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 border-top border-teal">
+            <a class="btn btn-outline-light mt-3 float-right" href="#">
+                <i class="fa-solid fa-file-pdf"></i>
+                Exportar PDF
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

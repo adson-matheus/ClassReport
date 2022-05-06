@@ -9,7 +9,7 @@
 {% block h1 %}Olá, {{full_name}}{% endblock h1 %}
 {% block card-title %}Menu{% endblock %}
 {% block content %}
-<a class="btn btn-app" href="{% url 'aulas:aulas' request.user.username %}">
+<a class="btn btn-app" href="{% url 'aula:index_aula' request.user.username %}">
     <i class="fas fa-graduation-cap"></i> Aulas
 </a>
 <a class="btn btn-app" href="#">
