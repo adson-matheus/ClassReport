@@ -31,17 +31,17 @@
             rows=10
             maxlength=255
             required
-            placeholder="Assunto da aula, observações, etc...">{{ form_aula.assunto }}</textarea>
+            placeholder="Assunto da aula, observações, etc...">{{ aula.assunto }}</textarea>
     </div>
 
     <div class="form-group">
         <label for="dataAula">Data da aula: </label>
-        <input id="dataAula" type="date" name="dataAula" class="form-control" required placeholder="Data da aula">
+        <input id="dataAula" type="date" name="dataAula" class="form-control" required placeholder="Data da aula" value="{{aula.datetime.date|date:"Y-m-d"}}">
     </div>
 
     <div class="form-group">
         <label for="horario">Horário da aula: </label>
-        <input id="horario" type="time" name="horario" class="form-control" required placeholder="Horário da aula">
+        <input id="horario" type="time" name="horario" class="form-control" required placeholder="Horário da aula" value="{{aula.datetime.time}}">
     </div>
 
     <div class="d-flex justify-content-center">
