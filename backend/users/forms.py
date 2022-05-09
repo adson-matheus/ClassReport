@@ -1,5 +1,5 @@
 from django import forms
-from .models import Administrador, Professor
+from .models import Administrador, Professor, Aluno
 from django.contrib.auth.models import User
 
 class UserForm(forms.ModelForm):
@@ -16,3 +16,8 @@ class ProfessorForm(forms.ModelForm):
     class Meta:
         model = Professor
         fields = ['siape', 'idArea',]
+
+class AlunoForm(forms.ModelForm):
+    class Meta:
+        model = Aluno
+        fields = '__all__'
