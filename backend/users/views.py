@@ -1,9 +1,11 @@
 from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from .models import Area, Administrador, Professor
-from .forms import AdministradorForm, ProfessorForm, UserForm
+from .forms import AdministradorForm, ProfessorForm, UserForm, AlunoForm
 from .serializers import AreaSerializer
 from rest_framework import generics, permissions
+from django.http import HttpResponse
 
 def add_admin_controller(form_user, form_admin):
     '''
@@ -75,6 +77,31 @@ def add_generic_user(form_user, group_name):
     get_group = Group.objects.get(name=group_name)
     get_group.user_set.add(user)
     return user
+
+@login_required
+class AlunoTemplate:
+    def add_aluno(request):
+        """
+            Professor e Administrador adicionam aluno
+        """
+        if request.method == 'POST':
+            form = AlunoForm(request.POST)
+            if form.is_valid():
+                form.save()
+                # msg
+                return redirect('login:index')
+            else:
+                return HttpResponse("Aluno já existe!")
+                # msg
+                pass
+        else:
+            form = AlunoForm()
+        context = {
+            'form': form,
+            'user': request.user,
+            'full_name': request.user.get_full_name()
+        }
+        return render(request, 'users/add_aluno_template.html', context)
 
 class ListarAreas(generics.ListCreateAPIView):
     """
