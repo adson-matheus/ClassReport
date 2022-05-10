@@ -9,5 +9,5 @@ urlpatterns = [
     path('admin/areas/<int:pk>', views.DetalhesAreas.as_view()),
     path('alunos', views.AlunoTemplate.index_aluno, name='index_aluno'),
     path('aluno/add', views.AlunoTemplate.add_aluno, name='add_aluno'),
-    path('aluno/edit/<int:id>', views.AlunoTemplate.edit_aluno, name='edit_aluno'),
+    path('aluno/edit/<int:matr>', views.AlunoTemplate.edit_aluno, name='edit_aluno'),
 ]
