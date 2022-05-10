@@ -1,8 +1,8 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
-from .models import Area, Administrador, Professor
-from .forms import AdministradorForm, ProfessorForm, UserForm, AlunoForm
+from .models import Area, Administrador, Professor, Aluno
+from .forms import AdministradorForm, ProfessorForm, UserForm, AlunoForm, EditarAlunoForm
 from .serializers import AreaSerializer
 from rest_framework import generics, permissions
 from django.http import HttpResponse
@@ -80,6 +80,10 @@ def add_generic_user(form_user, group_name):
 
 @login_required
 class AlunoTemplate:
+    """
+        Aluno possui matrícula e nome. Aluno assiste 'n' aulas.
+        Aluno NÃO possui acesso ao sistema.
+    """
     def add_aluno(request):
         """
             Professor e Administrador adicionam aluno
@@ -102,6 +106,27 @@ class AlunoTemplate:
             'full_name': request.user.get_full_name()
         }
         return render(request, 'users/add_aluno_template.html', context)
+
+    def edit_aluno(request, id):
+        aluno = Aluno.objects.get(pk=id)
+        if request.method == 'POST':
+            form = EditarAlunoForm(request.POST, instance=aluno)
+            if form.is_valid():
+                # msg
+                form.save()
+                return redirect('login:index')
+            else:
+                # msg
+                pass
+        else:
+            form = EditarAlunoForm(instance=aluno)
+        context = {
+            'aluno': aluno,
+            'user': request.user,
+            'full_name': request.user.get_full_name()
+        }
+        return render(request, 'users/editar_aluno_template.html', context)
+
 
 class ListarAreas(generics.ListCreateAPIView):
     """
