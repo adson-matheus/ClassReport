@@ -84,6 +84,14 @@ class AlunoTemplate:
         Aluno possui matrícula e nome. Aluno assiste 'n' aulas.
         Aluno NÃO possui acesso ao sistema.
     """
+    def index_aluno(request):
+        alunos = Aluno.objects.all()
+        context = {
+            'alunos': alunos,
+            'full_name': request.user.get_full_name()
+        }
+        return render(request, 'users/alunos.html', context)
+
     def add_aluno(request):
         """
             Professor e Administrador adicionam aluno
@@ -93,7 +101,7 @@ class AlunoTemplate:
             if form.is_valid():
                 form.save()
                 # msg
-                return redirect('login:index')
+                return redirect('users:index_aluno')
             else:
                 return HttpResponse("Aluno já existe!")
                 # msg
@@ -107,14 +115,14 @@ class AlunoTemplate:
         }
         return render(request, 'users/add_aluno_template.html', context)
 
-    def edit_aluno(request, id):
-        aluno = Aluno.objects.get(pk=id)
+    def edit_aluno(request, matr):
+        aluno = Aluno.objects.get(matricula=matr)
         if request.method == 'POST':
             form = EditarAlunoForm(request.POST, instance=aluno)
             if form.is_valid():
                 # msg
                 form.save()
-                return redirect('login:index')
+                return redirect('users:index_aluno')
             else:
                 # msg
                 pass
