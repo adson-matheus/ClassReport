@@ -84,6 +84,14 @@ class AlunoTemplate:
         Aluno possui matrícula e nome. Aluno assiste 'n' aulas.
         Aluno NÃO possui acesso ao sistema.
     """
+    def index_aluno(request):
+        alunos = Aluno.objects.all()
+        context = {
+            'alunos': alunos,
+            'full_name': request.user.get_full_name()
+        }
+        return render(request, 'users/alunos.html', context)
+
     def add_aluno(request):
         """
             Professor e Administrador adicionam aluno
