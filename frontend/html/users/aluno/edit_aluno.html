@@ -1,12 +1,20 @@
 {% extends 'base.html' %}
 {% block title %}{{full_name}} - Editar Aluno{% endblock %}
-{% block h1 %}Editar Aluno{% endblock %}
+{% block h1 %}Editar informações de {{ aluno.nome }}{% endblock %}
 {% block breadcrumb %}
     {% autoescape off %}
     <li class="breadcrumb-item">Usuários</li>
     <li class="breadcrumb-item">{{full_name}}</li>
-    <li class="breadcrumb-item active">Editar - {{ aluno.nome }}</li>
+    <li class="breadcrumb-item active">Editar {{ aluno.nome }}</li>
     {% endautoescape %}
+{% endblock %}
+{% block card-title %}
+    {% autoescape off %}
+        <a href="{% url 'users:index_aluno' %}">
+            <i class="fa-solid fa-circle-arrow-left teal-color"></i>
+        </a>&nbsp
+    {% endautoescape %}
+    Editar Aluno
 {% endblock %}
 {% block content %}
 <form method='POST'>
@@ -22,6 +30,9 @@
     </div>
 
     <div class="d-flex justify-content-center">
+        <a class="mr-3" href="{% url 'users:index_aluno' %}">
+            <button type="button" class="btn btn-md btn-outline-light">Cancelar</button>
+        </a>
         <button type="submit" class="btn btn-outline-primary btn-outline-teal">Atualizar</button>
     </div>
 </form>
