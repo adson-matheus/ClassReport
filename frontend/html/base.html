@@ -112,7 +112,7 @@
                         {% if request.user.is_authenticated and is_admin %}
                         <li class="nav-header">AÇÕES</li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{% url 'users:index_aluno' %}" class="nav-link">
                                 <i class="nav-icon fas fa-solid fa-user-graduate"></i>
                                 <p>Alunos</p>
                             </a>

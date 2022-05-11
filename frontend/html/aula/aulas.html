@@ -13,7 +13,14 @@
 {% block title %}{{full_name}} - Minhas Aulas{% endblock %}
 {% block h1 %}Minhas Aulas{% endblock h1 %}
 {% block active_link_aulas %}active-teal{% endblock %}
-{% block card-title %}Aulas{% endblock %}
+{% block card-title %}
+    {% autoescape off %}
+        <a href="{% url 'login:index' %}">
+            <i class="fa-solid fa-circle-arrow-left teal-color"></i>
+        </a>&nbsp
+    {% endautoescape %}
+    Aulas
+{% endblock %}
 {% block content %}
 
 <div class="d-flex justify-content-center">

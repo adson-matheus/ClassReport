@@ -9,6 +9,14 @@
     <li class="breadcrumb-item active">Adicionar Aula</li>
     {% endautoescape %}
 {% endblock %}
+{% block card-title %}
+    {% autoescape off %}
+        <a href="{% url 'aula:index_aula' request.user.username %}">
+            <i class="fa-solid fa-circle-arrow-left teal-color"></i>
+        </a>&nbsp
+    {% endautoescape %}
+    Adicionar Aula
+{% endblock %}
 {% block content %}
 <form method='POST'>
     {% csrf_token %}
