@@ -10,4 +10,6 @@ urlpatterns = [
     path('alunos', views.AlunoTemplate.index_aluno, name='index_aluno'),
     path('aluno/add', views.AlunoTemplate.add_aluno, name='add_aluno'),
     path('aluno/edit/<int:matr>', views.AlunoTemplate.edit_aluno, name='edit_aluno'),
+    path('aluno/delete/<int:matr>', views.AlunoTemplate.delete_aluno_template, name='delete_aluno_template'),
+    path('aluno/delete/<int:matr>/confirm', views.AlunoTemplate.delete_aluno, name='delete_aluno'),
 ]
