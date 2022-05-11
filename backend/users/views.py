@@ -113,7 +113,7 @@ class AlunoTemplate:
             'user': request.user,
             'full_name': request.user.get_full_name()
         }
-        return render(request, 'users/aluno/add_aluno_template.html', context)
+        return render(request, 'users/aluno/add_aluno.html', context)
 
     def edit_aluno(request, matr):
         aluno = Aluno.objects.get(matricula=matr)
@@ -133,7 +133,7 @@ class AlunoTemplate:
             'user': request.user,
             'full_name': request.user.get_full_name()
         }
-        return render(request, 'users/aluno/editar_aluno_template.html', context)
+        return render(request, 'users/aluno/edit_aluno.html', context)
 
     def delete_aluno_template(request, matr):
         aluno = Aluno.objects.get(matricula=matr)
