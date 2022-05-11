@@ -12,9 +12,15 @@
 {% endblock %}
 {% block title %}{{full_name}} - Listar Alunos{% endblock %}
 {% block h1 %}Lista de Alunos{% endblock h1 %}
-{% block card-title %}Alunos{% endblock %}
+{% block card-title %}
+    {% autoescape off %}
+        <a href="{% url 'login:index' %}">
+            <i class="fa-solid fa-circle-arrow-left teal-color"></i>
+        </a>&nbsp
+    {% endautoescape %}
+    Alunos
+{% endblock %}
 {% block content %}
-
 <div class="d-flex justify-content-center">
     <div class="col-4 mb-2 text-center">
         <a href="{% url 'users:add_aluno' %}">
