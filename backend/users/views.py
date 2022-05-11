@@ -135,6 +135,19 @@ class AlunoTemplate:
         }
         return render(request, 'users/editar_aluno_template.html', context)
 
+    def delete_aluno_template(request, matr):
+        aluno = Aluno.objects.get(matricula=matr)
+        context = {
+            'full_name': request.user.get_full_name(),
+            'aluno': aluno,
+        }
+        return render(request, 'users/delete_aluno.html', context)
+
+    def delete_aluno(request, matr):
+        aluno = Aluno.objects.get(matricula=matr)
+        aluno.delete()
+        # msg
+        return redirect('users:index_aluno')
 
 class ListarAreas(generics.ListCreateAPIView):
     """
