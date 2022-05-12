@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 # Create your views here.
 @login_required()
@@ -19,7 +20,6 @@ def index(request):
         context.update({'is_admin':False})
         return render(request, 'index/index_professor.html', context)
 
-
 def login_usuario(request):
     if request.method == "POST":
         user = request.POST["username"]
@@ -29,6 +29,7 @@ def login_usuario(request):
             login(request, usuario)
             return redirect('login:index')
         else:
+            messages.warning(request, 'Usuário ou Senha incorretos.')
             return redirect('login:login_usuario')
 
     return render(request, 'login/login.html')
