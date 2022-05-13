@@ -15,7 +15,6 @@ class Avaliacao(models.Model):
 class AvaliacoesProfessor(models.Model):
     id_avaliacao = models.ForeignKey(Avaliacao, on_delete=models.SET_NULL, null=False)
     id_professor = models.ForeignKey(Professor, on_delete=models.SET_NULL, null=False)
-    checklist = models.JSONField(verbose_name='checklist')
 
     class Meta:
         ordering = ('-id',)
