@@ -142,7 +142,7 @@ SHORT_DATE_FORMAT = 'd/m/Y %H:%M'
 from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-secondary',
-    messages.INFO: 'alert-info',
+    messages.INFO: 'alert-light',
     messages.SUCCESS: 'alert-success',
     messages.WARNING: 'alert-light',
     messages.ERROR: 'alert-danger',
