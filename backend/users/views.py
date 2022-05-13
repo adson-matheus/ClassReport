@@ -1,10 +1,8 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
-from .models import Area, Administrador, Professor, Aluno
+from .models import Administrador, Professor, Aluno
 from .forms import AdministradorForm, ProfessorForm, UserForm, AlunoForm, EditarAlunoForm
-from .serializers import AreaSerializer
-from rest_framework import generics, permissions
 from django.http import HttpResponse
 
 def add_admin_controller(form_user, form_admin):
@@ -36,17 +34,15 @@ def add_admin_template(request):
 
 def add_prof_controller(form_user, form_prof):
     '''
-        Cria professor adicionando o respectivo siape e id da Area que atua.
+        Cria professor adicionando o respectivo siape.
     '''
     if form_user.is_valid() and form_prof.is_valid():
         get_siape = form_prof.cleaned_data['siape']
-        get_area = form_prof.cleaned_data['idArea']
         user = add_generic_user(form_user=form_user, group_name='grp_professores')
-        Professor(user=user, siape=get_siape, idArea=get_area).save()
+        Professor(user=user, siape=get_siape).save()
         return True
 
 def add_prof_template(request):
-    areas = Area.objects.all()
     if request.method == 'POST':
         form_user = UserForm(request.POST)
         form_prof = ProfessorForm(request.POST)
@@ -59,7 +55,6 @@ def add_prof_template(request):
 
     context = {
         'form': form,
-        'areas': areas
     }
     return render(request, 'users/add_prof_template.html', context)
 
@@ -149,18 +144,3 @@ class AlunoTemplate:
         # msg
         return redirect('users:index_aluno')
 
-class ListarAreas(generics.ListCreateAPIView):
-    """
-        View que retorna a API responsável por criar e listar as áreas
-    """
-    queryset = Area.objects.all()
-    serializer_class = AreaSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
-class DetalhesAreas(generics.RetrieveUpdateDestroyAPIView):
-    """
-        View que retorna a API responsável por buscar, atualizar e/ou deletar uma área
-    """
-    queryset = Area.objects.all()
-    serializer_class = AreaSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
