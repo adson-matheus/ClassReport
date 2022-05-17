@@ -9,28 +9,28 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('aula', '0001_initial'),
         ('users', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Aula',
+            name='Avaliacao',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('assunto', models.CharField(max_length=255, verbose_name='Assunto da aula')),
-                ('datetime', models.DateTimeField()),
-                ('idProfessor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='users.professor')),
+                ('checklist', models.JSONField(verbose_name='checklist')),
+                ('aula_do_aluno', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='aula.auladoaluno')),
             ],
             options={
-                'ordering': ('-datetime',),
+                'ordering': ('-id',),
             },
         ),
         migrations.CreateModel(
-            name='AulaDoAluno',
+            name='AvaliacoesProfessor',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('idAluno', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='users.aluno')),
-                ('idAula', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='aula.aula')),
+                ('id_avaliacao', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='avaliacao.avaliacao')),
+                ('id_professor', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='users.professor')),
             ],
             options={
                 'ordering': ('-id',),
