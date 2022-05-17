@@ -20,15 +20,6 @@
 {% block content %}
 <form method='POST'>
     {% csrf_token %}
-    <div class="form-group">
-        <label for="selectArea">Área*: </label>
-        <select id="selectArea" class="form-control" onchange='document.getElementById("idArea").value = this.value' required>
-            <option value="">--------</option>
-            {% for area in areas %}
-            <option value="{{area.id}}">{{area.nome}}</option>
-            {% endfor %}
-        <input type='hidden' id="idArea" type="text" name="idArea" value="">
-    </div>
 
     <div class="form-group">
         <label for="assunto">Assunto: </label>
