@@ -13,8 +13,8 @@ class Avaliacao(models.Model):
         return 'Avaliação da aula de {}'.format(self.aula_do_aluno)
 
 class AvaliacoesProfessor(models.Model):
-    id_avaliacao = models.ForeignKey(Avaliacao, on_delete=models.SET_NULL, null=False)
-    id_professor = models.ForeignKey(Professor, on_delete=models.SET_NULL, null=False)
+    id_avaliacao = models.ForeignKey(Avaliacao, on_delete=models.SET_NULL, null=True)
+    id_professor = models.ForeignKey(Professor, on_delete=models.SET_NULL, null=True)
 
     class Meta:
         ordering = ('-id',)
