@@ -1,17 +1,17 @@
 from django.db import models
-from users.models import Professor, Aluno
+from users.models import Aluno
+from disciplina.models import Disciplina
 
 # Create your models here.
 class Aula(models.Model):
-    #trocar idProfessor por Disciplina que já contem o prof.
-    idProfessor = models.ForeignKey(Professor, on_delete=models.CASCADE)
+    disciplina = models.ForeignKey(Disciplina, verbose_name="Disciplina", null=False, blank=False, on_delete=models.DO_NOTHING)
     assunto = models.CharField(verbose_name='Assunto da aula', max_length=255, null=False)
-    datetime = models.DateTimeField(auto_now=False, auto_now_add=False)
+    datetime = models.DateTimeField(verbose_name='Data e Hora da Aula',auto_now=False, auto_now_add=False)
 
     class Meta:
         ordering = ('-datetime',)
     def __str__(self):
-        return '[{}] Aula: {} - Prof. {}'.format(self.datetime, self.assunto, self.idProfessor)
+        return 'Assunto: {} - Prof. {}'.format(self.assunto, self.disciplina.idProfessor.user.get_full_name())
 
 class AulaDoAluno(models.Model):
     idAula = models.ForeignKey(Aula, on_delete=models.CASCADE, null=False)
