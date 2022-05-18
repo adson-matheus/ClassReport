@@ -22,6 +22,21 @@
     {% csrf_token %}
 
     <div class="form-group">
+        <label for="disciplina">Disciplina: </label>
+        <select id="disciplina" type="text" name="disciplina" class="form-control" required placeholder="Disciplina">
+            <option value="" selected="">---------</option>
+            {% for disciplina in disciplinas %}
+            <option value="{{disciplina.id}}">{{disciplina.nome}} - Prof. {{disciplina.idProfessor.user.get_full_name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="datetime">Data e Hora da aula: </label>
+        <input id="datetime" type="datetime-local" name="datetime" class="form-control" required placeholder="Data e Hora da aula">
+    </div>
+
+    <div class="form-group">
         <label for="assunto">Assunto: </label>
         <textarea
             id="assunto"
@@ -32,16 +47,6 @@
             maxlength=255
             required
             placeholder="Assunto da aula, observações, etc..."></textarea>
-    </div>
-
-    <div class="form-group">
-        <label for="dataAula">Data da aula: </label>
-        <input id="dataAula" type="date" name="dataAula" class="form-control" required placeholder="Data da aula">
-    </div>
-
-    <div class="form-group">
-        <label for="horario">Horário da aula: </label>
-        <input id="horario" type="time" name="horario" class="form-control" required placeholder="Horário da aula">
     </div>
 
     <div class="d-flex justify-content-center">
