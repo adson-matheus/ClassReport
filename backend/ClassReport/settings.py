@@ -39,9 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
-    'relatorio.apps.RelatorioConfig',
+    'avaliacao.apps.AvaliacaoConfig',
     'aula.apps.AulaConfig',
     'login.apps.LoginConfig',
+    'disciplina.apps.DisciplinaConfig',
     'rest_framework'
 ]
 

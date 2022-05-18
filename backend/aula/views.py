@@ -1,9 +1,8 @@
 from django.shortcuts import redirect, render
 from .utils import converter_para_datetime
-from users.models import Professor, Area
+from users.models import Professor
 from .forms import AulaForm, AulaFormEdit
 from .models import Aula
-from datetime import datetime
 
 class AulaTemplate:
     def index_aula(request, username):
@@ -20,12 +19,13 @@ class AulaTemplate:
             form_aula = AulaForm(request.POST)
             if form_aula.is_valid():
                 dados = form_aula.clean()
-                idArea = dados['idArea']
                 assunto = dados['assunto']
                 dataAula = dados['dataAula']
                 horario = dados['horario']
                 dt = converter_para_datetime(data=dataAula, horario=horario)
-                Aula(idProfessor=Professor.objects.get(user=request.user), idArea=idArea, assunto=assunto, datetime=dt).save()
+                #TODO mudar o forms e modo de salvar uma aula
+                #adm escolhe prof
+                Aula(idProfessor=Professor.objects.get(user=request.user), assunto=assunto, datetime=dt).save()
                 return redirect('aula:index_aula', request.user.username)
             else:
                 pass
@@ -36,7 +36,6 @@ class AulaTemplate:
             'username': username,
             'form_aula': form_aula,
             'full_name': request.user.get_full_name(),
-            'areas': Area.objects.all()
         }
         return render(request, 'aula/add_aula.html', context)
 
@@ -50,7 +49,6 @@ class AulaTemplate:
         return render(request, 'aula/get_aula.html', context)
 
     def edit_aula(request, username, id):
-        areas = Area.objects.all()
         aula = Aula.objects.get(pk=id)
         if request.method == 'POST':
             form_aula = AulaFormEdit(request.POST, instance=aula)
@@ -62,7 +60,6 @@ class AulaTemplate:
                 dt = converter_para_datetime(data=dataAula, horario=horario)
                 Aula(id=id,
                      idProfessor=Professor.objects.get(user=request.user),
-                     idArea=dados['idArea'],
                      assunto=dados['assunto'],
                      datetime=dt).save()
                 # msg
@@ -75,7 +72,6 @@ class AulaTemplate:
         context = {
             'form_aula': form_aula,
             'aula': aula,
-            'areas': areas,
             'full_name': request.user.get_full_name(),
             'username': username,
         }

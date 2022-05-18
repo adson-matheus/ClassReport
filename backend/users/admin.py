@@ -5,4 +5,3 @@ from .models import *
 admin.site.register(Administrador)
 admin.site.register(Professor)
 admin.site.register(Aluno)
-admin.site.register(Area)
