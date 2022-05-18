@@ -14,6 +14,14 @@ class AulaTemplate:
         }
         return render(request, 'aula/aulas.html', context)
 
+    def index_aula_admin(request):
+        context = {
+            'aulas': Aula.objects.all(),
+            'username': request.user.get_username(),
+            'full_name': request.user.get_full_name()
+        }
+        return render(request, 'aula/index_aula_admin.html', context)
+    
     def add_aula(request, username):
         if request.method == 'POST':
             form_aula = AulaForm(request.POST)
