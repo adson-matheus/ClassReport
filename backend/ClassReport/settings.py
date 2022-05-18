@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'avaliacao.apps.AvaliacaoConfig',
     'aula.apps.AulaConfig',
     'login.apps.LoginConfig',
+    'disciplina.apps.DisciplinaConfig',
     'rest_framework'
 ]
 
