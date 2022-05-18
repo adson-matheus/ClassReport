@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from .utils import converter_para_datetime
 from users.models import Professor
+from disciplina.models import Disciplina
 from .forms import AulaForm, AulaFormEdit
 from .models import Aula
 
@@ -14,27 +15,32 @@ class AulaTemplate:
         }
         return render(request, 'aula/aulas.html', context)
 
-    def add_aula(request, username):
+    def index_aula_admin(request):
+        context = {
+            'aulas': Aula.objects.all(),
+            'username': request.user.get_username(),
+            'full_name': request.user.get_full_name()
+        }
+        return render(request, 'aula/index_aula_admin.html', context)
+
+    def add_aula(request):
         if request.method == 'POST':
             form_aula = AulaForm(request.POST)
             if form_aula.is_valid():
                 dados = form_aula.clean()
                 assunto = dados['assunto']
-                dataAula = dados['dataAula']
-                horario = dados['horario']
-                dt = converter_para_datetime(data=dataAula, horario=horario)
-                #TODO mudar o forms e modo de salvar uma aula
-                #adm escolhe prof
-                Aula(idProfessor=Professor.objects.get(user=request.user), assunto=assunto, datetime=dt).save()
-                return redirect('aula:index_aula', request.user.username)
+                datetime = dados['datetime']
+                disciplina = dados['disciplina']
+                Aula(disciplina=disciplina, assunto=assunto, datetime=datetime).save()
+                return redirect('aula:index_aula_admin')
             else:
                 pass
                 #message
         else:
             form_aula = AulaForm()
         context = {
-            'username': username,
             'form_aula': form_aula,
+            'disciplinas': Disciplina.objects.all(),
             'full_name': request.user.get_full_name(),
         }
         return render(request, 'aula/add_aula.html', context)
