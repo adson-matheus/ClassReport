@@ -73,7 +73,7 @@
                     <i class="fa-solid fa-trash-can"></i>
                 </div>
                 {% comment %} add alerta javascript {% endcomment %}
-                <a href="{% url 'aula:delete_aula_template' request.user.username aula.id %}" class="small-box-footer">
+                <a href="{% url 'aula:delete_aula_template' aula.id %}" class="small-box-footer">
                     Excluir <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
