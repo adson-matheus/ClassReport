@@ -141,21 +141,6 @@
                                 <p>Relatórios</p>
                             </a>
                         </li>
-                        {% elif request.user.is_authenticated and not is_admin %}
-                        <li class="nav-header">AÇÕES</li>
-                        <li class="nav-item">
-                            <a href="{% url 'aula:index_aula_prof' request.user.username %}" class="nav-link {% block active_link_aulas %}{% endblock %}">
-                                <i class="nav-icon fas fa-graduation-cap nav-icon"></i>
-                                <p>Aulas</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-list nav-icon"></i>
-                                <p>Avaliações</p>
-                            </a>
-                        </li>
-                        {% endif %}
                         <li class="nav-header">CADASTRO</li>
                         <li class="nav-item {% block menu_cadastro_open %}{% endblock %}">
                             <a href="#" class="nav-link {% block active_cadastro_nav %}{% endblock %}">
@@ -180,6 +165,21 @@
                                 </li>
                             </ul>
                         </li>
+                        {% elif request.user.is_authenticated and not is_admin %}
+                        <li class="nav-header">AÇÕES</li>
+                        <li class="nav-item">
+                            <a href="{% url 'aula:index_aula_prof' request.user.username %}" class="nav-link {% block active_link_aulas %}{% endblock %}">
+                                <i class="nav-icon fas fa-graduation-cap nav-icon"></i>
+                                <p>Aulas</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-list nav-icon"></i>
+                                <p>Avaliações</p>
+                            </a>
+                        </li>
+                        {% endif %}
                     </ul>
                 </nav>
 
