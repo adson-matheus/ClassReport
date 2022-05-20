@@ -1,5 +1,4 @@
-from django.contrib.auth.decorators import user_passes_test, permission_required
-from .utils import user_can_add_aula
+from django.contrib.auth.decorators import permission_required
 from users.utils import is_admin
 from django.shortcuts import redirect, render
 from users.models import Professor
