@@ -1,5 +1,6 @@
-from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import permission_required
 from users.utils import is_admin
+from django.shortcuts import redirect, render
 from users.models import Professor
 from disciplina.models import Disciplina
 from .forms import AulaForm, AulaFormEdit
@@ -25,6 +26,7 @@ class AulaTemplate:
         }
         return render(request, 'aula/index_aula_admin.html', context)
 
+    @permission_required('aula.add_aula', login_url='/', raise_exception=True)
     def add_aula(request):
         if request.method == 'POST':
             form_aula = AulaForm(request.POST)
@@ -57,6 +59,7 @@ class AulaTemplate:
         context.update(is_admin(request))
         return render(request, 'aula/get_aula.html', context)
 
+    @permission_required('aula.change_aula', login_url='/', raise_exception=True)
     def edit_aula(request, id):
         aula = Aula.objects.get(pk=id)
         if request.method == 'POST':
@@ -83,6 +86,7 @@ class AulaTemplate:
         context.update(is_admin(request))
         return render(request, 'aula/edit_aula.html', context)
 
+    @permission_required('aula.delete_aula', login_url='/', raise_exception=True)
     def delete_aula_template(request, id):
         aula = Aula.objects.get(pk=id)
         context = {
@@ -92,6 +96,7 @@ class AulaTemplate:
         context.update(is_admin(request))
         return render(request, 'aula/delete_aula.html', context)
 
+    @permission_required('aula.delete_aula', login_url='/', raise_exception=True)
     def delete_aula(request, id):
         aula = Aula.objects.get(pk=id)
         aula.delete()
