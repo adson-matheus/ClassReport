@@ -24,7 +24,7 @@
 {% block content %}
 
 <div class="d-flex justify-content-center">
-    <div class="col-4 mb-2 text-center">
+    <div class="col-sm-12 col-4 mb-2 text-center">
         <a href="{% url 'aula:add_aula' %}">
             <button type="button" class="btn btn-lg btn-success btn-teal">Adicionar Aula</button>
         </a>
@@ -34,13 +34,11 @@
 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
     <div class="row">
         <div class="col-sm-12">
-            <table id="example1" class="table table-bordered dataTable dtr-inline"
-                aria-describedby="example1_info">
+            <table id="example1" class="table table-bordered dataTable dtr-inline" aria-describedby="example1_info">
                 <thead>
                     <tr>
-                        <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1"
-                            colspan="1" aria-sort="ascending"
-                            aria-label="id: ativar para ordenar descendente" style="">#</th>
+                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                            aria-label="Disciplina: ativar para ordenar ascendente" style="">Disciplina</th>
                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                             aria-label="Data da aula: ativar para ordenar ascendente" style="">Data da aula</th>
                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
@@ -52,7 +50,7 @@
                 <tbody>
                 {% for aula in queryset %}
                     <tr class="odd">
-                        <td class="sorting_1 dtr-control text-center" tabindex="0">{{aula.id}}</td>
+                        <td class="sorting_1 dtr-control text-center" tabindex="0">{{aula.disciplina.nome}}</td>
                         <td class="">{{aula.datetime|date:'SHORT_DATE_FORMAT'}}<br>{{aula.datetime|time:'H:i'}}</td>
                         <td class="">{{aula.assunto}}</td>
                         <td class="text-center">
@@ -65,7 +63,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th rowspan="1" colspan="1" style="">#</th>
+                        <th rowspan="1" colspan="1" style="">Disciplina</th>
                         <th rowspan="1" colspan="1" style="">Data da Aula</th>
                         <th rowspan="1" colspan="1" style="">Assunto da aula</th>
                         <th rowspan="1" colspan="1" style="">Ações</th>

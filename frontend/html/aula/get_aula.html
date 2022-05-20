@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
-{% block title %}{{full_name}} - Adicionar Aula{% endblock %}
+{% block title %}{{full_name}} - Detalhar Aula{% endblock %}
 {% block breadcrumb %}
     {% autoescape off %}
         <li class="breadcrumb-item">Usuários</li>
         <li class="breadcrumb-item">{{full_name}}</li>
-        <li class="breadcrumb-item"><a href="{% url 'aula:index_aula' request.user.username %}" class="teal-color">Minhas Aulas</a></li>
+        {% if is_admin %}
+        <li class="breadcrumb-item"><a href="{% url 'aula:index_aula_admin' %}" class="teal-color">Aulas Cadastradas</a></li>
+        {% else %}
+        <li class="breadcrumb-item"><a href="{% url 'aula:index_aula_prof' request.user.username %}" class="teal-color">Minhas Aulas</a></li>
+        {% endif %}
         <li class="breadcrumb-item active">Detalhar Aula</li>
     {% endautoescape %}
 {% endblock %}
@@ -21,7 +25,24 @@
 {% block content %}
 <div class="card-body">
     <div class="row">
-        <div class="col-lg-3 col-6">
+        {% if not is_admin %}
+        <div class="col-lg-4"></div>
+        <div class="col-sm-12 col-lg-4">
+            <div class="small-box bg-teal">
+                <div class="inner">
+                    <h3>Avaliar</h3>
+                    <h5>Alunos</h5>
+                </div>
+                <div class="icon">
+                    <i class="fa-solid fa-clipboard-check"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    Avaliar <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-sm-12 col-lg-4">
             <div class="small-box bg-teal">
                 <div class="inner">
                     <h3>Adicionar</h3>
@@ -35,21 +56,7 @@
                 </a>
             </div>
         </div>
-        <div class="col-lg-3 col-6">
-            <div class="small-box bg-teal">
-                <div class="inner">
-                    <h3>Avaliar</h3>
-                    <h5>Aluno</h5>
-                </div>
-                <div class="icon">
-                    <i class="fa-solid fa-clipboard-check"></i>
-                </div>
-                <a href="#" class="small-box-footer">
-                    Avaliar <i class="fas fa-arrow-circle-right"></i>
-                </a>
-            </div>
-        </div>
-        <div class="col-lg-3 col-6">
+        <div class="col-sm-12 col-lg-4">
             <div class="small-box bg-teal">
                 <div class="inner">
                     <h3>Editar</h3>
@@ -63,7 +70,7 @@
                 </a>
             </div>
         </div>
-        <div class="col-lg-3 col-6">
+        <div class="col-sm-12 col-lg-4">
             <div class="small-box bg-danger">
                 <div class="inner">
                     <h3>Excluir</h3>
@@ -78,6 +85,7 @@
                 </a>
             </div>
         </div>
+        {% endif %}
     </div>
     <div class="row">
         <div class="col-12">
