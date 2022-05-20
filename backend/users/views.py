@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
+from users.utils import is_admin
 from django.contrib.auth.models import User, Group
 from .models import Administrador, Professor, Aluno
 from .forms import AdministradorForm, ProfessorForm, UserForm, AlunoForm, EditarAlunoForm
@@ -30,6 +31,7 @@ def add_admin_template(request):
         'form_admin': form_admin,
         'form_user': form_user
     }
+    context.update(is_admin(request))
     return render(request, 'users/add_admin_template.html', context)
 
 def add_prof_controller(form_user, form_prof):
@@ -56,6 +58,7 @@ def add_prof_template(request):
     context = {
         'form': form,
     }
+    context.update(is_admin(request))
     return render(request, 'users/add_prof_template.html', context)
 
 def add_generic_user(form_user, group_name):
