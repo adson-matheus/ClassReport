@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from .utils import converter_para_datetime
+from users.utils import is_admin
 from users.models import Professor
 from disciplina.models import Disciplina
 from .forms import AulaForm, AulaFormEdit
@@ -21,6 +21,7 @@ class AulaTemplate:
             'username': request.user.get_username(),
             'full_name': request.user.get_full_name()
         }
+        context.update(is_admin(request))
         return render(request, 'aula/index_aula_admin.html', context)
 
     def add_aula(request):
@@ -43,6 +44,7 @@ class AulaTemplate:
             'disciplinas': Disciplina.objects.all(),
             'full_name': request.user.get_full_name(),
         }
+        context.update(is_admin(request))
         return render(request, 'aula/add_aula.html', context)
 
     def get_aula(request, id):
@@ -51,6 +53,7 @@ class AulaTemplate:
             'full_name': request.user.get_full_name(),
             'aula': aula
         }
+        context.update(is_admin(request))
         return render(request, 'aula/get_aula.html', context)
 
     def edit_aula(request, id):
@@ -76,6 +79,7 @@ class AulaTemplate:
             'disciplinas': Disciplina.objects.all(),
             'full_name': request.user.get_full_name(),
         }
+        context.update(is_admin(request))
         return render(request, 'aula/edit_aula.html', context)
 
     def delete_aula_template(request, id):
@@ -84,6 +88,7 @@ class AulaTemplate:
             'full_name': request.user.get_full_name(),
             'aula': aula,
         }
+        context.update(is_admin(request))
         return render(request, 'aula/delete_aula.html', context)
 
     def delete_aula(request, id):
