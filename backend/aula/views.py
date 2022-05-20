@@ -59,6 +59,7 @@ class AulaTemplate:
         context.update(is_admin(request))
         return render(request, 'aula/get_aula.html', context)
 
+    @permission_required('aula.change_aula', login_url='/', raise_exception=True)
     def edit_aula(request, id):
         aula = Aula.objects.get(pk=id)
         if request.method == 'POST':
@@ -85,6 +86,7 @@ class AulaTemplate:
         context.update(is_admin(request))
         return render(request, 'aula/edit_aula.html', context)
 
+    @permission_required('aula.delete_aula', login_url='/', raise_exception=True)
     def delete_aula_template(request, id):
         aula = Aula.objects.get(pk=id)
         context = {
@@ -94,6 +96,7 @@ class AulaTemplate:
         context.update(is_admin(request))
         return render(request, 'aula/delete_aula.html', context)
 
+    @permission_required('aula.delete_aula', login_url='/', raise_exception=True)
     def delete_aula(request, id):
         aula = Aula.objects.get(pk=id)
         aula.delete()
