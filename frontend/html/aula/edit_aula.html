@@ -11,7 +11,7 @@
 {% endblock %}
 {% block card-title %}
     {% autoescape off %}
-        <a href="{% url 'aula:get_aula' request.user.username aula.id %}">
+        <a href="{% url 'aula:get_aula' aula.id %}">
             <i class="fa-solid fa-circle-arrow-left teal-color"></i>
         </a>&nbsp
     {% endautoescape %}
@@ -20,6 +20,21 @@
 {% block content %}
 <form method='POST'>
     {% csrf_token %}
+
+    <div class="form-group">
+        <label for="disciplina">Disciplina: </label>
+        <select id="disciplina" type="text" name="disciplina" class="form-control" required placeholder="Disciplina">
+            <option value="{{aula.disciplina.id}}" selected>{{aula.disciplina.nome}} - Prof. {{aula.disciplina.idProfessor.user.get_full_name}}</option>
+            {% for disciplina in disciplinas %}
+                {% if disciplina.id != aula.disciplina.id %}
+                <option value="{{disciplina.id}}">{{disciplina.nome}} - Prof. {{disciplina.idProfessor.user.get_full_name}}</option>
+                {% else %}
+                {% comment %} não mostra duplicado {% endcomment %}
+                {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+
     <div class="form-group">
         <label for="assunto">Assunto: </label>
         <textarea
@@ -34,17 +49,12 @@
     </div>
 
     <div class="form-group">
-        <label for="dataAula">Data da aula: </label>
-        <input id="dataAula" type="date" name="dataAula" class="form-control" required placeholder="Data da aula" value="{{aula.datetime.date|date:"Y-m-d"}}">
-    </div>
-
-    <div class="form-group">
-        <label for="horario">Horário da aula: </label>
-        <input id="horario" type="time" name="horario" class="form-control" required placeholder="Horário da aula" value="{{aula.datetime.time}}">
+        <label for="datetime">Data e Hora da Aula: </label>
+        <input id="datetime" type="datetime-local" name="datetime" class="form-control" required placeholder="Data e Hora da Aula" value="{{aula.datetime.date|date:"Y-m-d"}}T{{aula.datetime.time}}">
     </div>
 
     <div class="d-flex justify-content-center">
-        <a class="mr-3" href="{% url 'aula:get_aula' request.user.username aula.id %}">
+        <a class="mr-3" href="{% url 'aula:get_aula' aula.id %}">
             <button type="button" class="btn btn-md btn-outline-light">Cancelar</button>
         </a>
         <button type="submit" class="btn btn-outline-primary btn-outline-teal">Cadastrar</button>

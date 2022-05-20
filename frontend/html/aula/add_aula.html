@@ -11,7 +11,7 @@
 {% endblock %}
 {% block card-title %}
     {% autoescape off %}
-        <a href="{% url 'aula:index_aula' request.user.username %}">
+        <a href="{% url 'aula:index_aula_admin' %}">
             <i class="fa-solid fa-circle-arrow-left teal-color"></i>
         </a>&nbsp
     {% endautoescape %}

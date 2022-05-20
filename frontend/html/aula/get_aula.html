@@ -12,7 +12,7 @@
 {% block active_link_aulas %}active-teal{% endblock %}
 {% block card-title %}
     {% autoescape off %}
-        <a href="{% url 'aula:index_aula' request.user.username %}">
+        <a href="{% url 'aula:index_aula_admin' %}">
             <i class="fa-solid fa-circle-arrow-left teal-color"></i>
         </a>&nbsp
     {% endautoescape %}
@@ -58,7 +58,7 @@
                 <div class="icon">
                     <i class="fas fa-pen-to-square"></i>
                 </div>
-                <a href="{% url 'aula:edit_aula' request.user.username aula.id %}" class="small-box-footer">
+                <a href="{% url 'aula:edit_aula' aula.id %}" class="small-box-footer">
                     Editar <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
@@ -73,7 +73,7 @@
                     <i class="fa-solid fa-trash-can"></i>
                 </div>
                 {% comment %} add alerta javascript {% endcomment %}
-                <a href="{% url 'aula:delete_aula_template' request.user.username aula.id %}" class="small-box-footer">
+                <a href="{% url 'aula:delete_aula_template' aula.id %}" class="small-box-footer">
                     Excluir <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
@@ -83,7 +83,9 @@
         <div class="col-12">
             <p class="text-right">Horário da Aula: {{aula.datetime|date:'SHORT_DATE_FORMAT'}} às {{aula.datetime|time:'H:i'}}</p>
             <div class="post mb-5">
-                <p class="text-justify">{{aula.assunto}}</p>
+                <p class="text-justify">Disciplina: {{aula.disciplina.nome}}</p>
+                <p class="text-justify">Docente: {{aula.disciplina.idProfessor.user.get_full_name}}</p>
+                <p class="text-center">{{aula.assunto}}</p>
                 <p class="text-right">Alunos: Sem alunos cadastrados</p>
             </div>
         </div>
