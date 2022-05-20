@@ -9,10 +9,11 @@ class AulaTemplate:
     def index_aula(request, username):
         prof = Professor.objects.get(user=request.user)
         context = {
-            'queryset': Aula.objects.filter(idProfessor = prof),
+            'queryset': Aula.objects.filter(disciplina__idProfessor = prof),
             'username': username,
             'full_name': request.user.get_full_name()
         }
+        context.update(is_admin(request))
         return render(request, 'aula/aulas.html', context)
 
     def index_aula_admin(request):
