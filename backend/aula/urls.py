@@ -4,7 +4,7 @@ from django.urls import path
 app_name = 'aula'
 urlpatterns = [
     # /aula/
-    path("prof/<username>", views.AulaTemplate.index_aula, name='index_aula'),
+    path("prof/<username>", views.AulaTemplate.index_aula_prof, name='index_aula_prof'),
     path("list", views.AulaTemplate.index_aula_admin, name='index_aula_admin'),
     path("add", views.AulaTemplate.add_aula, name='add_aula'),
     path("detail/<int:id>", views.AulaTemplate.get_aula, name='get_aula'),

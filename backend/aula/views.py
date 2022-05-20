@@ -6,7 +6,7 @@ from .forms import AulaForm, AulaFormEdit
 from .models import Aula
 
 class AulaTemplate:
-    def index_aula(request, username):
+    def index_aula_prof(request, username):
         prof = Professor.objects.get(user=request.user)
         context = {
             'queryset': Aula.objects.filter(disciplina__idProfessor = prof),
@@ -14,7 +14,7 @@ class AulaTemplate:
             'full_name': request.user.get_full_name()
         }
         context.update(is_admin(request))
-        return render(request, 'aula/aulas.html', context)
+        return render(request, 'aula/index_aula_prof.html', context)
 
     def index_aula_admin(request):
         context = {

@@ -5,7 +5,7 @@
     {% autoescape off %}
     <li class="breadcrumb-item">Usuários</li>
     <li class="breadcrumb-item">{{full_name}}</li>
-    <li class="breadcrumb-item"><a href="{% url 'aula:index_aula' request.user.username %}" class="teal-color">Minhas Aulas</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'aula:index_aula_prof' request.user.username %}" class="teal-color">Minhas Aulas</a></li>
     <li class="breadcrumb-item active">Excluir Aula</li>
     {% endautoescape %}
 {% endblock %}
