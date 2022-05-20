@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>ClassReport - Acesso Negado</title>
+  <!-- CSS only -->
+  <link rel="stylesheet" href="../../static/css/403.css">
+
+</head>
+<body>
+  <div class="lock"></div>
+  <div class="message">
+    <h1 style="text-align:center;">Acesso negado.</h1>
+    <p>Você não possui permissão para acessar esta página.</p>
+    <div style="text-align:center; padding-top:20px">
+      <a href="{% url 'login:index' %}">
+        <button type="button" class="btn btn-outline-dark">Voltar</button>
+      </a>
+    </div>
+  </div>
+  
+  <footer style="margin-top: 70px">
+    <strong>Copyright &copy; 2021 by Ben (https://codepen.io/benrobyg/pen/WgYMWL)
+  </footer>
+
+</body>
+</html>
