@@ -63,6 +63,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             '../frontend/html/',
+            '../frontend/html/exceptions/'
         ],
         'APP_DIRS': True,
         'OPTIONS': {
