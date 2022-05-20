@@ -88,6 +88,7 @@ class AlunoTemplate:
             'alunos': alunos,
             'full_name': request.user.get_full_name()
         }
+        context.update(is_admin(request))
         return render(request, 'users/aluno/alunos.html', context)
 
     def add_aluno(request):
@@ -111,6 +112,7 @@ class AlunoTemplate:
             'user': request.user,
             'full_name': request.user.get_full_name()
         }
+        context.update(is_admin(request))
         return render(request, 'users/aluno/add_aluno.html', context)
 
     def edit_aluno(request, matr):
@@ -131,6 +133,7 @@ class AlunoTemplate:
             'user': request.user,
             'full_name': request.user.get_full_name()
         }
+        context.update(is_admin(request))
         return render(request, 'users/aluno/edit_aluno.html', context)
 
     def delete_aluno_template(request, matr):
@@ -139,6 +142,7 @@ class AlunoTemplate:
             'full_name': request.user.get_full_name(),
             'aluno': aluno,
         }
+        context.update(is_admin(request))
         return render(request, 'users/aluno/delete_aluno.html', context)
 
     def delete_aluno(request, matr):
