@@ -151,3 +151,15 @@ class AlunoTemplate:
         # msg
         return redirect('users:index_aluno')
 
+@login_required
+class ProfessorTemplate:
+    """
+        CRUD de Professor
+    """
+    def index_professor(request):        
+        context = {
+            'professores': Professor.objects.all(),
+            'full_name': request.user.get_full_name(),
+            'is_admin': True,
+        }
+        return render(request, 'users/prof/professores.html', context)
