@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from users.utils import is_admin
 from django.contrib.auth.models import User, Group
 from .models import Administrador, Professor, Aluno
-from .forms import AdministradorForm, ProfessorForm, UserForm, AlunoForm, EditarAlunoForm
+from .forms import AdministradorForm, ProfessorForm, ProfessorEditForm, UserForm, AlunoForm, EditarAlunoForm
 from django.http import HttpResponse
 
 def add_admin_controller(form_user, form_admin):
@@ -163,3 +163,13 @@ class ProfessorTemplate:
             'is_admin': True,
         }
         return render(request, 'users/prof/professores.html', context)
+    
+    #NOT WORKING
+    def edit_professor(request, siape):
+        professor = Professor.objects.get(siape=siape)
+        context = {
+            'professor': professor,
+            'full_name': request.user.get_full_name(),
+        }
+        context.update(is_admin(request))
+        return render(request, 'users/prof/edit_professor.html', context)
