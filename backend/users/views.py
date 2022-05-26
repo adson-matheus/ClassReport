@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from users.utils import is_admin
 from django.contrib.auth.models import User, Group
+from disciplina.models import Disciplina
 from .models import Administrador, Professor, Aluno
 from .forms import AdministradorForm, ProfessorForm, UserForm, AlunoForm, EditarAlunoForm
 from django.http import HttpResponse
@@ -156,10 +157,28 @@ class ProfessorTemplate:
     """
         CRUD de Professor
     """
-    def index_professor(request):        
+    def index_professor(request):
         context = {
-            'professores': Professor.objects.all(),
+            'professores': Professor.objects.exclude(user__is_active=False),
             'full_name': request.user.get_full_name(),
             'is_admin': True,
         }
         return render(request, 'users/prof/professores.html', context)
+
+    def delete_professor_template(request, siape):
+        professor = Professor.objects.get(siape=siape)
+        disciplinas = Disciplina.objects.filter(idProfessor=professor.siape)
+        context = {
+            'full_name': request.user.get_full_name(),
+            'professor': professor,
+            'disciplinas': disciplinas,
+        }
+        context.update(is_admin(request))
+        return render(request, 'users/prof/delete_prof.html', context)
+
+    def delete_professor(request, siape):
+        professor = Professor.objects.get(siape=siape)
+        professor.user.is_active = False
+        #professor.delete()
+        # msg
+        return redirect('users:index_prof')
