@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from users.utils import is_admin
 from django.contrib.auth.models import User, Group
 from disciplina.models import Disciplina
@@ -77,12 +77,12 @@ def add_generic_user(form_user, group_name):
     get_group.user_set.add(user)
     return user
 
-@login_required
 class AlunoTemplate:
     """
         Aluno possui matrícula e nome. Aluno assiste 'n' aulas.
         Aluno NÃO possui acesso ao sistema.
     """
+    @permission_required('users.view_aluno', login_url='/', raise_exception=True)
     def index_aluno(request):
         alunos = Aluno.objects.all()
         context = {
@@ -92,9 +92,10 @@ class AlunoTemplate:
         context.update(is_admin(request))
         return render(request, 'users/aluno/alunos.html', context)
 
+    @permission_required('users.add_aluno', login_url='/', raise_exception=True)
     def add_aluno(request):
         """
-            Professor e Administrador adicionam aluno
+            Administrador adiciona aluno
         """
         if request.method == 'POST':
             form = AlunoForm(request.POST)
@@ -116,6 +117,7 @@ class AlunoTemplate:
         context.update(is_admin(request))
         return render(request, 'users/aluno/add_aluno.html', context)
 
+    @permission_required('users.change_aluno', login_url='/', raise_exception=True)
     def edit_aluno(request, matr):
         aluno = Aluno.objects.get(matricula=matr)
         if request.method == 'POST':
@@ -137,6 +139,7 @@ class AlunoTemplate:
         context.update(is_admin(request))
         return render(request, 'users/aluno/edit_aluno.html', context)
 
+    @permission_required('users.delete_aluno', login_url='/', raise_exception=True)
     def delete_aluno_template(request, matr):
         aluno = Aluno.objects.get(matricula=matr)
         context = {
@@ -146,6 +149,7 @@ class AlunoTemplate:
         context.update(is_admin(request))
         return render(request, 'users/aluno/delete_aluno.html', context)
 
+    @permission_required('users.delete_aluno', login_url='/', raise_exception=True)
     def delete_aluno(request, matr):
         aluno = Aluno.objects.get(matricula=matr)
         aluno.delete()
