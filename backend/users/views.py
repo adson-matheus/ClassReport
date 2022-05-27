@@ -17,6 +17,7 @@ def add_admin_controller(form_user, form_admin):
         Administrador(user=user, siape=get_siape).save()
         return True
 
+@permission_required('users.add_administrador', login_url='/', raise_exception=True)
 def add_admin_template(request):
     if request.method == 'POST':
         form_user = UserForm(request.POST)
