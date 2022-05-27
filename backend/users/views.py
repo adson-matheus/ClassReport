@@ -45,6 +45,7 @@ def add_prof_controller(form_user, form_prof):
         Professor(user=user, siape=get_siape).save()
         return True
 
+@permission_required('users.add_professor', login_url='/', raise_exception=True)
 def add_prof_template(request):
     if request.method == 'POST':
         form_user = UserForm(request.POST)
