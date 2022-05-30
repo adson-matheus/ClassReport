@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import permission_required
 from users.utils import is_admin, listar_alunos
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from disciplina.models import Disciplina
 from users.models import Professor, Aluno
 from .forms import AulaForm, AulaFormEdit
@@ -51,7 +51,7 @@ class AulaTemplate:
         return render(request, 'aula/add_aula.html', context)
 
     def get_aula(request, id):
-        aula = Aula.objects.get(pk=id)
+        aula = get_object_or_404(Aula, pk=id)
         context = {
             'full_name': request.user.get_full_name(),
             'aula': aula
@@ -109,4 +109,15 @@ class AulaDoAlunoView():
     @permission_required('users.view_aluno', login_url='/', raise_exception=True)
     def index_alunos(request, id_aula):
         context = listar_alunos(request)
+        aula = get_object_or_404(Aula, pk=id_aula)
+        context.update({'aula':aula})
         return render(request, 'aula_do_aluno/index_alunos.html', context)
+
+    @permission_required('aula.add_aula_do_aluno', login_url='/', raise_exception=True)
+    def add_aluno_em_aula(request, id_aula, id_aluno):
+        aula = Aula.objects.get(id=id_aula)
+        aluno = Aluno.objects.get(id=id_aluno)
+        #https://docs.djangoproject.com/en/4.0/ref/models/querysets/#bulk-create
+        #bulk create
+        AulaDoAluno(aula=aula, aluno=aluno).save()
+        return render(request, 'aula_do_aluno/add_aluno_em_aula.html')
