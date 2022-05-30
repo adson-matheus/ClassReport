@@ -14,8 +14,8 @@ class Aula(models.Model):
         return 'Assunto: {} - Prof. {}'.format(self.assunto, self.disciplina.idProfessor.user.get_full_name())
 
 class AulaDoAluno(models.Model):
-    idAula = models.ForeignKey(Aula, on_delete=models.CASCADE, null=False)
-    idAluno = models.ForeignKey(Aluno, on_delete=models.CASCADE, null=False)
+    aula = models.ForeignKey(Aula, verbose_name="Aula", on_delete=models.CASCADE, null=True)
+    aluno = models.ForeignKey(Aluno, verbose_name="Aluno", on_delete=models.CASCADE, null=True)
 
     class Meta:
         ordering = ('-id',)
