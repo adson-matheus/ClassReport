@@ -1,10 +1,10 @@
 from django.contrib.auth.decorators import permission_required
-from users.utils import is_admin
+from users.utils import is_admin, listar_alunos
 from django.shortcuts import redirect, render
-from users.models import Professor
 from disciplina.models import Disciplina
+from users.models import Professor, Aluno
 from .forms import AulaForm, AulaFormEdit
-from .models import Aula
+from .models import Aula, AulaDoAluno
 
 class AulaTemplate:
     def index_aula_prof(request, username):
@@ -101,3 +101,12 @@ class AulaTemplate:
         aula = Aula.objects.get(pk=id)
         aula.delete()
         return redirect('aula:index_aula_admin')
+
+class AulaDoAlunoView():
+    """
+        CRUD para manter um aluno em uma aula
+    """
+    @permission_required('users.view_aluno', login_url='/', raise_exception=True)
+    def index_alunos(request, id_aula):
+        context = listar_alunos(request)
+        return render(request, 'aula_do_aluno/index_alunos.html', context)
