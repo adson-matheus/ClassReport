@@ -16,6 +16,7 @@
     {% endautoescape %}
     Adicionar Aluno
 {% endblock %}
+{% block active_link_alunos %}active-teal{% endblock %}
 {% block content %}
     <form method="post">
         {% csrf_token %}
