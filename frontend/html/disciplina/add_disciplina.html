@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}{{full_name}} - Adicionar Disciplina{% endblock %}
+{% block active_link_disciplinas %}active-teal{% endblock %}
+{% block breadcrumb %}
+    {% autoescape off %}
+    <li class="breadcrumb-item">Usuários</li>
+    <li class="breadcrumb-item">{{full_name}}</li>
+    <li class="breadcrumb-item"><a href="{% url 'aula:index_aula_prof' request.user.username %}" class="teal-color">Disciplinas</a></li>
+    <li class="breadcrumb-item active">Adicionar Disciplina</li>
+    {% endautoescape %}
+{% endblock %}
+{% block card-title %}
+    {% autoescape off %}
+        <a href="{% url 'disciplina:listar_disciplinas' %}">
+            <i class="fa-solid fa-circle-arrow-left teal-color"></i>
+        </a>&nbsp
+    {% endautoescape %}
+    Adicionar Disciplina
+{% endblock %}
+{% block content %}
+<form method='POST'>
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="nome">Nome da Disciplina: </label>
+        <input id="nome" type="text" maxlength=255 name="nome" class="form-control" required placeholder="Nome da Disciplina">
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-outline-primary btn-outline-teal">Cadastrar</button>
+    </div>
+</form>
+{% endblock %}
