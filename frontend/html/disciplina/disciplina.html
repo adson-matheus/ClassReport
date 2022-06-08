@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap4.min.css" integrity="sha512-PT0RvABaDhDQugEbpNMwgYBCnGCiTZMh9yOzUsJHDgl/dMhD9yjHAwoumnUk3JydV3QTcIkNDuN40CJxik5+WQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
+{% block breadcrumb %}
+    {% autoescape off %}
+    <li class="breadcrumb-item">Usuários</li>
+    <li class="breadcrumb-item">{{full_name}}</li>
+    <li class="breadcrumb-item active">Disciplinas</li>
+    {% endautoescape %}
+{% endblock %}
+{% block title %}{{full_name}} - Disciplinas{% endblock %}
+{% block h1 %}Disciplinas Cadastradas{% endblock h1 %}
+{% block card-title %}
+    {% autoescape off %}
+        <a href="{% url 'login:index' %}">
+            <i class="fa-solid fa-circle-arrow-left teal-color"></i>
+        </a>&nbsp
+    {% endautoescape %}
+    Disciplinas
+{% endblock %}
+{% block active_link_disciplinas %}active-teal{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-center">
+    {% if is_admin %}
+    <div class="col-4 mb-2 text-center">
+        <a href="#">
+            <button type="button" class="btn btn-lg btn-success btn-teal">Adicionar Disciplina</button>
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+<div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+    <div class="row">
+        <div class="col-sm-12">
+            <table id="example1" class="table table-bordered dataTable dtr-inline"
+                aria-describedby="example1_info">
+                <thead>
+                    <tr>
+                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                            aria-label="Matrícula: ativar para ordenar ascendente">Nome da Disciplina</th>
+                        <th class="w-25" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                            aria-label="Ações: consultar, editar e excluir">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for disciplina in disciplinas %}
+                    <tr class="odd">
+                        <td>{{disciplina.nome}}</td>
+                        <td class="text-center">
+                            {% if is_admin %}
+                                <a class="btn bg-teal btn-sm" href="#">
+                                    <i class="fas fa-pen-to-square"></i>
+                                </a>
+                                <a class="btn bg-danger btn-sm" href="#">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </a>
+                            {% else %}
+                                <p>-</p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th rowspan="1" colspan="1">Nome da Disciplina</th>
+                        <th rowspan="1" colspan="1">Ações</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js" integrity="sha512-BkpSL20WETFylMrcirBahHfSnY++H2O1W+UnEEO4yNIl+jI2+zowyoGJpbtk6bx97fBXf++WJHSSK2MV4ghPcg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/dataTables.bootstrap4.min.js" integrity="sha512-OQlawZneA7zzfI6B1n1tjUuo3C5mtYuAWpQdg+iI9mkDoo7iFzTqnQHf+K5ThOWNJ9AbXL4+ZDwH7ykySPQc+A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-responsive/2.3.0/dataTables.responsive.min.js" integrity="sha512-jHZCTFSeSUkjMMzALVJ5aztNk1+qw1EOhBu6AZIIJo0j4YsCyG4S/feS27WkEAV7C6htBoE4GCqPOjAOodu2Jw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-responsive-bs4/2.3.0/responsive.bootstrap4.min.js" integrity="sha512-Isz8YdCq0qR8rvj22HWFFfj9vi+ambuHruMv9ctDBb2BDiSfOcY76BcoH5uSVj1nHDbCUb9qeG2CDSTYkaf8QQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-buttons/2.2.3/js/dataTables.buttons.min.js" integrity="sha512-QT3oEXamRhx0x+SRDcgisygyWze0UicgNLFM9Dj5QfJuu2TVyw7xRQfmB0g7Z5/TgCdYKNW15QumLBGWoPefYg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-buttons-bs4/2.2.3/buttons.bootstrap4.min.js" integrity="sha512-DfTGKO1w5pcl0/oFlkn7icaopS8zAeOKoIfk2MZRIaxX6NlZ7PFSLX83BU5UILhfolXFKN40lk2ftpRbftw+Kw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.0/jszip.min.js" integrity="sha512-xcHCGC5tQ0SHlRX8Anbz6oy/OullASJkEhb4gjkneVpGE3/QGYejf14CUO5n5q5paiHfRFTa9HKgByxzidw2Bw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.5/pdfmake.min.js" integrity="sha512-rDbVu5s98lzXZsmJoMa0DjHNE+RwPJACogUCLyq3Xxm2kJO6qsQwjbE5NDk2DqmlKcxDirCnU1wAzVLe12IM3w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.5/vfs_fonts.js" integrity="sha512-cktKDgjEiIkPVHYbn8bh/FEyYxmt4JDJJjOCu5/FQAkW4bc911XtKYValiyzBiJigjVEvrIAyQFEbRJZyDA1wQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-buttons/2.2.3/js/buttons.html5.min.js" integrity="sha512-BdN+kHA7QfWIcQE3WMwSj5QAvVUrSGxJLv7/yuEEypMOZBSJ1VKGr9BSpOew+6va9yfGUACw/8Yt7LKNn3RKRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-buttons/2.2.3/js/buttons.print.min.js" integrity="sha512-UthH9WkvNUixebk8yKEFm3Sy+Rm8GbuvxiIMCDs9Cepl+YxhY+LUijPFZshcW7+PHa/HcSFLfSX3fGq1AcglWg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        $(function () {
+          $("#example1").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print"]
+          }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+      </script>
+{% endblock %}
