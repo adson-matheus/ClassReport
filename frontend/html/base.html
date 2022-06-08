@@ -109,31 +109,37 @@
                         {% if request.user.is_authenticated and is_admin %}
                         <li class="nav-header">AÇÕES</li>
                         <li class="nav-item">
-                            <a href="{% url 'users:index_aluno' %}" class="nav-link">
+                            <a href="{% url 'users:index_aluno' %}" class="nav-link {% block active_link_alunos %}{% endblock %}">
                                 <i class="nav-icon fas fa-solid fa-user-graduate"></i>
                                 <p>Alunos</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'aula:index_aula_admin' %}" class="nav-link">
+                            <a href="{% url 'aula:index_aula_admin' %}" class="nav-link {% block active_link_aulas_admin %}{% endblock %}">
                                 <i class="nav-icon fas fa-solid fa-graduation-cap"></i>
                                 <p>Aulas</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'users:index_prof' %}" class="nav-link">
+                            <a href="{% url 'users:index_prof' %}" class="nav-link {% block active_link_prof %}{% endblock %}">
                                 <i class="nav-icon fas fa-solid fa-person-chalkboard"></i>
                                 <p>Professores</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link ">
+                            <a href="#" class="nav-link {% block active_link_disciplinas %}{% endblock %}">
                                 <i class="nav-icon fas fa-solid fa-book-medical"></i>
-                                <p>Áreas</p>
+                                <p>Disciplinas</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="#" class="nav-link {% block active_link_turmas %}{% endblock %}">
+                                <i class="nav-icon fas fa-solid fa-users-rectangle"></i>
+                                <p>Turmas</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {% block active_link_relatorios %}{% endblock %}">
                                 <i class="nav-icon fas fa-clipboard-list"></i>
                                 <p>Relatórios</p>
                             </a>
@@ -149,13 +155,13 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{% url 'users:add_admin_template' %}" class="nav-link {% block active_link_admin %}{% endblock %}">
+                                    <a href="{% url 'users:add_admin_template' %}" class="nav-link {% block active_link_add_admin %}{% endblock %}">
                                         <i class="fas fa-id-card nav-icon"></i>
                                         <p>Administrador</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{% url 'users:add_prof_template' %}" class="nav-link {% block active_link_prof %}{% endblock %}">
+                                    <a href="{% url 'users:add_prof_template' %}" class="nav-link {% block active_link_add_prof %}{% endblock %}">
                                         <i class="fas fa-person-chalkboard nav-icon"></i>
                                         <p>Professor</p>
                                     </a>
@@ -165,13 +171,13 @@
                         {% elif request.user.is_authenticated and not is_admin %}
                         <li class="nav-header">AÇÕES</li>
                         <li class="nav-item">
-                            <a href="{% url 'aula:index_aula_prof' request.user.username %}" class="nav-link {% block active_link_aulas %}{% endblock %}">
+                            <a href="{% url 'aula:index_aula_prof' request.user.username %}" class="nav-link {% block active_link_aulas_prof %}{% endblock %}">
                                 <i class="nav-icon fas fa-graduation-cap nav-icon"></i>
                                 <p>Aulas</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="#" class="nav-link {% block active_link_avaliacoes %}{% endblock %}">
                                 <i class="nav-icon fas fa-list nav-icon"></i>
                                 <p>Avaliações</p>
                             </a>
