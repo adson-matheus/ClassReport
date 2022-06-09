@@ -5,8 +5,8 @@ from datetime import date
 
 # Create your models here.
 class Turma(models.Model):
-    professor = models.OneToOneField(Professor, verbose_name="Professor", blank=False, null=False, on_delete=models.DO_NOTHING)
-    disciplina = models.ForeignKey(Disciplina, verbose_name="Disciplina", blank=False, null=False, on_delete=models.DO_NOTHING)
+    professor = models.ForeignKey(Professor, verbose_name="Professor", blank=False, null=False, on_delete=models.PROTECT)
+    disciplina = models.ForeignKey(Disciplina, verbose_name="Disciplina", blank=False, null=False, on_delete=models.PROTECT)
     ano = models.IntegerField(verbose_name="Ano da Turma", blank=True, null=True, default=date.today().year)
     periodo = models.IntegerField(verbose_name="Período da Turma", blank=True, null=True, default=1)
     descricao = models.CharField(verbose_name="Descrição, Código...", max_length=255, null=True, blank=True)
