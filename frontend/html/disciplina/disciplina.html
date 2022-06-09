@@ -22,6 +22,18 @@
 {% endblock %}
 {% block active_link_disciplinas %}active-teal{% endblock %}
 {% block content %}
+{% if messages %}
+    {% for message in messages %}
+        <div class="container-fluid p-0">
+            <div class="alert {% if message.tags %} {{ message.tags }} {% endif %} alert-dismissible" role="alert">
+                <button type="button" class="close text-black" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="True">&times;</span>
+                </button>
+                {{ message }}
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
 <div class="d-flex justify-content-center">
     {% if is_admin %}
     <div class="col-4 mb-2 text-center">
@@ -54,7 +66,7 @@
                                 <a class="btn bg-teal btn-sm" href="#">
                                     <i class="fas fa-pen-to-square"></i>
                                 </a>
-                                <a class="btn bg-danger btn-sm" href="#">
+                                <a class="btn bg-danger btn-sm" href="{% url 'disciplina:excluir_disciplina_template' disciplina.id %}">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>
                             {% else %}
