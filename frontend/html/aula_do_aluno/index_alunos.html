@@ -42,8 +42,8 @@
             </div>
         </div>
         <div class="card-body">
-            <p class="text-center">{{aula.disciplina.idProfessor.user.get_full_name}}</p>
-            <p class="text-center">{{aula.disciplina.nome}}:<br>{{aula.assunto}}</p>
+            <p class="text-center">{{aula.turma.professor.user.get_full_name}}</p>
+            <p class="text-center">{{aula.turma.disciplina}}:<br>{{aula.assunto}}</p>
             <p class="text-right mb-0"><small>{{aula.datetime|date:'SHORT_DATE_FORMAT'}} - {{aula.datetime|time:'H:i'}}</small></p>
         </div>
     </div>
@@ -72,8 +72,8 @@
                         <td class="text-center">
                             {% if is_admin %}
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="aluno{{aluno.id}}">
-                                    <label class="custom-control-label" for="aluno{{aluno.id}}"></label>
+                                    <input type="checkbox" class="custom-control-input" value="{{aluno.id}}" id="{{aluno.id}}" onclick="get_aluno();">
+                                    <label class="custom-control-label" for="{{aluno.id}}"></label>
                                 </div>
                             {% else %}
                                 <p>-</p>
