@@ -63,10 +63,10 @@ class AulaTemplate:
             form_aula = AulaFormEdit(request.POST, instance=aula)
             if form_aula.is_valid():
                 dados = form_aula.clean()
-                disciplina = dados['disciplina']
+                turma = dados['turma']
                 assunto = dados['assunto']
                 datetime = dados['datetime']
-                Aula(id=id, disciplina=disciplina, assunto=assunto, datetime=datetime).save()
+                Aula(id=id, turma=turma, assunto=assunto, datetime=datetime).save()
                 # msg
                 return redirect('aula:get_aula', id)
             else:
@@ -77,7 +77,7 @@ class AulaTemplate:
         context = {
             'form_aula': form_aula,
             'aula': aula,
-            'disciplinas': Disciplina.objects.all(),
+            'turmas': Turma.objects.all(),
             'full_name': request.user.get_full_name(),
         }
         context.update(is_admin(request))
