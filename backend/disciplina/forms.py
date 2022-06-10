@@ -5,3 +5,8 @@ class DisciplinaForm(ModelForm):
     class Meta:
         model = Disciplina
         fields = '__all__'
+
+class EditarDisciplinaForm(ModelForm):
+    class Meta:
+        model = Disciplina
+        fields = '__all__'
