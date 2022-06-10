@@ -1,6 +1,6 @@
 from disciplina.models import Disciplina
 from disciplina.forms import DisciplinaForm, EditarDisciplinaForm
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import permission_required
 from users.utils import is_admin
 from django.db.models import ProtectedError
@@ -36,18 +36,19 @@ def add_disciplina(request):
 
 @permission_required('disciplina.change_disciplina', login_url='/', raise_exception=True)
 def editar_disciplina(request, id):
+    disciplina = get_object_or_404(Disciplina, pk=id)
     if request.method == 'POST':
-        form = EditarDisciplinaForm(request.POST)
+        form = EditarDisciplinaForm(request.POST, instance=disciplina)
         if form.is_valid():
             nome = form.cleaned_data['nome']
             Disciplina(id=id, nome=nome).save()
             return redirect('disciplina:listar_disciplinas')
     else:
-        form = EditarDisciplinaForm()
+        form = EditarDisciplinaForm(instance=Disciplina)
 
     context = {
         'form': form,
-        'disciplina': Disciplina.objects.get(pk=id),
+        'disciplina': disciplina,
         'full_name': request.user.get_full_name(),
         'is_admin': True,
     }
