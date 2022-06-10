@@ -12,7 +12,7 @@
 {% endblock %}
 {% block title %}Aulas Cadastradas{% endblock %}
 {% block h1 %}Aulas Cadastradas{% endblock h1 %}
-{% block active_link_aulas %}active-teal{% endblock %}
+{% block active_link_aulas_admin %}active-teal{% endblock %}
 {% block card-title %}
     {% autoescape off %}
         <a href="{% url 'login:index' %}">
@@ -39,22 +39,22 @@
                 <thead>
                     <tr>
                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                            aria-label="Informações da aula: ativar para ordenar ascendente" style="">Disciplina</th>
-                        <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1"
-                            colspan="1" aria-sort="ascending" aria-label="id: ativar para ordenar descendente" style="">Professor</th>
+                            aria-label="Informações da aula: ativar para ordenar ascendente">Turma</th>
                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                            aria-label="Data da aula: ativar para ordenar ascendente" style="">Data da aula</th>
+                            aria-label="Professor: ativar para ordenar ascendente">Professor</th>
                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                            aria-label="Informações da aula: ativar para ordenar ascendente" style="">Assunto da aula</th>
+                            aria-label="Data da aula: ativar para ordenar ascendente">Data da aula</th>
+                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                            aria-label="Assunto da aula: ativar para ordenar ascendente">Assunto da aula</th>
                         <th tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                            aria-label="Ações: consultar, editar e excluir" style="">Ações</th>
+                            aria-label="Ações: consultar">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                 {% for aula in aulas %}
                     <tr class="odd">
-                        <td tabindex="0">{{aula.disciplina.nome}}</td>
-                        <td tabindex="0">{{aula.disciplina.idProfessor.user.get_full_name}}</td>
+                        <td tabindex="0">{{aula.turma.disciplina}} - {{aula.turma.ano}}.{{aula.turma.periodo}}</td>
+                        <td>{{aula.turma.professor.user.get_full_name}}</td>
                         <td>{{aula.datetime|date:'SHORT_DATE_FORMAT'}} às {{aula.datetime|time:'H:i'}}</td>
                         <td>{{aula.assunto}}</td>
                         <td class="text-center">
@@ -63,15 +63,15 @@
                             </a>
                         </td>
                     </tr>
-                    {% endfor %}
+                {% endfor %}
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th rowspan="1" colspan="1" style="">Disciplina</th>
-                        <th rowspan="1" colspan="1" style="">Professor</th>
-                        <th rowspan="1" colspan="1" style="">Data da Aula</th>
-                        <th rowspan="1" colspan="1" style="">Assunto da aula</th>
-                        <th rowspan="1" colspan="1" style="">Ações</th>
+                        <th rowspan="1" colspan="1">Turma</th>
+                        <th rowspan="1" colspan="1">Professor</th>
+                        <th rowspan="1" colspan="1">Data da Aula</th>
+                        <th rowspan="1" colspan="1">Assunto da aula</th>
+                        <th rowspan="1" colspan="1">Ações</th>
                     </tr>
                 </tfoot>
             </table>

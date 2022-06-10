@@ -1,7 +1,9 @@
 from django.contrib.auth.decorators import permission_required
 from users.utils import is_admin, listar_alunos
 from django.shortcuts import redirect, render, get_object_or_404
-from disciplina.models import Disciplina
+from users.utils import is_admin
+from users.models import Professor
+from turma.models import Turma
 from users.models import Professor, Aluno
 from .forms import AulaForm, AulaFormEdit
 from .models import Aula, AulaDoAluno
@@ -10,7 +12,7 @@ class AulaTemplate:
     def index_aula_prof(request, username):
         prof = Professor.objects.get(user=request.user)
         context = {
-            'queryset': Aula.objects.filter(disciplina__idProfessor = prof),
+            'queryset': Aula.objects.filter(turma__professor = prof),
             'username': username,
             'full_name': request.user.get_full_name(),
             'is_admin': False
@@ -31,11 +33,7 @@ class AulaTemplate:
         if request.method == 'POST':
             form_aula = AulaForm(request.POST)
             if form_aula.is_valid():
-                dados = form_aula.clean()
-                assunto = dados['assunto']
-                datetime = dados['datetime']
-                disciplina = dados['disciplina']
-                Aula(disciplina=disciplina, assunto=assunto, datetime=datetime).save()
+                form_aula.save()
                 return redirect('aula:index_aula_admin')
             else:
                 pass
@@ -44,7 +42,7 @@ class AulaTemplate:
             form_aula = AulaForm()
         context = {
             'form_aula': form_aula,
-            'disciplinas': Disciplina.objects.all(),
+            'turmas': Turma.objects.all(),
             'full_name': request.user.get_full_name(),
         }
         context.update(is_admin(request))
@@ -66,10 +64,10 @@ class AulaTemplate:
             form_aula = AulaFormEdit(request.POST, instance=aula)
             if form_aula.is_valid():
                 dados = form_aula.clean()
-                disciplina = dados['disciplina']
+                turma = dados['turma']
                 assunto = dados['assunto']
                 datetime = dados['datetime']
-                Aula(id=id, disciplina=disciplina, assunto=assunto, datetime=datetime).save()
+                Aula(id=id, turma=turma, assunto=assunto, datetime=datetime).save()
                 # msg
                 return redirect('aula:get_aula', id)
             else:
@@ -80,7 +78,7 @@ class AulaTemplate:
         context = {
             'form_aula': form_aula,
             'aula': aula,
-            'disciplinas': Disciplina.objects.all(),
+            'turmas': Turma.objects.all(),
             'full_name': request.user.get_full_name(),
         }
         context.update(is_admin(request))

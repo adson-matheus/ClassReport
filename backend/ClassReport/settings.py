@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'aula.apps.AulaConfig',
     'login.apps.LoginConfig',
     'disciplina.apps.DisciplinaConfig',
+    'turma.apps.TurmaConfig',
     'rest_framework'
 ]
 

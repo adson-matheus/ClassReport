@@ -12,6 +12,7 @@
 {% endblock %}
 {% block title %}{{full_name}} - Listar Professores{% endblock %}
 {% block h1 %}Lista de Professores{% endblock h1 %}
+{% block active_link_prof %}active-teal{% endblock %}
 {% block card-title %}
     {% autoescape off %}
         <a href="{% url 'login:index' %}">

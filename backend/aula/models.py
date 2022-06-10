@@ -1,23 +1,23 @@
 from django.db import models
 from users.models import Aluno
-from disciplina.models import Disciplina
+from turma.models import Turma
 
 # Create your models here.
 class Aula(models.Model):
-    disciplina = models.ForeignKey(Disciplina, verbose_name="Disciplina", null=False, blank=False, on_delete=models.DO_NOTHING)
-    assunto = models.CharField(verbose_name='Assunto da aula', max_length=255, null=False)
-    datetime = models.DateTimeField(verbose_name='Data e Hora da Aula',auto_now=False, auto_now_add=False)
+    turma = models.ForeignKey(Turma, verbose_name="Turma", null=True, blank=True, on_delete=models.PROTECT)
+    assunto = models.CharField(verbose_name='Assunto da aula', max_length=255, null=True)
+    datetime = models.DateTimeField(verbose_name='Data e Hora da Aula', auto_now=False, auto_now_add=False)
 
     class Meta:
-        ordering = ('-datetime',)
+        ordering = ('-turma',)
     def __str__(self):
-        return 'Assunto: {} - Prof. {}'.format(self.assunto, self.disciplina.idProfessor.user.get_full_name())
+        return 'Turma: {}, Assunto: {}'.format(self.turma, self.assunto)
 
 class AulaDoAluno(models.Model):
-    aula = models.ForeignKey(Aula, verbose_name="Aula", on_delete=models.CASCADE, null=True)
-    aluno = models.ForeignKey(Aluno, verbose_name="Aluno", on_delete=models.CASCADE, null=True)
+    aula = models.ForeignKey(Aula, on_delete=models.CASCADE, null=False)
+    aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE, null=False)
 
     class Meta:
         ordering = ('-id',)
     def __str__(self):
-        return '{} - {}'.format(self.idAluno, self.idAula)
+        return '{} - {}'.format(self.aluno, self.aula)

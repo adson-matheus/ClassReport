@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}{{full_name}} - Editar Aula{% endblock %}
-{% block active_link_aulas %}active-teal{% endblock %}
+{% block active_link_aulas_admin %}active-teal{% endblock %}
+{% block active_link_aulas_prof %}active-teal{% endblock %}
 {% block breadcrumb %}
     {% autoescape off %}
     <li class="breadcrumb-item">Usuários</li>
@@ -22,14 +23,13 @@
     {% csrf_token %}
 
     <div class="form-group">
-        <label for="disciplina">Disciplina: </label>
-        <select id="disciplina" type="text" name="disciplina" class="form-control" required placeholder="Disciplina">
-            <option value="{{aula.disciplina.id}}" selected>{{aula.disciplina.nome}} - Prof. {{aula.disciplina.idProfessor.user.get_full_name}}</option>
-            {% for disciplina in disciplinas %}
-                {% if disciplina.id != aula.disciplina.id %}
-                <option value="{{disciplina.id}}">{{disciplina.nome}} - Prof. {{disciplina.idProfessor.user.get_full_name}}</option>
-                {% else %}
-                {% comment %} não mostra duplicado {% endcomment %}
+        <label for="turma">Turma: </label>
+        <select id="turma" type="text" name="turma" class="form-control" required placeholder="Turma">
+            <option value="{{aula.turma.id}}" selected>{{aula.turma}}</option>
+            {% for turma in turmas %}
+                {% if turma.id != aula.turma.id %}
+                    <option value="{{turma.id}}">{{turma}}</option>
+                    {% comment %} não mostra duplicado {% endcomment %}
                 {% endif %}
             {% endfor %}
         </select>

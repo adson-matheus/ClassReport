@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}{{full_name}} - Detalhar Aula{% endblock %}
+{% block active_link_aulas_admin %}active-teal{% endblock %}
+{% block active_link_aulas_prof %}active-teal{% endblock %}
 {% block breadcrumb %}
     {% autoescape off %}
         <li class="breadcrumb-item">Usuários</li>
@@ -13,14 +15,19 @@
     {% endautoescape %}
 {% endblock %}
 {% block h1 %}Detalhar Aula{% endblock h1 %}
-{% block active_link_aulas %}active-teal{% endblock %}
 {% block card-title %}
     {% autoescape off %}
+    {% if is_admin %}
         <a href="{% url 'aula:index_aula_admin' %}">
             <i class="fa-solid fa-circle-arrow-left teal-color"></i>
         </a>&nbsp
+    {% else %}
+        <a href="{% url 'aula:index_aula_prof' request.user.username %}">
+            <i class="fa-solid fa-circle-arrow-left teal-color"></i>
+        </a>&nbsp
+    {% endif %}
     {% endautoescape %}
-    Aula do dia {{aula.datetime|date:'SHORT_DATE_FORMAT'}}
+    Aula de {{aula.turma}}
 {% endblock %}
 {% block content %}
 <div class="card-body">
@@ -91,8 +98,8 @@
         <div class="col-12">
             <p class="text-right">Horário da Aula: {{aula.datetime|date:'SHORT_DATE_FORMAT'}} às {{aula.datetime|time:'H:i'}}</p>
             <div class="post mb-5">
-                <p class="text-justify">Disciplina: {{aula.disciplina.nome}}</p>
-                <p class="text-justify">Docente: {{aula.disciplina.idProfessor.user.get_full_name}}</p>
+                <p class="text-justify">Turma: {{aula.turma.disciplina}} - {{aula.turma.ano}}.{{aula.turma.periodo}}</p>
+                <p class="text-justify">Docente: {{aula.turma.professor.user.get_full_name}}</p>
                 <p class="text-center">{{aula.assunto}}</p>
                 <p class="text-right">Alunos: Sem alunos cadastrados</p>
             </div>
