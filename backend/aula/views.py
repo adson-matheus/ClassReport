@@ -5,7 +5,7 @@ from users.utils import is_admin
 from users.models import Professor
 from turma.models import Turma
 from users.models import Professor, Aluno
-from .forms import AulaForm, AulaFormEdit
+from .forms import AulaForm, AulaFormEdit, AulaDoAlunoForm
 from .models import Aula, AulaDoAluno
 
 class AulaTemplate:
@@ -113,9 +113,11 @@ class AulaDoAlunoView():
 
     @permission_required('aula.add_aula_do_aluno', login_url='/', raise_exception=True)
     def add_aluno_em_aula(request, id_aula, id_aluno):
-        aula = Aula.objects.get(id=id_aula)
-        aluno = Aluno.objects.get(id=id_aluno)
+        
+        #aula = Aula.objects.get(id=id_aula)
+        #aluno = Aluno.objects.get(id=id_aluno)
+        #AulaDoAluno.objects.bulk_create()
         #https://docs.djangoproject.com/en/4.0/ref/models/querysets/#bulk-create
         #bulk create
-        AulaDoAluno(aula=aula, aluno=aluno).save()
+        #AulaDoAluno(aula=aula, aluno=aluno).save()
         return render(request, 'aula_do_aluno/add_aluno_em_aula.html')
