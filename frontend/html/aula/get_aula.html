@@ -27,7 +27,7 @@
         </a>&nbsp
     {% endif %}
     {% endautoescape %}
-    Aula do dia {{aula.datetime|date:'SHORT_DATE_FORMAT'}}
+    Aula de {{aula.turma}}
 {% endblock %}
 {% block content %}
 <div class="card-body">
@@ -98,7 +98,7 @@
         <div class="col-12">
             <p class="text-right">Horário da Aula: {{aula.datetime|date:'SHORT_DATE_FORMAT'}} às {{aula.datetime|time:'H:i'}}</p>
             <div class="post mb-5">
-                <p class="text-justify">Disciplina: {{aula.turma.disciplina}}</p>
+                <p class="text-justify">Turma: {{aula.turma.disciplina}} - {{aula.turma.ano}}.{{aula.turma.periodo}}</p>
                 <p class="text-justify">Docente: {{aula.turma.professor.user.get_full_name}}</p>
                 <p class="text-center">{{aula.assunto}}</p>
                 <p class="text-right">Alunos: Sem alunos cadastrados</p>
