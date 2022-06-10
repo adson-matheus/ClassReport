@@ -1,5 +1,5 @@
 from disciplina.models import Disciplina
-from disciplina.forms import DisciplinaForm
+from disciplina.forms import DisciplinaForm, EditarDisciplinaForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import permission_required
 from users.utils import is_admin
@@ -33,6 +33,25 @@ def add_disciplina(request):
         'is_admin': True,
     }
     return render(request, 'disciplina/add_disciplina.html', context)
+
+@permission_required('disciplina.change_disciplina', login_url='/', raise_exception=True)
+def editar_disciplina(request, id):
+    if request.method == 'POST':
+        form = EditarDisciplinaForm(request.POST)
+        if form.is_valid():
+            nome = form.cleaned_data['nome']
+            Disciplina(id=id, nome=nome).save()
+            return redirect('disciplina:listar_disciplinas')
+    else:
+        form = EditarDisciplinaForm()
+
+    context = {
+        'form': form,
+        'disciplina': Disciplina.objects.get(pk=id),
+        'full_name': request.user.get_full_name(),
+        'is_admin': True,
+    }
+    return render(request, 'disciplina/editar_disciplina.html', context)
 
 @permission_required('disciplina.delete_disciplina', login_url='/', raise_exception=True)
 def excluir_disciplina_template(request, id):
