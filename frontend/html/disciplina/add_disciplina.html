@@ -5,7 +5,7 @@
     {% autoescape off %}
     <li class="breadcrumb-item">Usuários</li>
     <li class="breadcrumb-item">{{full_name}}</li>
-    <li class="breadcrumb-item"><a href="{% url 'aula:index_aula_prof' request.user.username %}" class="teal-color">Disciplinas</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'disciplina:listar_disciplinas' %}" class="teal-color">Disciplinas</a></li>
     <li class="breadcrumb-item active">Adicionar Disciplina</li>
     {% endautoescape %}
 {% endblock %}

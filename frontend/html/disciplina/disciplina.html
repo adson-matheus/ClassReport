@@ -63,7 +63,7 @@
                         <td>{{disciplina.nome}}</td>
                         <td class="text-center">
                             {% if is_admin %}
-                                <a class="btn bg-teal btn-sm" href="#">
+                                <a class="btn bg-teal btn-sm" href="{% url 'disciplina:editar_disciplina' disciplina.id %}">
                                     <i class="fas fa-pen-to-square"></i>
                                 </a>
                                 <a class="btn bg-danger btn-sm" href="{% url 'disciplina:excluir_disciplina_template' disciplina.id %}">
