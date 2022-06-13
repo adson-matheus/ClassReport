@@ -52,7 +52,8 @@ class AulaTemplate:
         aula = get_object_or_404(Aula, pk=id)
         context = {
             'full_name': request.user.get_full_name(),
-            'aula': aula
+            'aula': aula,
+            'alunos': AulaDoAluno.objects.filter(aula=aula)
         }
         context.update(is_admin(request))
         return render(request, 'aula/get_aula.html', context)
@@ -104,15 +105,26 @@ class AulaDoAlunoView():
     """
         CRUD para manter um aluno em uma aula
     """
-    @permission_required('users.view_aluno', login_url='/', raise_exception=True)
-    def index_alunos(request, id_aula):
-        context = listar_alunos(request)
+    @permission_required('aula.add_auladoaluno', login_url='/', raise_exception=True)
+    def add_aluno_em_aula(request, id_aula):
         aula = get_object_or_404(Aula, pk=id_aula)
+        if request.method == 'POST':
+            form = AulaDoAlunoForm(request.POST)
+            if form.is_valid():
+                id_alunos = form.cleaned_data['alunos']
+                AulaDoAluno.objects.bulk_create(ignore_conflicts=False, objs = [
+                    AulaDoAluno(aula=aula, aluno=Aluno.objects.get(pk=id)) for id in id_alunos
+                ])
+                return redirect('aula:get_aula', id_aula)
+        else:
+            form = AulaDoAlunoForm()
+        context = listar_alunos(request)
         context.update({'aula':aula})
+        context.update({'form':form})
         return render(request, 'aula_do_aluno/index_alunos.html', context)
 
-    @permission_required('aula.add_aula_do_aluno', login_url='/', raise_exception=True)
-    def add_aluno_em_aula(request, id_aula, id_aluno):
+    # @permission_required('aula.add_aula_do_aluno', login_url='/', raise_exception=True)
+    # def add_aluno_em_aula(request, id_aula, id_aluno):
         
         #aula = Aula.objects.get(id=id_aula)
         #aluno = Aluno.objects.get(id=id_aluno)
@@ -120,4 +132,4 @@ class AulaDoAlunoView():
         #https://docs.djangoproject.com/en/4.0/ref/models/querysets/#bulk-create
         #bulk create
         #AulaDoAluno(aula=aula, aluno=aluno).save()
-        return render(request, 'aula_do_aluno/add_aluno_em_aula.html')
+        # return render(request, 'aula_do_aluno/add_aluno_em_aula.html')
