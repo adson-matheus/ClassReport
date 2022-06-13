@@ -1,5 +1,9 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, Form, MultipleChoiceField
 from .models import Aula, AulaDoAluno
+from users.models import Aluno
+
+alunos = Aluno.objects.all()
+CHOICES = ( (aluno.id, aluno.nome) for aluno in alunos)
 
 class AulaForm(ModelForm):
     class Meta:
@@ -11,7 +15,6 @@ class AulaFormEdit(ModelForm):
         model = Aula
         fields = '__all__'
 
-# criar um form p/ pegar todos os ids marcados
-# depois envia isso pra view
-# da view faz um bulk create,
-# usar js pra pegar todos os valores marcados
+class AulaDoAlunoForm(Form):
+    alunos = MultipleChoiceField(choices=CHOICES, required=True)
+
