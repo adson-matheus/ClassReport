@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required, permission_required
-from users.utils import is_admin
+from users.utils import is_admin, listar_alunos
 from django.contrib.auth.models import User, Group
 from disciplina.models import Disciplina
 from .models import Administrador, Professor, Aluno
@@ -86,12 +86,7 @@ class AlunoTemplate:
     """
     @permission_required('users.view_aluno', login_url='/', raise_exception=True)
     def index_aluno(request):
-        alunos = Aluno.objects.all()
-        context = {
-            'alunos': alunos,
-            'full_name': request.user.get_full_name()
-        }
-        context.update(is_admin(request))
+        context = listar_alunos(request)
         return render(request, 'users/aluno/alunos.html', context)
 
     @permission_required('users.add_aluno', login_url='/', raise_exception=True)
