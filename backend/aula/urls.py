@@ -13,6 +13,5 @@ urlpatterns = [
     path("detail/<int:id>", views.AulaTemplate.get_aula, name='get_aula'),
 
     # aula do aluno
-    path("detail/<int:id_aula>/aluno", views.AulaDoAlunoView.index_alunos, name='index_alunos'),
-    #path("detail/<int:id_aula>/aluno/add", views.AulaDoAlunoView.add_aluno_em_aula, name='add_aluno_em_aula'),
+    path("detail/<int:id_aula>/aluno", views.AulaDoAlunoView.add_aluno_em_aula, name='add_aluno_em_aula'),
 ]
