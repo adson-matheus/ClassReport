@@ -94,14 +94,14 @@
 </div>
 <form method='POST'>
     {% csrf_token %}
+    <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-outline-primary btn-outline-teal btn-lg">Adicionar</button>
+    </div>
     <select name="alunos" required id="id_alunos" multiple style="visibility: hidden">
         {% for aluno in alunos %}
             <option value="{{aluno.id}}">{{aluno.nome}}</option>
         {% endfor %}
     </select>
-    <div class="d-flex justify-content-center">
-        <button type="submit" class="btn btn-outline-primary btn-outline-teal btn-lg">Adicionar</button>
-    </div>
 </form>
 {% endblock %}
 {% block scripts %}
