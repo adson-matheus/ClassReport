@@ -97,68 +97,87 @@
         </div>
         {% endif %}
     </div>
-    <div class="row">
-        <div class="col-12">
-            <p class="text-right">Horário da Aula: {{aula.datetime|date:'SHORT_DATE_FORMAT'}} às {{aula.datetime|time:'H:i'}}</p>
-            <div class="post mb-5">
-                <p class="text-justify">Turma: {{aula.turma.disciplina}} - {{aula.turma.ano}}.{{aula.turma.periodo}}</p>
-                <p class="text-justify">Docente: {{aula.turma.professor.user.get_full_name}}</p>
-                <p class="text-center">{{aula.assunto}}</p>
-            </div>
+    <div class="card card-primary">
+        <div class="card-header bg-teal">
+            <h3 class="card-title">Sobre a Aula</h3>
         </div>
-    </div>
-    <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-        <div class="row">
-            <div class="col-sm-12">
-                <table id="example1" class="table table-bordered dataTable dtr-inline"
-                    aria-describedby="example1_info">
-                    <thead>
-                        <tr>
-                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                                aria-label="Matrícula: ativar para ordenar ascendente">Matrícula</th>
-                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                                aria-sort="ascending" aria-label="Nome do Aluno: ativar para ordenar ascendente">Nome do Aluno</th>
-                            <th tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                                aria-label="Ações: consultar, editar e excluir">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for aluno in alunos %}
-                        <tr class="odd">
-                            <td>{{aluno.aluno.matricula}}</td>
-                            <td>{{aluno.aluno.nome}}</td>
-                            <td class="text-center">
-                                {% if is_admin %}
-                                    <a class="btn bg-teal btn-sm" href="#">
-                                        <i class="fas fa-pen-to-square"></i>
-                                    </a>
-                                    <a class="btn bg-danger btn-sm" href="#">
-                                        <i class="fa-solid fa-trash-can"></i>
-                                    </a>
-                                {% else %}
-                                    <p>-</p>
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th rowspan="1" colspan="1">Matrícula</th>
-                            <th rowspan="1" colspan="1">Nome do Aluno</th>
-                            <th rowspan="1" colspan="1">Ações</th>
-                        </tr>
-                    </tfoot>
-                </table>
+        <div class="card-body">
+            <strong><i class="fas fa-solid fa-clock mr-1"></i> Horário</strong>
+            <p class="text-muted">
+                {{aula.datetime|date:'SHORT_DATE_FORMAT'}} às {{aula.datetime|time:'H:i'}}
+            </p>
+            <hr>
+            <strong><i class="fas fa-solid fa-users-rectangle mr-1"></i> Turma</strong>
+            <p class="text-muted">
+                {{aula.turma.disciplina}} - {{aula.turma.ano}}.{{aula.turma.periodo}}
+            </p>
+            <hr>
+            <strong><i class="fas fa-solid fa-person-chalkboard mr-1"></i> Docente</strong>
+            <p class="text-muted">
+                {{aula.turma.professor.user.get_full_name}}
+            </p>
+            <hr>
+            <strong><i class="fas fa-solid fa-file-alt mr-1"></i> Assunto</strong>
+            <p class="text-muted">
+                <span class="tag tag-danger">{{aula.assunto}}</span>
+            </p>
+            <hr>
+            <strong><i class="fas fa-solid fa-person-chalkboard mr-1"></i> Alunos</strong>
+                <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="example1" class="table table-bordered dataTable dtr-inline"
+                                aria-describedby="example1_info">
+                                <thead>
+                                    <tr>
+                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                            aria-label="Matrícula: ativar para ordenar ascendente">Matrícula</th>
+                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                            aria-sort="ascending" aria-label="Nome do Aluno: ativar para ordenar ascendente">Nome do Aluno</th>
+                                        <th tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                            aria-label="Ações: consultar, editar e excluir">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for aluno in alunos %}
+                                    <tr class="odd">
+                                        <td>{{aluno.aluno.matricula}}</td>
+                                        <td>{{aluno.aluno.nome}}</td>
+                                        <td class="text-center">
+                                            {% if is_admin %}
+                                                <a class="btn bg-teal btn-sm" href="#">
+                                                    <i class="fas fa-pen-to-square"></i>
+                                                </a>
+                                                <a class="btn bg-danger btn-sm" href="#">
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                                </a>
+                                            {% else %}
+                                                <p>-</p>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th rowspan="1" colspan="1">Matrícula</th>
+                                        <th rowspan="1" colspan="1">Nome do Aluno</th>
+                                        <th rowspan="1" colspan="1">Ações</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            <hr>
+            <div class="row">
+                <div class="col-12 border-top border-teal">
+                    <a class="btn btn-outline-light mt-3 float-right" href="#">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        Exportar PDF
+                    </a>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12 border-top border-teal">
-            <a class="btn btn-outline-light mt-3 float-right" href="#">
-                <i class="fa-solid fa-file-pdf"></i>
-                Exportar PDF
-            </a>
         </div>
     </div>
 </div>
