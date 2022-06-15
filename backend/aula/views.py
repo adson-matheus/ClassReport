@@ -121,15 +121,21 @@ class AulaDoAlunoView():
         context = listar_alunos(request)
         context.update({'aula':aula})
         context.update({'form':form})
-        return render(request, 'aula_do_aluno/index_alunos.html', context)
+        return render(request, 'aula_do_aluno/add_aluno_em_aula.html', context)
 
-    # @permission_required('aula.add_aula_do_aluno', login_url='/', raise_exception=True)
-    # def add_aluno_em_aula(request, id_aula, id_aluno):
-        
-        #aula = Aula.objects.get(id=id_aula)
-        #aluno = Aluno.objects.get(id=id_aluno)
-        #AulaDoAluno.objects.bulk_create()
-        #https://docs.djangoproject.com/en/4.0/ref/models/querysets/#bulk-create
-        #bulk create
-        #AulaDoAluno(aula=aula, aluno=aluno).save()
-        # return render(request, 'aula_do_aluno/add_aluno_em_aula.html')
+    @permission_required('aula.delete_auladoaluno', login_url='/', raise_exception=True)
+    def remover_aluno_de_aula_template(request, id_aluno, id_aula):
+        aula = get_object_or_404(AulaDoAluno, aula=id_aula, aluno=id_aluno)
+        context = {
+            'aula':aula,
+            'full_name': request.user.get_full_name(),
+            'is_admin': True,
+        }
+        return render(request, 'aula_do_aluno/remover_aluno_de_aula_template.html', context)
+
+    @permission_required('aula.delete_auladoaluno', login_url='/', raise_exception=True)
+    def remover_aluno_de_aula(request, id_aluno, id_aula):
+        aula = get_object_or_404(AulaDoAluno, aula=id_aula, aluno=id_aluno)
+        aula.delete()
+        #msg successo
+        return redirect("aula:get_aula", id_aula)
