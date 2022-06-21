@@ -7,5 +7,6 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('aulas/', include('aula.urls')),
     path('disciplinas/', include('disciplina.urls')),
+    path('turmas/', include('turma.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
