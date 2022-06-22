@@ -1,5 +1,7 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required, permission_required
+from django.db.models import ProtectedError
+from django.contrib import messages
 from users.utils import is_admin, listar_alunos
 from django.contrib.auth.models import User, Group
 from disciplina.models import Disciplina
@@ -168,18 +170,16 @@ class ProfessorTemplate:
 
     def delete_professor_template(request, siape):
         professor = Professor.objects.get(siape=siape)
-        disciplinas = Disciplina.objects.filter(idProfessor=professor.siape)
         context = {
             'full_name': request.user.get_full_name(),
             'professor': professor,
-            'disciplinas': disciplinas,
         }
         context.update(is_admin(request))
         return render(request, 'users/prof/delete_prof.html', context)
 
     def delete_professor(request, siape):
-        professor = Professor.objects.get(siape=siape)
+        professor = get_object_or_404(Professor, siape=siape)
         professor.user.is_active = False
-        #professor.delete()
-        # msg
+        professor.user.save()
+        messages.success(request, "{} excluído com sucesso!".format(professor.user.get_full_name()))
         return redirect('users:index_prof')
