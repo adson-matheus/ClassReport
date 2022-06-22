@@ -33,6 +33,6 @@ def excluir_turma(request, id):
         return redirect('turma:listar_turmas')
 
     except ProtectedError as e:
-        aulas = [ aula.assunto for aula in e.protected_objects ]
-        messages.error(request, '{} não pode ser excluída. Há aulas dessa turma cadastradas: {}!'.format(turma, aulas))
+        for aula in e.protected_objects:
+            messages.error(request, "Não é possível excluir a turma {}. A aula '{}' está cadastrada e faz parte desta turma!".format(turma, aula.assunto))
         return redirect('turma:excluir_turma_template', id)
