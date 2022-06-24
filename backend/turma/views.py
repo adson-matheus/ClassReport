@@ -4,7 +4,9 @@ from users.utils import is_admin
 from django.db.models import ProtectedError
 from django.contrib import messages
 from .models import Turma
+from aula.models import Aula
 
+@permission_required('turma.view_turma', login_url='/', raise_exception=True)
 def listar_turmas(request):
     turmas = Turma.objects.all()
     context = {
@@ -13,6 +15,18 @@ def listar_turmas(request):
     }
     context.update(is_admin(request))
     return render(request, 'turma/listar_turmas.html', context)
+
+@permission_required('turma.view_turma', login_url='/', raise_exception=True)
+def listar_aulas_de_turma(request, id):
+    turma = get_object_or_404(Turma, pk=id)
+    aulas = Aula.objects.filter(turma=turma)
+    context = {
+        'aulas': aulas,
+        'turma': turma,
+        'full_name': request.user.get_full_name(),
+    }
+    context.update(is_admin(request))
+    return render(request, 'turma/listar_aulas_de_turma.html', context)
 
 @permission_required('turma.delete_turma', login_url='/', raise_exception=True)
 def excluir_turma_template(request, id):
