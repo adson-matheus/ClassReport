@@ -67,7 +67,7 @@
                 {% for turma in turmas %}
                     <tr class="odd">
                         <td>{{turma.disciplina}}</td>
-                        <td>{{turma.professor.user.get_full_name}}</td>
+                        <td>{{turma.professor}}</td>
                         <td>{{turma.ano}}.{{turma.periodo}}</td>
                         <td>{% if turma.descricao %} {{turma.descricao}} {% else %} - {% endif %}</td>
                         <td class="text-center">

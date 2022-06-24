@@ -181,5 +181,5 @@ class ProfessorTemplate:
         professor = get_object_or_404(Professor, siape=siape)
         professor.user.is_active = False
         professor.user.save()
-        messages.success(request, "{} excluído com sucesso!".format(professor.user.get_full_name()))
+        messages.success(request, "{} excluído com sucesso!".format(professor))
         return redirect('users:index_prof')

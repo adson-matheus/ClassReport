@@ -17,7 +17,7 @@ class Administrador(models.Model):
     class Meta:
         ordering = ('-user',)
     def __str__(self):
-        return self.user.username
+        return self.user.get_full_name()
 
 class Professor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -26,4 +26,4 @@ class Professor(models.Model):
     class Meta:
         ordering = ('-user',)
     def __str__(self):
-        return self.user.username
+        return self.user.get_full_name()
