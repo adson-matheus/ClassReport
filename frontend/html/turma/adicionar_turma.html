@@ -26,7 +26,7 @@
         <select id="professor" type="text" name="professor" class="form-control" required placeholder="Professor">
             <option value="" selected="">---------</option>
             {% for professor in professores %}
-            <option value="{{professor.siape}}">{{professor.user.get_full_name}}</option>
+            <option value="{{professor.siape}}">{{professor}}</option>
             {% endfor %}
         </select>
     </div>

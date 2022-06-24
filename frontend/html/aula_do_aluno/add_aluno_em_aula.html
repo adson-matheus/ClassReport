@@ -42,7 +42,7 @@
             </div>
         </div>
         <div class="card-body">
-            <p class="text-center">{{aula.turma.professor.user.get_full_name}}</p>
+            <p class="text-center">{{aula.turma.professor}}</p>
             <p class="text-center">{{aula.turma.disciplina}}:<br>{{aula.assunto}}</p>
             <p class="text-right mb-0"><small>{{aula.datetime|date:'SHORT_DATE_FORMAT'}} - {{aula.datetime|time:'H:i'}}</small></p>
         </div>
