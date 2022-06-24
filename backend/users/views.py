@@ -4,9 +4,8 @@ from django.db.models import ProtectedError
 from django.contrib import messages
 from users.utils import is_admin, listar_alunos
 from django.contrib.auth.models import User, Group
-from disciplina.models import Disciplina
 from .models import Administrador, Professor, Aluno
-from .forms import AdministradorForm, ProfessorForm, ProfessorEditForm, UserForm, AlunoForm, EditarAlunoForm
+from .forms import AdministradorForm, ProfessorForm, EditProfessorForm, UserForm, AlunoForm, EditarAlunoForm
 from django.http import HttpResponse
 
 def add_admin_controller(form_user, form_admin):
@@ -168,6 +167,37 @@ class ProfessorTemplate:
         }
         return render(request, 'users/prof/professores.html', context)
 
+    #NOT WORKING
+    def edit_professor(request, siape):
+        professor = get_object_or_404(Professor, siape=siape)
+        #user_prof = get_object_or_404(User, user_id=professor.user.id)
+        if request.method == 'POST':
+            form_prof = EditProfessorForm(request.POST, instance=professor)
+            form_user = UserForm(request.POST, instance=professor.user)
+            if form_prof.is_valid() and form_user.is_valid():
+                siape = form_prof.cleaned_data['siape']
+                form_user.save()
+                form_prof.save()
+                messages.success(request, 'Professor editado(a) com sucesso!')
+                return redirect('users:index_prof')
+            else:
+                print(form_prof)
+                print('aaaaaaaaaaaaaaaaaaaa')
+                print(form_user)
+                messages.error(request, 'Erro ao editar professor! Tente novamente.')
+                return redirect('users:index_prof')
+        else:
+            form_prof = EditProfessorForm(instance=professor)
+            form_user = UserForm(instance=professor.user)
+        context = {
+            'professor': professor,
+            'full_name': request.user.get_full_name(),
+            'form_user': form_user,
+            'form_prof': form_prof,
+        }
+        context.update(is_admin(request))
+        return render(request, 'users/prof/edit_professor.html', context)
+
     def delete_professor_template(request, siape):
         professor = Professor.objects.get(siape=siape)
         context = {
@@ -183,13 +213,3 @@ class ProfessorTemplate:
         professor.user.save()
         messages.success(request, "{} excluído com sucesso!".format(professor))
         return redirect('users:index_prof')
-    
-    #NOT WORKING
-    def edit_professor(request, siape):
-        professor = Professor.objects.get(siape=siape)
-        context = {
-            'professor': professor,
-            'full_name': request.user.get_full_name(),
-        }
-        context.update(is_admin(request))
-        return render(request, 'users/prof/edit_professor.html', context)
