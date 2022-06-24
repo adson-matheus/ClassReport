@@ -19,11 +19,12 @@
 {% block content %}
 <form method='POST'>
     {% csrf_token %}
-    {% comment %} {{form_user.as_p}} {% endcomment %}
-    <div class="form-group">
+    {{form_user.as_p}}
+    {{form_prof.as_p}}
+    {% comment %} <div class="form-group">
         <label for="siape">SIAPE: </label>
         <input id="siape" type="number" name="siape" class="form-control" max_length="20" required placeholder="SIAPE do professor" value="{{ professor.siape }}">
-    </div>
+    </div> {% endcomment %}
 
     {% comment %} <div class="form-group">
         <label for="first_name">Nome do Professor: </label>
