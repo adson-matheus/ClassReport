@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %}{{full_name}} - Adicionar Turma{% endblock %}
+{% block active_link_turma %}active-teal{% endblock %}
+{% block breadcrumb %}
+    {% autoescape off %}
+    <li class="breadcrumb-item">Usuários</li>
+    <li class="breadcrumb-item">{{full_name}}</li>
+    <li class="breadcrumb-item"><a href="{% url 'turma:listar_turmas' %}" class="teal-color">Turmas</a></li>
+    <li class="breadcrumb-item active">Adicionar Turma</li>
+    {% endautoescape %}
+{% endblock %}
+{% block card-title %}
+    {% autoescape off %}
+        <a href="{% url 'turma:listar_turmas' %}">
+            <i class="fa-solid fa-circle-arrow-left teal-color"></i>
+        </a>&nbsp
+    {% endautoescape %}
+    Adicionar Turma
+{% endblock %}
+{% block content %}
+<form method='POST'>
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="professor">Professor*: </label>
+        <select id="professor" type="text" name="professor" class="form-control" required placeholder="Professor">
+            <option value="" selected="">---------</option>
+            {% for professor in professores %}
+            <option value="{{professor.siape}}">{{professor.user.get_full_name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="disciplina">Disciplina*: </label>
+        <select id="disciplina" type="text" name="disciplina" class="form-control" required placeholder="Disciplina">
+            <option value="" selected="">---------</option>
+            {% for disciplina in disciplinas %}
+            <option value="{{disciplina.id}}">{{disciplina}}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="ano">Ano*: </label>
+        <input id="ano" type="number" name="ano" class="form-control" required placeholder="Ano" value="{{ano_atual}}">
+    </div>
+
+    <div class="form-group">
+        <label for="periodo">Período*: </label>
+        <input id="periodo" type="number" name="periodo" class="form-control" required placeholder="Período" value="1">
+    </div>
+
+    <div class="form-group">
+        <label for="descricao">Descrição: </label>
+        <textarea
+            id="descricao"
+            type="text"
+            name="descricao"
+            class="form-control"
+            rows=10
+            maxlength=255
+            required
+            placeholder="Descrição da turma, código, etc..."></textarea>
+            <small>Descrição não obrigatória</small>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <a class="mr-3" href="{% url 'turma:listar_turmas' %}">
+            <button type="button" class="btn btn-md btn-outline-light">Cancelar</button>
+        </a>
+        <button type="submit" class="btn btn-outline-primary btn-outline-teal">Cadastrar</button>
+    </div>
+</form>
+{% endblock %}
