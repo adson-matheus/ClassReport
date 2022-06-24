@@ -14,4 +14,4 @@ class Turma(models.Model):
     class Meta:
         ordering = ('-disciplina',)
     def __str__(self):
-        return '{} - {}.{} - {}'.format(self.disciplina, self.ano, self.periodo, self.professor.user.get_full_name())
+        return '{} - {}.{} - {}'.format(self.disciplina, self.ano, self.periodo, self.professor)
