@@ -4,6 +4,9 @@
 .teal-color {
     color: teal !important;
 }
+.white-color {
+    color: white !important;
+}
 .card-teal{
     border-top: 3px solid teal !important;
 }

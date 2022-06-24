@@ -8,7 +8,7 @@ from users.models import Professor
 from disciplina.models import Disciplina
 from aula.models import Aula
 from .models import Turma
-from .forms import TurmaForm
+from .forms import TurmaForm, EditarTurmaForm
 
 @permission_required('turma.add_turma', login_url='/', raise_exception=True)
 def adicionar_turma(request):
@@ -32,6 +32,32 @@ def adicionar_turma(request):
     }
     context.update(is_admin(request))
     return render(request, 'turma/adicionar_turma.html', context)
+
+@permission_required('turma.change_turma', login_url='/', raise_exception=True)
+def editar_turma(request, id):
+    professores = Professor.objects.exclude(user__is_active=False)
+    disciplinas = Disciplina.objects.all()
+    turma = Turma.objects.get(id=id)
+    if request.method == 'POST':
+        form = EditarTurmaForm(request.POST, instance=turma)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Turma editada com sucesso!')
+            return redirect('turma:listar_aulas_de_turma', id)
+        else:
+            messages.error(request, 'Erro ao editar turma! Tente novamente.')
+            return redirect('turma:listar_aulas_de_turma', id)
+    else:
+        form = EditarTurmaForm(instance=turma)
+    context = {
+        'form': form,
+        'professores': professores,
+        'disciplinas': disciplinas,
+        'turma': turma,
+        'full_name': request.user.get_full_name(),
+    }
+    context.update(is_admin(request))
+    return render(request, 'turma/editar_turma.html', context)
 
 @permission_required('turma.view_turma', login_url='/', raise_exception=True)
 def listar_turmas(request):
