@@ -1,10 +1,37 @@
 from django.contrib.auth.decorators import permission_required
 from django.shortcuts import render, redirect, get_object_or_404
 from users.utils import is_admin
+from datetime import date
 from django.db.models import ProtectedError
 from django.contrib import messages
-from .models import Turma
+from users.models import Professor
+from disciplina.models import Disciplina
 from aula.models import Aula
+from .models import Turma
+from .forms import TurmaForm
+
+@permission_required('turma.add_turma', login_url='/', raise_exception=True)
+def adicionar_turma(request):
+    professores = Professor.objects.exclude(user__is_active=False)
+    disciplinas = Disciplina.objects.all()
+    ano_atual = date.today().year
+    if request.method == 'POST':
+        form = TurmaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Turma adicionada com sucesso!')
+            return redirect('turma:listar_turmas')
+    else:
+        form = TurmaForm()
+    context = {
+        'form': form,
+        'professores': professores,
+        'disciplinas': disciplinas,
+        'ano_atual': ano_atual,
+        'full_name': request.user.get_full_name(),
+    }
+    context.update(is_admin(request))
+    return render(request, 'turma/adicionar_turma.html', context)
 
 @permission_required('turma.view_turma', login_url='/', raise_exception=True)
 def listar_turmas(request):
