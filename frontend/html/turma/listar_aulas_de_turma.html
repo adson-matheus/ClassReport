@@ -52,8 +52,6 @@
                 <tbody>
                     {% for aula in aulas %}
                     <tr class="odd">
-                        {% comment %} <td tabindex="0">{{aula.turma.disciplina}} - {{aula.turma.ano}}.{{aula.turma.periodo}}</td>
-                        <td>{{aula.turma.professor.user.get_full_name}}</td> {% endcomment %}
                         <td>{{aula.datetime|date:'SHORT_DATE_FORMAT'}} às {{aula.datetime|time:'H:i'}}</td>
                         <td>{{aula.assunto}}</td>
                         <td class="text-center">
