@@ -17,6 +17,11 @@ class ProfessorForm(forms.ModelForm):
         model = Professor
         fields = ['siape',]
 
+class ProfessorEditForm(forms.ModelForm):
+    class Meta:
+        model = Professor
+        fields = ['siape',]
+
 class AlunoForm(forms.ModelForm):
     class Meta:
         model = Aluno

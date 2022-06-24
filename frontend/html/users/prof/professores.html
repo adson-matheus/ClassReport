@@ -83,8 +83,7 @@
                             </a>
                         </td>
                         <td class="text-center">
-                            {% comment %} {% url 'users:edit_prof' professor.siape %} {% endcomment %}
-                            <a class="btn bg-teal btn-sm" href="#">
+                            <a class="btn bg-teal btn-sm" href="{% url 'users:edit_professor' professor.siape %}">
                                 <i class="fas fa-pen-to-square"></i>
                             </a>
                             <a class="btn bg-danger btn-sm" href="{% url 'users:delete_prof_template' professor.siape %}">

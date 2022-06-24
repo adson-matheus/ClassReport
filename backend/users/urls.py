@@ -11,6 +11,7 @@ urlpatterns = [
     path('alunos/delete/<int:matr>/confirm', views.AlunoTemplate.delete_aluno, name='delete_aluno'),
     path('prof', views.ProfessorTemplate.index_professor, name='index_prof'),
     path('prof/add', views.add_prof_template, name='add_prof_template'),
+    path('professor/edit/<int:siape>', views.ProfessorTemplate.edit_professor, name='edit_professor'),
     path('prof/delete/<int:siape>', views.ProfessorTemplate.delete_professor_template, name='delete_prof_template'),
     path('prof/delete/<int:siape>/confirm', views.ProfessorTemplate.delete_professor, name='delete_prof'),
 ]

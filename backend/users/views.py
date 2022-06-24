@@ -6,7 +6,7 @@ from users.utils import is_admin, listar_alunos
 from django.contrib.auth.models import User, Group
 from disciplina.models import Disciplina
 from .models import Administrador, Professor, Aluno
-from .forms import AdministradorForm, ProfessorForm, UserForm, AlunoForm, EditarAlunoForm
+from .forms import AdministradorForm, ProfessorForm, ProfessorEditForm, UserForm, AlunoForm, EditarAlunoForm
 from django.http import HttpResponse
 
 def add_admin_controller(form_user, form_admin):
@@ -183,3 +183,13 @@ class ProfessorTemplate:
         professor.user.save()
         messages.success(request, "{} excluído com sucesso!".format(professor))
         return redirect('users:index_prof')
+    
+    #NOT WORKING
+    def edit_professor(request, siape):
+        professor = Professor.objects.get(siape=siape)
+        context = {
+            'professor': professor,
+            'full_name': request.user.get_full_name(),
+        }
+        context.update(is_admin(request))
+        return render(request, 'users/prof/edit_professor.html', context)
