@@ -37,7 +37,7 @@
 <div class="d-flex justify-content-center">
     {% if is_admin %}
     <div class="col-4 mb-2 text-center">
-        <a href="#">
+        <a href="{% url 'turma:adicionar_turma' %}">
             <button type="button" class="btn btn-lg btn-success btn-teal">Adicionar Turma</button>
         </a>
     </div>
@@ -52,9 +52,13 @@
                 <thead>
                     <tr>
                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                            aria-label="Matrícula: ativar para ordenar ascendente">Nome da Turma</th>
+                            aria-label="Turma: ativar para ordenar ascendente">Turma</th>
                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                            aria-label="Matrícula: ativar para ordenar ascendente">Professor</th>
+                            aria-label="Professor: ativar para ordenar ascendente">Professor</th>
+                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                            aria-label="Período: ativar para ordenar ascendente">Período</th>
+                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                            aria-label="Descrição: ativar para ordenar ascendente">Código/Descrição</th>
                         <th class="w-25" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                             aria-label="Ações: consultar, editar e excluir">Ações</th>
                     </tr>
@@ -62,8 +66,10 @@
                 <tbody>
                 {% for turma in turmas %}
                     <tr class="odd">
-                        <td>{{turma.disciplina}} - {{turma.ano}}.{{turma.periodo}}</td>
+                        <td>{{turma.disciplina}}</td>
                         <td>{{turma.professor.user.get_full_name}}</td>
+                        <td>{{turma.ano}}.{{turma.periodo}}</td>
+                        <td>{% if turma.descricao %} {{turma.descricao}} {% else %} - {% endif %}</td>
                         <td class="text-center">
                             {% if is_admin %}
                                 <a class="btn bg-teal btn-sm" href="{% url 'turma:listar_aulas_de_turma' turma.id %}">
@@ -86,6 +92,8 @@
                     <tr>
                         <th rowspan="1" colspan="1">Nome da Turma</th>
                         <th rowspan="1" colspan="1">Professor</th>
+                        <th rowspan="1" colspan="1">Período</th>
+                        <th rowspan="1" colspan="1">Código/Descrição</th>
                         <th rowspan="1" colspan="1">Ações</th>
                     </tr>
                 </tfoot>
