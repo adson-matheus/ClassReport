@@ -61,12 +61,24 @@ def editar_turma(request, id):
 
 @permission_required('turma.view_turma', login_url='/', raise_exception=True)
 def listar_turmas(request):
-    turmas = Turma.objects.all()
-    context = {
-        'turmas': turmas,
-        'full_name': request.user.get_full_name(),
-    }
-    context.update(is_admin(request))
+    '''
+        Caso seja admin, mostra todas as turmas. Se for professor, mostra apenas as turmas dele.
+    '''
+    is_admin_dict = is_admin(request)
+    if is_admin_dict['is_admin'] == True:
+        turmas = Turma.objects.all()
+        context = {
+            'turmas': turmas,
+            'full_name': request.user.get_full_name(),
+        }
+        context.update(is_admin_dict)
+    else:
+        turmas = Turma.objects.filter(professor__user=request.user)
+        context = {
+            'turmas': turmas,
+            'full_name': request.user.get_full_name(),
+        }
+        context.update(is_admin_dict)
     return render(request, 'turma/listar_turmas.html', context)
 
 @permission_required('turma.view_turma', login_url='/', raise_exception=True)

@@ -9,8 +9,8 @@
 {% block h1 %}Olá, {{full_name}}{% endblock h1 %}
 {% block card-title %}Menu{% endblock %}
 {% block content %}
-<a class="btn btn-app" href="{% url 'aula:index_aula_prof' request.user.username %}">
-    <i class="fas fa-graduation-cap"></i> Aulas
+<a href="{% url 'turma:listar_turmas' %}" class="btn btn-app" {% block active_link_turmas_prof %}{% endblock %}>
+    <i class="nav-icon fas fa-solid fa-users-rectangle"></i> Turmas
 </a>
 <a class="btn btn-app" href="#">
     <i class="fas fa-list"></i> Avaliações

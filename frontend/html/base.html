@@ -133,7 +133,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'turma:listar_turmas' %}" class="nav-link {% block active_link_turmas %}{% endblock %}">
+                            <a href="{% url 'turma:listar_turmas' %}" class="nav-link {% block active_link_turmas_admin %}{% endblock %}">
                                 <i class="nav-icon fas fa-solid fa-users-rectangle"></i>
                                 <p>Turmas</p>
                             </a>
@@ -171,9 +171,9 @@
                         {% elif request.user.is_authenticated and not is_admin %}
                         <li class="nav-header">AÇÕES</li>
                         <li class="nav-item">
-                            <a href="{% url 'aula:index_aula_prof' request.user.username %}" class="nav-link {% block active_link_aulas_prof %}{% endblock %}">
-                                <i class="nav-icon fas fa-graduation-cap nav-icon"></i>
-                                <p>Aulas</p>
+                            <a href="{% url 'turma:listar_turmas' %}" class="nav-link {% block active_link_turmas_prof %}{% endblock %}">
+                                <i class="nav-icon fas fa-solid fa-users-rectangle"></i>
+                                <p>Turmas</p>
                             </a>
                         </li>
                         <li class="nav-item">
