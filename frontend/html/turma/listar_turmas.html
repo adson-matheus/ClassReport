@@ -20,7 +20,8 @@
     {% endautoescape %}
     Turmas
 {% endblock %}
-{% block active_link_turmas %}active-teal{% endblock %}
+{% block active_link_turmas_admin %}active-teal{% endblock %}
+{% block active_link_turmas_prof %}active-teal{% endblock %}
 {% block content %}
 {% if messages %}
     {% for message in messages %}
@@ -71,18 +72,16 @@
                         <td>{{turma.ano}}.{{turma.periodo}}</td>
                         <td>{% if turma.descricao %} {{turma.descricao}} {% else %} - {% endif %}</td>
                         <td class="text-center">
+                            <a class="btn bg-teal btn-sm" href="{% url 'turma:listar_aulas_de_turma' turma.id %}">
+                                <i class="fas fa-eye"></i>
+                            </a>
                             {% if is_admin %}
-                                <a class="btn bg-teal btn-sm" href="{% url 'turma:listar_aulas_de_turma' turma.id %}">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a class="btn bg-teal btn-sm" href="{% url 'turma:editar_turma' turma.id %}">
-                                    <i class="fas fa-pen-to-square"></i>
-                                </a>
-                                <a class="btn bg-danger btn-sm" href="{% url 'turma:excluir_turma_template' turma.id %}">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                </a>
-                            {% else %}
-                                <p>-</p>
+                            <a class="btn bg-teal btn-sm" href="{% url 'turma:editar_turma' turma.id %}">
+                                <i class="fas fa-pen-to-square"></i>
+                            </a>
+                            <a class="btn bg-danger btn-sm" href="{% url 'turma:excluir_turma_template' turma.id %}">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </a>
                             {% endif %}
                         </td>
                     </tr>
