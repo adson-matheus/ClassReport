@@ -170,20 +170,14 @@ class ProfessorTemplate:
     #NOT WORKING
     def edit_professor(request, siape):
         professor = get_object_or_404(Professor, siape=siape)
-        #user_prof = get_object_or_404(User, user_id=professor.user.id)
         if request.method == 'POST':
             form_prof = EditProfessorForm(request.POST, instance=professor)
             form_user = UserForm(request.POST, instance=professor.user)
             if form_prof.is_valid() and form_user.is_valid():
-                siape = form_prof.cleaned_data['siape']
-                form_user.save()
-                form_prof.save()
+                #TODO: editar professor, siape não pode ser PK.
                 messages.success(request, 'Professor editado(a) com sucesso!')
                 return redirect('users:index_prof')
             else:
-                print(form_prof)
-                print('aaaaaaaaaaaaaaaaaaaa')
-                print(form_user)
                 messages.error(request, 'Erro ao editar professor! Tente novamente.')
                 return redirect('users:index_prof')
         else:
