@@ -25,7 +25,7 @@
             <i class="fa-solid fa-circle-arrow-left teal-color"></i>
         </a>&nbsp
     {% else %}
-        <a href="{% url 'aula:get_aula' avaliacao.aula_do_aluno.aula.id %}">
+        <a href="#" onclick="history.back()">
             <i class="fa-solid fa-circle-arrow-left teal-color"></i>
         </a>&nbsp
     {% endif %}
@@ -60,41 +60,46 @@
             <h3 class="card-title">Critérios de Avaliação</h3>
         </div>
         <div class="card-body">
-            <strong><i class="fas fa-solid fa-clock mr-1"></i> ASSIDUIDADE E PONTUALIDADE</strong>
+            <strong>ASSIDUIDADE E PONTUALIDADE:</strong>
             <p class="text-muted">
                 {{str_avaliacao.assiduidade}}
             </p>
-            <strong><i class="fas fa-solid fa-clock mr-1"></i> INICIATIVA E INTERESSE:</strong><br>
+            <hr>
+            <strong>INICIATIVA E INTERESSE:</strong><br>
             Avaliar se o aluno demonstra interesse em acompanhar os atendimentos, iniciativa para auxiliar nas atividades e disponibilidade para aprender.
             <p class="text-muted">
                 {{str_avaliacao.iniciativa}}
             </p>
             <hr>
-            <strong><i class="fas fa-solid fa-clock mr-1"></i> PROFISSIONALISMO E QUALIDADES HUMANÍSTICAS:</strong><br>
+            <strong>PROFISSIONALISMO E QUALIDADES HUMANÍSTICAS:</strong><br>
             Avaliar se o aluno demonstra atitude respeitosa e colaborativa para com os preceptores, os(as) pacientes, demais membros da equipe e colegas estudantes.
             <p class="text-muted">
                 {{str_avaliacao.profissionalismo}}
             </p>
             <hr>
-            <strong><i class="fas fa-solid fa-clock mr-1"></i> RACIOCÍNIO CLÍNICO</strong><br>
+            <strong>RACIOCÍNIO CLÍNICO:</strong><br>
             Avaliar se o aluno realiza adequadamente o exame clínico e se aplica adequadamente os recursos propedêuticos, com vistas ao diagnóstico correto e formulação de planos terapêuticos.
             <p class="text-muted">
                 {{str_avaliacao.raciocinio_clinico}}
             </p>
             <hr>
-            <strong><i class="fas fa-solid fa-clock mr-1"></i> RELAÇÃO MÉDICO-PACIENTE</strong><br>
+            <strong>RELAÇÃO MÉDICO-PACIENTE:</strong><br>
             Avaliar se o aluno comunica-se adequadamente com os(as) paciente(s) e/ou familiares, obtém consentimento (quando necessário), demonstra respeito à privacidade e adota postura ética.
             <p class="text-muted">
                 {{str_avaliacao.relacao_med_paciente}}
             </p>
             <hr>
-            <div class="row">
-                <div class="col-12 border-top border-teal">
-                    <a class="btn btn-outline-light mt-3 float-right" href="#">
-                        <i class="fa-solid fa-file-pdf"></i>
-                        Exportar PDF
-                    </a>
-                </div>
+            <div class="d-flex justify-content-center border-top border-teal">
+                <a href="#" class="btn btn-outline-light mr-3 mt-3">
+                    <i class="fa-solid fa-pen-to-square"></i> Editar
+                </a>
+                <a class="btn btn-primary btn-teal mr-3 mt-3" href="#">
+                    <i class="fa-solid fa-file-pdf"></i>
+                    Exportar PDF
+                </a>
+                <a href="{% url 'avaliacao:excluir_avaliacao_template' avaliacao.id %}" class="btn btn-outline-danger mt-3">
+                    <i class="fa-solid fa-trash-can"></i> Excluir
+                </a>
             </div>
         </div>
     </div>
