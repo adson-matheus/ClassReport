@@ -35,3 +35,12 @@ def excluir_avaliacao(request, id_avaliacao):
     avaliacao.delete()
     messages.success(request, f'Avaliação de {avaliacao.aula_do_aluno.aluno} excluída com sucesso!')
     return redirect('aula:get_aula', avaliacao.aula_do_aluno.aula.id)
+
+def exportar_pdf(request, id_avaliacao):
+    avaliacao = get_object_or_404(Avaliacao, pk=id_avaliacao)
+    str_avaliacao = json_para_string(avaliacao.checklist)
+    context = {
+        'avaliacao': avaliacao,
+        'str_avaliacao': str_avaliacao,
+    }
+    return render(request, 'avaliacao/exportar_pdf.html', context)
