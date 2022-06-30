@@ -1,0 +1,114 @@
+{% load static %}
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Avaliação de Práticas Ambulatoriais</title>
+
+    <!-- CSS's -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/pdf.css' %}">
+</head>
+
+<body onload="window.print()">
+    <!-- SCRIPTS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+    <!-- INÍCIO DO DOCUMENTO DE IMPRESSÃO -->
+
+    <div id="documento">
+        <!-- CABEÇALHO -->
+        <div style="text-align: center;">
+            <img id="cabecalho" src="{% static 'img/cabecalho.png' %}" height="">
+        </div>
+
+        <!-- PREENCHIMENTO DOS VALORES DAS VARIÁVEIS NOS RESPECTIVOS LOCAIS -->
+        <h5 style="text-align: center;">
+            <strong>
+                FICHA DE AVALIAÇÃO DE PRÁTICAS AMBULATORIAIS
+            </strong>
+        </h5>
+        <br>
+        <div id="conteudo">
+            <!-- CORPO PRINCIPAL DO DOCUMENTO -->
+            <div id="inicio">
+                <h5>
+                    Local: <b>Clínica Escola UFRN</b>
+                </h5>
+                <h5>
+                    Data: <b>{{avaliacao.aula_do_aluno.aula.datetime|date:'SHORT_DATE_FORMAT'}} às {{avaliacao.aula_do_aluno.aula.datetime|time:'H:i'}}</b>
+                </h5>
+                <h5>
+                    Turma: <b>{{avaliacao.aula_do_aluno.aula.turma.disciplina}} - {{avaliacao.aula_do_aluno.aula.turma.ano}}.{{avaliacao.aula_do_aluno.aula.turma.periodo}}</b>
+                </h5>
+                <h5>Preceptor Responsável pela Avaliação: <b>{{avaliacao.aula_do_aluno.aula.turma.professor}}</b></h5>
+                <h5>Estudante: <b>{{avaliacao.aula_do_aluno.aluno}}</b></h5>
+            </div>
+            <div class="mt-3">
+                <!-- tabela -->
+                <table class="table table-bordered table-responsive-lg">
+                <thead>
+                    <tr>
+                        <th style="vertical-align: middle">
+                            CRITÉRIOS DE AVALIAÇÃO
+                        </th>
+                        <th style="vertical-align: middle" class="text-center">
+                            CONCEITO ATRIBUÍDO
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="vertical-align: middle">
+                            <strong>ASSIDUIDADE E PONTUALIDADE:</strong>
+                        </td>
+                        <td class="text-center">
+                            {{str_avaliacao.assiduidade}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>INICIATIVA E INTERESSE:</strong> Avaliar se o aluno demonstra interesse em acompanhar os atendimentos, iniciativa para auxiliar nas atividades e disponibilidade para aprender.
+                        </td>
+                        <td style="vertical-align: middle" class="text-center">
+                            {{str_avaliacao.iniciativa}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>PROFISSIONALISMO E QUALIDADES HUMANÍSTICAS:</strong> Avaliar se o aluno demonstra atitude respeitosa e colaborativa para com os preceptores, os(as) pacientes, demais membros da equipe e colegas estudantes.
+                        </td>
+                        <td style="vertical-align: middle" class="text-center">
+                            {{str_avaliacao.profissionalismo}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>RACIOCÍNIO CLÍNICO:</strong> Avaliar se o aluno realiza adequadamente o exame clínico e se aplica adequadamente os recursos propedêuticos, com vistas ao diagnóstico correto e formulação de planos terapêuticos.
+                        </td>
+                        <td style="vertical-align: middle" class="text-center">
+                            {{str_avaliacao.raciocinio_clinico}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>RELAÇÃO MÉDICO-PACIENTE:</strong> Avaliar se o aluno comunica-se adequadamente com os(as) paciente(s) e/ou familiares, obtém consentimento (quando necessário), demonstra respeito à privacidade e adota postura ética.
+                        </td>
+                        <td style="vertical-align: middle" class="text-center">
+                            {{str_avaliacao.relacao_med_paciente}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- CAMPO _ ASSINATURA -->
+            <p id="campoAssinatura">___________________________________</p>
+            <p id="nomeAssinatura"><span>Assinatura do(a) Preceptor(a)</span></p>
+            <p id="carimbo" class="mt-3">Carimbo:</p>
+        </div>
+        <!-- FIM DO DOCUMENTO DE IMPRESSÃO -->
+    </div>
+    <br>
+</body>
+
+</html>
