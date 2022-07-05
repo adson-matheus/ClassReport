@@ -5,7 +5,7 @@ from .utils import json_para_string
 from django.contrib import messages
 from aula.models import AulaDoAluno
 from .models import Avaliacao
-from .forms import AvaliacaoForm
+from .forms import AvaliacaoForm, EditarAvaliacaoForm
 
 @permission_required('avaliacao.add_avaliacao', login_url='/', raise_exception=True)
 def adicionar_avaliacao(request, id_aluno, id_aula):
@@ -30,6 +30,28 @@ def adicionar_avaliacao(request, id_aluno, id_aula):
     }
     context.update(is_admin(request))
     return render(request, 'avaliacao/adicionar_avaliacao.html', context)
+
+@permission_required('avaliacao.change_avaliacao', login_url='/', raise_exception=True)
+def editar_avaliacao(request, id_avaliacao):
+    avaliacao = get_object_or_404(Avaliacao, pk=id_avaliacao)
+    if request.method == 'POST':
+        form = EditarAvaliacaoForm(request.POST, instance=avaliacao)
+        if form.is_valid():
+            avaliacao.checklist = form.cleaned_data['checklist']
+            avaliacao.save()
+            messages.success(request, 'Avaliação editada com sucesso!')
+            return redirect('avaliacao:detalhar_avaliacao', avaliacao.id)
+        else:
+            messages.error(request, 'Erro ao editar avaliação!')
+            return redirect('avaliacao:detalhar_avaliacao', avaliacao.id)
+    else:
+        form = EditarAvaliacaoForm(instance=avaliacao)
+    context = {
+        'avaliacao': avaliacao,
+        'str_avaliacao': json_para_string(avaliacao.checklist),
+        'full_name': request.user.get_full_name(),
+    }
+    return render(request, 'avaliacao/editar_avaliacao.html', context)
 
 @permission_required('avaliacao.view_avaliacao', login_url='/', raise_exception=True)
 def detalhar_avaliacao(request, id_avaliacao):
