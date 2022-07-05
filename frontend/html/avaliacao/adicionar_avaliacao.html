@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block title %}{{full_name}} - Adicionar Avaliação{% endblock %}
+{% block active_link_avaliacao %}active-teal{% endblock %}
+{% block breadcrumb %}
+    {% autoescape off %}
+    <li class="breadcrumb-item">Usuários</li>
+    <li class="breadcrumb-item">{{full_name}}</li>
+    <li class="breadcrumb-item"><a href="{% url 'aula:get_aula' aula_do_aluno.aula.id %}" class="teal-color">Aula</a></li>
+    <li class="breadcrumb-item active">Adicionar Avaliação</li>
+    {% endautoescape %}
+{% endblock %}
+{% block card-title %}
+    {% autoescape off %}
+        <a href="{% url 'aula:get_aula' aula_do_aluno.aula.id %}">
+            <i class="fa-solid fa-circle-arrow-left teal-color"></i>
+        </a>&nbsp
+    {% endautoescape %}
+    Adicionar Avaliação
+{% endblock %}
+{% block h1 %}
+        Adicionar Avaliação de {{aula_do_aluno.aluno}}
+{% endblock %}
+{% block content %}
+<form method='POST'>
+    {% csrf_token %}
+    {% comment %} {{form}} {% endcomment %}
+    
+    <div class="form-group">
+        <label for="assiduidade">Assiduidade e Pontualidade:</label>
+        <select id="assiduidade" type="text" name="assiduidade" class="form-control" required placeholder="Assiduidade">
+            <option value="2" selected="">Chegou pontualmente no horário (2.0).</option>
+            <option value="1">Chegou atrasado na atividade ou plantão (1.0).</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="iniciativa">Iniciativa e Interesse:</label>
+        <span>Avaliar se o aluno demonstra interesse em acompanhar os atendimentos, iniciativa para auxiliar nas atividades e disponibilidade para aprender.</span>
+        <select id="iniciativa" type="text" name="iniciativa" class="form-control" required placeholder="Iniciativa e Interesse:">
+            <option value="2" selected="">Excelente (2.0).</option>
+            <option value="1.5">Satisfatório (1.5).</option>
+            <option value="1">Regular (1.0).</option>
+            <option value="0.5">Insatisfatório (0.5).</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="profissionalismo">Profissionalismo e Qualidades Humanísticas:</label>
+        <span>Avaliar se o aluno demonstra atitude respeitosa e colaborativa para com os preceptores, os(as) pacientes, demais membros da equipe e colegas estudantes.</span>
+        <select id="profissionalismo" type="text" name="profissionalismo" class="form-control" required placeholder="Profissionalismo e Qualidades Humanísticas">
+            <option value="2" selected="">Excelente (2.0).</option>
+            <option value="1.5">Satisfatório (1.5).</option>
+            <option value="1">Regular (1.0).</option>
+            <option value="0.5">Insatisfatório (0.5).</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="raciocinio_clinico">Raciocínio Clínico:</label>
+        <span>Avaliar se o aluno realiza adequadamente o exame clínico e se aplica adequadamente os recursos propedêuticos, com vistas ao diagnóstico correto e formulação de planos terapêuticos.</span>
+        <select id="raciocinio_clinico" type="text" name="raciocinio_clinico" class="form-control" required placeholder="Raciocínio Clínico">
+            <option value="2" selected="">Excelente (2.0).</option>
+            <option value="1.5">Satisfatório (1.5).</option>
+            <option value="1">Regular (1.0).</option>
+            <option value="0.5">Insatisfatório (0.5).</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="relacao_med_paciente">Relação Médico-Paciente:</label>
+        <span>Avaliar se o aluno comunica-se adequadamente com os(as) paciente(s) e/ou familiares, obtém consentimento (quando necessário), demonstra respeito à privacidade e adota postura ética.        </span>
+        <select id="relacao_med_paciente" type="text" name="relacao_med_paciente" class="form-control" required placeholder="Relação Médico-Paciente">
+            <option value="2" selected="">Excelente (2.0).</option>
+            <option value="1.5">Satisfatório (1.5).</option>
+            <option value="1">Regular (1.0).</option>
+            <option value="0.5">Insatisfatório (0.5).</option>
+        </select>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <a class="mr-3" href="{% url 'aula:index_aula_admin' %}">
+            <button type="button" class="btn btn-md btn-outline-light">Cancelar</button>
+        </a>
+        <button type="submit" class="btn btn-outline-primary btn-outline-teal" onclick="getChecklist()">Cadastrar</button>
+    </div>
+
+    <input type="hidden" id="checklist" name="checklist">
+</form>
+
+<script>
+    function getChecklist() {
+        var assiduidade = $('#assiduidade').val();
+        var iniciativa = $('#iniciativa').val();
+        var profissionalismo = $('#profissionalismo').val();
+        var raciocinio_clinico = $('#raciocinio_clinico').val();
+        var relacao_med_paciente = $('#relacao_med_paciente').val();
+        var checklist = {
+            'assiduidade': parseFloat(assiduidade),
+            'iniciativa': parseFloat(iniciativa),
+            'profissionalismo': parseFloat(profissionalismo),
+            'raciocinio_clinico': parseFloat(raciocinio_clinico),
+            'relacao_med_paciente': parseFloat(relacao_med_paciente)
+        };
+
+        document.getElementById("checklist").value = JSON.stringify(checklist);
+    }
+</script>
+{% endblock %}
