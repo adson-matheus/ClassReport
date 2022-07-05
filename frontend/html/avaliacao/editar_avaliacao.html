@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load l10n %}
+{% block title %}{{full_name}} - Editar Avaliação{% endblock %}
+{% block active_link_avaliacao %}active-teal{% endblock %}
+{% block breadcrumb %}
+    {% autoescape off %}
+    <li class="breadcrumb-item">Usuários</li>
+    <li class="breadcrumb-item">{{full_name}}</li>
+    <li class="breadcrumb-item"><a href="{% url 'avaliacao:detalhar_avaliacao' avaliacao.id %}" class="teal-color">Avaliação</a></li>
+    <li class="breadcrumb-item active">Editar Avaliação</li>
+    {% endautoescape %}
+{% endblock %}
+{% block card-title %}
+    {% autoescape off %}
+        <a href="{% url 'avaliacao:detalhar_avaliacao' avaliacao.id %}">
+            <i class="fa-solid fa-circle-arrow-left teal-color"></i>
+        </a>&nbsp
+    {% endautoescape %}
+    Editar Avaliação
+{% endblock %}
+{% block h1 %}
+        Editar Avaliação de {{avaliacao.aula_do_aluno.aluno}}
+{% endblock %}
+{% block content %}
+<form method='POST' onload="add_selected()">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="assiduidade">Assiduidade e Pontualidade:</label>
+        <select id="assiduidade" type="text" name="assiduidade" class="form-control" required placeholder="Assiduidade">
+            <option value="2">Chegou pontualmente no horário (2.0).</option>
+            <option value="1">Chegou atrasado na atividade ou plantão (1.0).</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="iniciativa">Iniciativa e Interesse:</label>
+        <span>Avaliar se o aluno demonstra interesse em acompanhar os atendimentos, iniciativa para auxiliar nas atividades e disponibilidade para aprender.</span>
+        <select id="iniciativa" type="text" name="iniciativa" class="form-control" required placeholder="Iniciativa e Interesse:">
+            <option value="2">Excelente (2.0).</option>
+            <option value="1.5">Satisfatório (1.5).</option>
+            <option value="1">Regular (1.0).</option>
+            <option value="0.5">Insatisfatório (0.5).</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="profissionalismo">Profissionalismo e Qualidades Humanísticas:</label>
+        <span>Avaliar se o aluno demonstra atitude respeitosa e colaborativa para com os preceptores, os(as) pacientes, demais membros da equipe e colegas estudantes.</span>
+        <select id="profissionalismo" type="text" name="profissionalismo" class="form-control" required placeholder="Profissionalismo e Qualidades Humanísticas">
+            <option value="2">Excelente (2.0).</option>
+            <option value="1.5">Satisfatório (1.5).</option>
+            <option value="1">Regular (1.0).</option>
+            <option value="0.5">Insatisfatório (0.5).</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="raciocinio_clinico">Raciocínio Clínico:</label>
+        <span>Avaliar se o aluno realiza adequadamente o exame clínico e se aplica adequadamente os recursos propedêuticos, com vistas ao diagnóstico correto e formulação de planos terapêuticos.</span>
+        <select id="raciocinio_clinico" type="text" name="raciocinio_clinico" class="form-control" required placeholder="Raciocínio Clínico">
+            <option value="2">Excelente (2.0).</option>
+            <option value="1.5">Satisfatório (1.5).</option>
+            <option value="1">Regular (1.0).</option>
+            <option value="0.5">Insatisfatório (0.5).</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="relacao_med_paciente">Relação Médico-Paciente:</label>
+        <span>Avaliar se o aluno comunica-se adequadamente com os(as) paciente(s) e/ou familiares, obtém consentimento (quando necessário), demonstra respeito à privacidade e adota postura ética.        </span>
+        <select id="relacao_med_paciente" type="text" name="relacao_med_paciente" class="form-control" required placeholder="Relação Médico-Paciente">
+            <option value="2">Excelente (2.0).</option>
+            <option value="1.5">Satisfatório (1.5).</option>
+            <option value="1">Regular (1.0).</option>
+            <option value="0.5">Insatisfatório (0.5).</option>
+        </select>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <a class="mr-3" href="{% url 'avaliacao:detalhar_avaliacao' avaliacao.id %}">
+            <button type="button" class="btn btn-md btn-outline-light">Cancelar</button>
+        </a>
+        <button type="submit" class="btn btn-outline-primary btn-outline-teal" onclick="getChecklist()">Cadastrar</button>
+    </div>
+
+    <input type="hidden" id="checklist" name="checklist">
+</form>
+
+<script>
+    function getChecklist() {
+        var assiduidade = $('#assiduidade').val();
+        var iniciativa = $('#iniciativa').val();
+        var profissionalismo = $('#profissionalismo').val();
+        var raciocinio_clinico = $('#raciocinio_clinico').val();
+        var relacao_med_paciente = $('#relacao_med_paciente').val();
+        var checklist = {
+            'assiduidade': parseFloat(assiduidade),
+            'iniciativa': parseFloat(iniciativa),
+            'profissionalismo': parseFloat(profissionalismo),
+            'raciocinio_clinico': parseFloat(raciocinio_clinico),
+            'relacao_med_paciente': parseFloat(relacao_med_paciente)
+        };
+
+        document.getElementById("checklist").value = JSON.stringify(checklist);
+    }
+
+    window.onload = function add_selected() {
+        var assiduidade = {{avaliacao.checklist.assiduidade|unlocalize}};
+        var iniciativa = {{avaliacao.checklist.iniciativa|unlocalize}};
+        var profissionalismo = {{avaliacao.checklist.profissionalismo|unlocalize}};
+        var raciocinio_clinico = {{avaliacao.checklist.raciocinio_clinico|unlocalize}};
+        var relacao_med_paciente = {{avaliacao.checklist.relacao_med_paciente|unlocalize}};
+        $(`select#assiduidade option[value='${assiduidade}']`).prop("selected","selected");
+        $(`select#iniciativa option[value='${iniciativa}']`).prop("selected","selected");
+        $(`select#profissionalismo option[value='${profissionalismo}']`).prop("selected","selected");
+        $(`select#raciocinio_clinico option[value='${raciocinio_clinico}']`).prop("selected","selected");
+        $(`select#relacao_med_paciente option[value='${relacao_med_paciente}']`).prop("selected","selected");
+    }
+
+</script>
+{% endblock %}
