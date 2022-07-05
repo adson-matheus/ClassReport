@@ -82,6 +82,7 @@ def excluir_avaliacao(request, id_avaliacao):
     messages.success(request, f'Avaliação de {avaliacao.aula_do_aluno.aluno} excluída com sucesso!')
     return redirect('aula:get_aula', avaliacao.aula_do_aluno.aula.id)
 
+@permission_required('avaliacao.view_avaliacao', login_url='/', raise_exception=True)
 def exportar_pdf(request, id_avaliacao):
     avaliacao = get_object_or_404(Avaliacao, pk=id_avaliacao)
     str_avaliacao = json_para_string(avaliacao.checklist)
