@@ -102,7 +102,7 @@
             </p>
             <hr>
             <div class="d-flex justify-content-center border-top border-teal">
-                <a href="#" class="btn btn-outline-light mr-3 mt-3">
+                <a href="{% url 'avaliacao:editar_avaliacao' avaliacao.id %}" class="btn btn-outline-light mr-3 mt-3">
                     <i class="fa-solid fa-pen-to-square"></i> Editar
                 </a>
                 <a class="btn btn-primary btn-teal mr-3 mt-3" href="{% url 'avaliacao:exportar_pdf' avaliacao.id %}">
