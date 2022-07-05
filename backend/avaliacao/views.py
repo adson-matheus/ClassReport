@@ -5,7 +5,7 @@ from .utils import json_para_string
 from django.contrib import messages
 from aula.models import AulaDoAluno
 from .models import Avaliacao
-from .forms import AvaliacaoForm
+from .forms import AvaliacaoForm, EditarAvaliacaoForm
 
 @permission_required('avaliacao.add_avaliacao', login_url='/', raise_exception=True)
 def adicionar_avaliacao(request, id_aluno, id_aula):
@@ -14,11 +14,10 @@ def adicionar_avaliacao(request, id_aluno, id_aula):
         form = AvaliacaoForm(request.POST)
         if form.is_valid():
             checklist = form.cleaned_data['checklist']
-            print(checklist)
             avaliacao = Avaliacao(aula_do_aluno=aula_do_aluno, checklist=checklist)
             avaliacao.save()
             messages.success(request, 'Avaliação adicionada com sucesso!')
-            return redirect('avaliacao:detalhar_avaliacao', id_aula, id_aluno)
+            return redirect('avaliacao:detalhar_avaliacao', avaliacao.id)
         else:
             messages.error(request, 'Erro ao adicionar avaliação!')
             return redirect('aula:get_aula', aula_do_aluno.aula.id)
@@ -32,10 +31,31 @@ def adicionar_avaliacao(request, id_aluno, id_aula):
     context.update(is_admin(request))
     return render(request, 'avaliacao/adicionar_avaliacao.html', context)
 
+@permission_required('avaliacao.change_avaliacao', login_url='/', raise_exception=True)
+def editar_avaliacao(request, id_avaliacao):
+    avaliacao = get_object_or_404(Avaliacao, pk=id_avaliacao)
+    if request.method == 'POST':
+        form = EditarAvaliacaoForm(request.POST, instance=avaliacao)
+        if form.is_valid():
+            avaliacao.checklist = form.cleaned_data['checklist']
+            avaliacao.save()
+            messages.success(request, 'Avaliação editada com sucesso!')
+            return redirect('avaliacao:detalhar_avaliacao', avaliacao.id)
+        else:
+            messages.error(request, 'Erro ao editar avaliação!')
+            return redirect('avaliacao:detalhar_avaliacao', avaliacao.id)
+    else:
+        form = EditarAvaliacaoForm(instance=avaliacao)
+    context = {
+        'avaliacao': avaliacao,
+        'str_avaliacao': json_para_string(avaliacao.checklist),
+        'full_name': request.user.get_full_name(),
+    }
+    return render(request, 'avaliacao/editar_avaliacao.html', context)
+
 @permission_required('avaliacao.view_avaliacao', login_url='/', raise_exception=True)
-def detalhar_avaliacao(request, id_aluno, id_aula):
-    aula_do_aluno = get_object_or_404(AulaDoAluno, aluno=id_aluno, aula=id_aula)
-    avaliacao = get_object_or_404(Avaliacao, aula_do_aluno=aula_do_aluno)
+def detalhar_avaliacao(request, id_avaliacao):
+    avaliacao = get_object_or_404(Avaliacao, id=id_avaliacao)
     str_avaliacao = json_para_string(avaliacao.checklist)
     context = {
         'full_name': request.user.get_full_name(),
@@ -62,6 +82,7 @@ def excluir_avaliacao(request, id_avaliacao):
     messages.success(request, f'Avaliação de {avaliacao.aula_do_aluno.aluno} excluída com sucesso!')
     return redirect('aula:get_aula', avaliacao.aula_do_aluno.aula.id)
 
+@permission_required('avaliacao.view_avaliacao', login_url='/', raise_exception=True)
 def exportar_pdf(request, id_avaliacao):
     avaliacao = get_object_or_404(Avaliacao, pk=id_avaliacao)
     str_avaliacao = json_para_string(avaliacao.checklist)
