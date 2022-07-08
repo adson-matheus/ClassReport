@@ -26,7 +26,10 @@ def add_admin_template(request):
         form_admin = AdministradorForm(request.POST)
         created = add_admin_controller(form_user=form_user, form_admin=form_admin)
         if created:
+            messages.success(request, "Administrador(a) criado com sucesso!")
             return redirect('login:index')
+        else:
+            messages.error(request, "Erro ao criar administrador(a)! Provavelmente já existe um usuário com esse username ou siape.")
     else:
         form_user = UserForm()
         form_admin = AdministradorForm()
