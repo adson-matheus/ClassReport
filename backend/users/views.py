@@ -1,10 +1,8 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required, permission_required
-from django.db.models import ProtectedError
 from django.contrib import messages
 from users.utils import is_admin, listar_alunos
 from django.contrib.auth.models import User, Group
-from disciplina.models import Disciplina
 from .models import Administrador, Professor, Aluno
 from .forms import AdministradorForm, ProfessorForm, UserForm, AlunoForm, EditarAlunoForm
 from django.http import HttpResponse

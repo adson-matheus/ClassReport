@@ -121,6 +121,17 @@ class AulaDoAlunoView():
         context.update({'form':form})
         return render(request, 'aula_do_aluno/add_aluno_em_aula.html', context)
 
+    @permission_required('aula.view_auladoaluno', login_url='/', raise_exception=True)
+    def aulas_do_aluno(request, matr):
+        aluno = get_object_or_404(Aluno, matricula=matr)
+        context = {
+            'full_name': request.user.get_full_name(),
+            'aluno': aluno,
+            'aulas': AulaDoAluno.objects.filter(aluno=aluno)
+        }
+        context.update(is_admin(request))
+        return render(request, 'aula_do_aluno/aulas_do_aluno.html', context)
+
     @permission_required('aula.delete_auladoaluno', login_url='/', raise_exception=True)
     def remover_aluno_de_aula_template(request, id_aluno, id_aula):
         aula = get_object_or_404(AulaDoAluno, aula=id_aula, aluno=id_aluno)
