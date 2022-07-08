@@ -55,15 +55,14 @@ def add_prof_template(request):
         form_prof = ProfessorForm(request.POST)
         created = add_prof_controller(form_user=form_user, form_prof=form_prof)
         if created:
+            messages.success(request, "Professor(a) criado com sucesso!")
             return redirect('login:index')
-        form = ProfessorForm(request.POST)
+        else:
+            messages.error(request, "Erro ao criar professor(a)! Provavelmente já existe um usuário com esse username ou siape.")
     else:
-        form = ProfessorForm()
-
-    context = {
-        'form': form,
-    }
-    context.update(is_admin(request))
+        form_user = UserForm(request.POST)
+        form_prof = ProfessorForm(request.POST)
+    context = is_admin(request)
     return render(request, 'users/add_prof_template.html', context)
 
 def add_generic_user(form_user, group_name):
