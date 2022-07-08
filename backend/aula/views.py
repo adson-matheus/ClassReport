@@ -2,9 +2,9 @@ from django.contrib.auth.decorators import permission_required
 from users.utils import is_admin, listar_alunos
 from django.shortcuts import redirect, render, get_object_or_404
 from users.utils import is_admin
-from users.models import Professor
-from turma.models import Turma
 from users.models import Professor, Aluno
+from turma.models import Turma
+from avaliacao.models import Avaliacao
 from .forms import AulaForm, AulaFormEdit, AulaDoAlunoForm
 from .models import Aula, AulaDoAluno
 
@@ -49,11 +49,18 @@ class AulaTemplate:
         return render(request, 'aula/add_aula.html', context)
 
     def get_aula(request, id):
+        #avaliacoes = []
         aula = get_object_or_404(Aula, pk=id)
+        alunos = AulaDoAluno.objects.filter(aula=aula)
+        # for aluno in alunos:
+        #     avaliacoes.append(Avaliacao.objects.filter(aula_do_aluno=aluno))
+        # avaliacoes_dos_alunos = zip(alunos, avaliacoes)
         context = {
             'full_name': request.user.get_full_name(),
             'aula': aula,
-            'alunos': AulaDoAluno.objects.filter(aula=aula)
+            'alunos': alunos,
+            #'avaliacoes': avaliacoes,
+            #'avaliacoes_dos_alunos': avaliacoes_dos_alunos,
         }
         context.update(is_admin(request))
         return render(request, 'aula/get_aula.html', context)
