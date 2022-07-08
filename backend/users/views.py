@@ -120,7 +120,7 @@ class AlunoTemplate:
 
     @permission_required('users.change_aluno', login_url='/', raise_exception=True)
     def edit_aluno(request, matr):
-        aluno = Aluno.objects.get(matricula=matr)
+        aluno = get_object_or_404(Aluno, matricula=matr)
         if request.method == 'POST':
             form = EditarAlunoForm(request.POST, instance=aluno)
             if form.is_valid():
@@ -152,7 +152,7 @@ class AlunoTemplate:
 
     @permission_required('users.delete_aluno', login_url='/', raise_exception=True)
     def delete_aluno(request, matr):
-        aluno = Aluno.objects.get(matricula=matr)
+        aluno = get_object_or_404(Aluno, matricula=matr)
         aluno.delete()
         # msg
         return redirect('users:index_aluno')
@@ -171,7 +171,7 @@ class ProfessorTemplate:
         return render(request, 'users/prof/professores.html', context)
 
     def delete_professor_template(request, siape):
-        professor = Professor.objects.get(siape=siape)
+        professor = get_object_or_404(Professor, siape=siape)
         context = {
             'full_name': request.user.get_full_name(),
             'professor': professor,

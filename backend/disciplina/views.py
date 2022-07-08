@@ -56,7 +56,7 @@ def editar_disciplina(request, id):
 
 @permission_required('disciplina.delete_disciplina', login_url='/', raise_exception=True)
 def excluir_disciplina_template(request, id):
-    disciplina = Disciplina.objects.get(pk=id)
+    disciplina = get_object_or_404(Disciplina, pk=id)
     context = {
         'full_name': request.user.get_full_name(),
         'disciplina': disciplina,

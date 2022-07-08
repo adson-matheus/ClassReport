@@ -1,16 +1,14 @@
 from django.contrib.auth.decorators import permission_required
 from users.utils import is_admin, listar_alunos
 from django.shortcuts import redirect, render, get_object_or_404
-from users.utils import is_admin
-from users.models import Professor
 from turma.models import Turma
 from users.models import Professor, Aluno
-from .forms import AulaForm, AulaFormEdit, AulaDoAlunoForm
 from .models import Aula, AulaDoAluno
+from .forms import AulaForm, AulaFormEdit, AulaDoAlunoForm
 
 class AulaTemplate:
     def index_aula_prof(request, username):
-        prof = Professor.objects.get(user=request.user)
+        prof = get_object_or_404(Professor, user=request.user)
         context = {
             'queryset': Aula.objects.filter(turma__professor = prof),
             'username': username,
@@ -60,7 +58,7 @@ class AulaTemplate:
 
     @permission_required('aula.change_aula', login_url='/', raise_exception=True)
     def edit_aula(request, id):
-        aula = Aula.objects.get(pk=id)
+        aula = get_object_or_404(Aula, pk=id)
         if request.method == 'POST':
             form_aula = AulaFormEdit(request.POST, instance=aula)
             if form_aula.is_valid():
@@ -87,7 +85,7 @@ class AulaTemplate:
 
     @permission_required('aula.delete_aula', login_url='/', raise_exception=True)
     def delete_aula_template(request, id):
-        aula = Aula.objects.get(pk=id)
+        aula = get_object_or_404(Aula, pk=id)
         context = {
             'full_name': request.user.get_full_name(),
             'aula': aula,
@@ -97,7 +95,7 @@ class AulaTemplate:
 
     @permission_required('aula.delete_aula', login_url='/', raise_exception=True)
     def delete_aula(request, id):
-        aula = Aula.objects.get(pk=id)
+        aula = get_object_or_404(Aula, pk=id)
         aula.delete()
         return redirect('aula:index_aula_admin')
 

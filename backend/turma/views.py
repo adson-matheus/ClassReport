@@ -37,7 +37,7 @@ def adicionar_turma(request):
 def editar_turma(request, id):
     professores = Professor.objects.exclude(user__is_active=False)
     disciplinas = Disciplina.objects.all()
-    turma = Turma.objects.get(id=id)
+    turma = get_object_or_404(Turma, pk=id)
     if request.method == 'POST':
         form = EditarTurmaForm(request.POST, instance=turma)
         if form.is_valid():
@@ -95,7 +95,7 @@ def listar_aulas_de_turma(request, id):
 
 @permission_required('turma.delete_turma', login_url='/', raise_exception=True)
 def excluir_turma_template(request, id):
-    turma = Turma.objects.get(pk=id)
+    turma = get_object_or_404(Turma, pk=id)
     context = {
         'full_name': request.user.get_full_name(),
         'turma': turma,
