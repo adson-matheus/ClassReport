@@ -1,10 +1,12 @@
 from django.contrib.auth.decorators import permission_required
-from users.utils import is_admin, listar_alunos
 from django.shortcuts import redirect, render, get_object_or_404
-from turma.models import Turma
-from users.models import Professor, Aluno
+from django.contrib import messages
+from users.utils import is_admin
+from .utils import alunos_nao_participantes_de_aula
 from .models import Aula, AulaDoAluno
 from .forms import AulaForm, AulaFormEdit, AulaDoAlunoForm
+from turma.models import Turma
+from users.models import Professor, Aluno
 
 class AulaTemplate:
     def index_aula_prof(request, username):
@@ -113,12 +115,19 @@ class AulaDoAlunoView():
                 AulaDoAluno.objects.bulk_create(ignore_conflicts=False, objs = [
                     AulaDoAluno(aula=aula, aluno=Aluno.objects.get(pk=id)) for id in id_alunos
                 ])
+                messages.success(request, 'Aluno(s) adicionado(s) com sucesso!')
                 return redirect('aula:get_aula', id_aula)
+            else:
+                messages.error(request, 'Erro ao adicionar aluno(s)')
         else:
             form = AulaDoAlunoForm()
-        context = listar_alunos(request)
-        context.update({'aula':aula})
-        context.update({'form':form})
+        context = {
+            'full_name': request.user.get_full_name(),
+            'aula':aula,
+            'form': form,
+        }
+        context.update({'alunos': alunos_nao_participantes_de_aula(id_aula)})
+        context.update(is_admin(request))
         return render(request, 'aula_do_aluno/add_aluno_em_aula.html', context)
 
     @permission_required('aula.view_auladoaluno', login_url='/', raise_exception=True)
@@ -146,5 +155,5 @@ class AulaDoAlunoView():
     def remover_aluno_de_aula(request, id_aluno, id_aula):
         aula = get_object_or_404(AulaDoAluno, aula=id_aula, aluno=id_aluno)
         aula.delete()
-        #msg successo
+        messages.success(request, 'Aluno removido da aula com sucesso!')
         return redirect("aula:get_aula", id_aula)
