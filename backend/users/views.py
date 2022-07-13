@@ -88,7 +88,9 @@ class AlunoTemplate:
     """
     @permission_required('users.view_aluno', login_url='/', raise_exception=True)
     def index_aluno(request):
-        context = listar_alunos(request)
+        context = listar_alunos()
+        context.update({"full_name": request.user.get_full_name()})
+        context.update(is_admin(request))
         return render(request, 'users/aluno/alunos.html', context)
 
     @permission_required('users.add_aluno', login_url='/', raise_exception=True)
