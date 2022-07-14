@@ -14,7 +14,7 @@ urlpatterns = [
 
     # aula do aluno
     path("<int:matr>/detail", views.AulaDoAlunoView.aulas_do_aluno, name='aulas_do_aluno'),
-    path("detail/<int:id_aula>/aluno", views.AulaDoAlunoView.add_aluno_em_aula, name='add_aluno_em_aula'),
-    path("detail/<int:id_aula>/aluno/delete/<int:id_aluno>", views.AulaDoAlunoView.remover_aluno_de_aula_template, name='remover_aluno_de_aula_template'),
-    path("detail/<int:id_aula>/aluno/delete/<int:id_aluno>/confirm", views.AulaDoAlunoView.remover_aluno_de_aula, name='remover_aluno_de_aula'),
+    path("detail/<int:aula_id>/aluno", views.AulaDoAlunoView.add_aluno_em_aula, name='add_aluno_em_aula'),
+    path("detail/<int:aula_id>/aluno/delete/<int:aluno_id>", views.AulaDoAlunoView.remover_aluno_de_aula_template, name='remover_aluno_de_aula_template'),
+    path("detail/<int:aula_id>/aluno/delete/<int:aluno_id>/confirm", views.AulaDoAlunoView.remover_aluno_de_aula, name='remover_aluno_de_aula'),
 ]
