@@ -10,8 +10,27 @@
 {% block active_link_add_prof %}active{% endblock %}
 {% block active_cadastro_nav %}active-teal{% endblock %}
 {% block menu_cadastro_open %}menu-open{% endblock %}
-{% block card-title %}Professor{% endblock %}
+{% block card-title %}
+    {% autoescape off %}
+        <a href="#" onclick="history.back()">
+            <i class="fa-solid fa-circle-arrow-left teal-color"></i>
+        </a>&nbsp
+    {% endautoescape %}
+    Professor
+{% endblock %}
 {% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="container-fluid p-0">
+                <div class="alert {% if message.tags %} {{ message.tags }} {% endif %} alert-dismissible" role="alert">
+                    <button type="button" class="close text-black" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="True">&times;</span>
+                    </button>
+                    {{ message }}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
     <form method="post">
         {% csrf_token %}
         <div class="form-group">
@@ -48,7 +67,4 @@
             <button type="submit" class="btn btn-outline-primary btn-outline-teal">Cadastrar</button>
         </div>
     </form>
-{% endblock %}
-{% block footer %}
-    *Se sua área não estiver aqui, peça ao seu administrador para que adicione antes de efetuar seu cadastro. 
 {% endblock %}

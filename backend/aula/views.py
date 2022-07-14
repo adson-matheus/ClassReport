@@ -1,16 +1,16 @@
 from django.contrib.auth.decorators import permission_required
-from users.utils import is_admin, listar_alunos
 from django.shortcuts import redirect, render, get_object_or_404
+from django.contrib import messages
 from users.utils import is_admin
-from users.models import Professor, Aluno
-from turma.models import Turma
-from avaliacao.models import Avaliacao
-from .forms import AulaForm, AulaFormEdit, AulaDoAlunoForm
+from .utils import alunos_nao_participantes_de_aula
 from .models import Aula, AulaDoAluno
+from .forms import AulaForm, AulaFormEdit, AulaDoAlunoForm
+from turma.models import Turma
+from users.models import Professor, Aluno
 
 class AulaTemplate:
     def index_aula_prof(request, username):
-        prof = Professor.objects.get(user=request.user)
+        prof = get_object_or_404(Professor, user=request.user)
         context = {
             'queryset': Aula.objects.filter(turma__professor = prof),
             'username': username,
@@ -67,7 +67,7 @@ class AulaTemplate:
 
     @permission_required('aula.change_aula', login_url='/', raise_exception=True)
     def edit_aula(request, id):
-        aula = Aula.objects.get(pk=id)
+        aula = get_object_or_404(Aula, pk=id)
         if request.method == 'POST':
             form_aula = AulaFormEdit(request.POST, instance=aula)
             if form_aula.is_valid():
@@ -94,7 +94,7 @@ class AulaTemplate:
 
     @permission_required('aula.delete_aula', login_url='/', raise_exception=True)
     def delete_aula_template(request, id):
-        aula = Aula.objects.get(pk=id)
+        aula = get_object_or_404(Aula, pk=id)
         context = {
             'full_name': request.user.get_full_name(),
             'aula': aula,
@@ -104,7 +104,7 @@ class AulaTemplate:
 
     @permission_required('aula.delete_aula', login_url='/', raise_exception=True)
     def delete_aula(request, id):
-        aula = Aula.objects.get(pk=id)
+        aula = get_object_or_404(Aula, pk=id)
         aula.delete()
         return redirect('aula:index_aula_admin')
 
@@ -122,13 +122,31 @@ class AulaDoAlunoView():
                 AulaDoAluno.objects.bulk_create(ignore_conflicts=False, objs = [
                     AulaDoAluno(aula=aula, aluno=Aluno.objects.get(pk=id)) for id in id_alunos
                 ])
+                messages.success(request, 'Aluno(s) adicionado(s) com sucesso!')
                 return redirect('aula:get_aula', id_aula)
+            else:
+                messages.error(request, 'Erro ao adicionar aluno(s)')
         else:
             form = AulaDoAlunoForm()
-        context = listar_alunos(request)
-        context.update({'aula':aula})
-        context.update({'form':form})
+        context = {
+            'full_name': request.user.get_full_name(),
+            'aula':aula,
+            'form': form,
+        }
+        context.update({'alunos': alunos_nao_participantes_de_aula(id_aula)})
+        context.update(is_admin(request))
         return render(request, 'aula_do_aluno/add_aluno_em_aula.html', context)
+
+    @permission_required('aula.view_auladoaluno', login_url='/', raise_exception=True)
+    def aulas_do_aluno(request, matr):
+        aluno = get_object_or_404(Aluno, matricula=matr)
+        context = {
+            'full_name': request.user.get_full_name(),
+            'aluno': aluno,
+            'aulas': AulaDoAluno.objects.filter(aluno=aluno)
+        }
+        context.update(is_admin(request))
+        return render(request, 'aula_do_aluno/aulas_do_aluno.html', context)
 
     @permission_required('aula.delete_auladoaluno', login_url='/', raise_exception=True)
     def remover_aluno_de_aula_template(request, id_aluno, id_aula):
@@ -144,5 +162,5 @@ class AulaDoAlunoView():
     def remover_aluno_de_aula(request, id_aluno, id_aula):
         aula = get_object_or_404(AulaDoAluno, aula=id_aula, aluno=id_aluno)
         aula.delete()
-        #msg successo
+        messages.success(request, 'Aluno removido da aula com sucesso!')
         return redirect("aula:get_aula", id_aula)

@@ -1,10 +1,8 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required, permission_required
-from django.db.models import ProtectedError
 from django.contrib import messages
 from users.utils import is_admin, listar_alunos
 from django.contrib.auth.models import User, Group
-from disciplina.models import Disciplina
 from .models import Administrador, Professor, Aluno
 from .forms import AdministradorForm, ProfessorForm, UserForm, AlunoForm, EditarAlunoForm
 from django.http import HttpResponse
@@ -26,7 +24,10 @@ def add_admin_template(request):
         form_admin = AdministradorForm(request.POST)
         created = add_admin_controller(form_user=form_user, form_admin=form_admin)
         if created:
+            messages.success(request, "Administrador(a) criado com sucesso!")
             return redirect('login:index')
+        else:
+            messages.error(request, "Erro ao criar administrador(a)! Provavelmente já existe um usuário com esse username ou siape.")
     else:
         form_user = UserForm()
         form_admin = AdministradorForm()
@@ -55,15 +56,14 @@ def add_prof_template(request):
         form_prof = ProfessorForm(request.POST)
         created = add_prof_controller(form_user=form_user, form_prof=form_prof)
         if created:
+            messages.success(request, "Professor(a) criado com sucesso!")
             return redirect('login:index')
-        form = ProfessorForm(request.POST)
+        else:
+            messages.error(request, "Erro ao criar professor(a)! Provavelmente já existe um usuário com esse username ou siape.")
     else:
-        form = ProfessorForm()
-
-    context = {
-        'form': form,
-    }
-    context.update(is_admin(request))
+        form_user = UserForm(request.POST)
+        form_prof = ProfessorForm(request.POST)
+    context = is_admin(request)
     return render(request, 'users/add_prof_template.html', context)
 
 def add_generic_user(form_user, group_name):
@@ -88,7 +88,9 @@ class AlunoTemplate:
     """
     @permission_required('users.view_aluno', login_url='/', raise_exception=True)
     def index_aluno(request):
-        context = listar_alunos(request)
+        context = listar_alunos()
+        context.update({"full_name": request.user.get_full_name()})
+        context.update(is_admin(request))
         return render(request, 'users/aluno/alunos.html', context)
 
     @permission_required('users.add_aluno', login_url='/', raise_exception=True)
@@ -118,7 +120,7 @@ class AlunoTemplate:
 
     @permission_required('users.change_aluno', login_url='/', raise_exception=True)
     def edit_aluno(request, matr):
-        aluno = Aluno.objects.get(matricula=matr)
+        aluno = get_object_or_404(Aluno, matricula=matr)
         if request.method == 'POST':
             form = EditarAlunoForm(request.POST, instance=aluno)
             if form.is_valid():
@@ -150,7 +152,7 @@ class AlunoTemplate:
 
     @permission_required('users.delete_aluno', login_url='/', raise_exception=True)
     def delete_aluno(request, matr):
-        aluno = Aluno.objects.get(matricula=matr)
+        aluno = get_object_or_404(Aluno, matricula=matr)
         aluno.delete()
         # msg
         return redirect('users:index_aluno')
@@ -169,7 +171,7 @@ class ProfessorTemplate:
         return render(request, 'users/prof/professores.html', context)
 
     def delete_professor_template(request, siape):
-        professor = Professor.objects.get(siape=siape)
+        professor = get_object_or_404(Professor, siape=siape)
         context = {
             'full_name': request.user.get_full_name(),
             'professor': professor,
