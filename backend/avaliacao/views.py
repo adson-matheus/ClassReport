@@ -8,8 +8,8 @@ from .models import Avaliacao
 from .forms import AvaliacaoForm, EditarAvaliacaoForm
 
 @permission_required('avaliacao.add_avaliacao', login_url='/', raise_exception=True)
-def adicionar_avaliacao(request, id_aluno, id_aula):
-    aula_do_aluno = get_object_or_404(AulaDoAluno, aluno=id_aluno, aula=id_aula)
+def adicionar_avaliacao(request, aluno_id, aula_id):
+    aula_do_aluno = get_object_or_404(AulaDoAluno, aluno=aluno_id, aula=aula_id)
     if request.method == 'POST':
         form = AvaliacaoForm(request.POST)
         if form.is_valid():

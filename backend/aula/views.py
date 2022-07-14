@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import permission_required
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 from users.utils import is_admin
+from avaliacao.utils import alunos_sem_avaliacao_da_aula
 from .utils import alunos_nao_participantes_de_aula
 from .models import Aula, AulaDoAluno
 from .forms import AulaForm, AulaFormEdit, AulaDoAlunoForm
@@ -53,8 +54,8 @@ class AulaTemplate:
         context = {
             'full_name': request.user.get_full_name(),
             'aula': aula,
-            'alunos': AulaDoAluno.objects.filter(aula=aula)
         }
+        context.update(alunos_sem_avaliacao_da_aula(aula))
         context.update(is_admin(request))
         return render(request, 'aula/get_aula.html', context)
 
@@ -106,8 +107,8 @@ class AulaDoAlunoView():
         CRUD para manter um aluno em uma aula
     """
     @permission_required('aula.add_auladoaluno', login_url='/', raise_exception=True)
-    def add_aluno_em_aula(request, id_aula):
-        aula = get_object_or_404(Aula, pk=id_aula)
+    def add_aluno_em_aula(request, aula_id):
+        aula = get_object_or_404(Aula, pk=aula_id)
         if request.method == 'POST':
             form = AulaDoAlunoForm(request.POST)
             if form.is_valid():
@@ -116,7 +117,7 @@ class AulaDoAlunoView():
                     AulaDoAluno(aula=aula, aluno=Aluno.objects.get(pk=id)) for id in id_alunos
                 ])
                 messages.success(request, 'Aluno(s) adicionado(s) com sucesso!')
-                return redirect('aula:get_aula', id_aula)
+                return redirect('aula:get_aula', aula_id)
             else:
                 messages.error(request, 'Erro ao adicionar aluno(s)')
         else:
@@ -126,7 +127,7 @@ class AulaDoAlunoView():
             'aula':aula,
             'form': form,
         }
-        context.update({'alunos': alunos_nao_participantes_de_aula(id_aula)})
+        context.update({'alunos': alunos_nao_participantes_de_aula(aula_id)})
         context.update(is_admin(request))
         return render(request, 'aula_do_aluno/add_aluno_em_aula.html', context)
 
@@ -142,8 +143,8 @@ class AulaDoAlunoView():
         return render(request, 'aula_do_aluno/aulas_do_aluno.html', context)
 
     @permission_required('aula.delete_auladoaluno', login_url='/', raise_exception=True)
-    def remover_aluno_de_aula_template(request, id_aluno, id_aula):
-        aula = get_object_or_404(AulaDoAluno, aula=id_aula, aluno=id_aluno)
+    def remover_aluno_de_aula_template(request, aluno_id, aula_id):
+        aula = get_object_or_404(AulaDoAluno, aula=aula_id, aluno=aluno_id)
         context = {
             'aula':aula,
             'full_name': request.user.get_full_name(),
@@ -152,8 +153,8 @@ class AulaDoAlunoView():
         return render(request, 'aula_do_aluno/remover_aluno_de_aula_template.html', context)
 
     @permission_required('aula.delete_auladoaluno', login_url='/', raise_exception=True)
-    def remover_aluno_de_aula(request, id_aluno, id_aula):
-        aula = get_object_or_404(AulaDoAluno, aula=id_aula, aluno=id_aluno)
+    def remover_aluno_de_aula(request, aluno_id, aula_id):
+        aula = get_object_or_404(AulaDoAluno, aula=aula_id, aluno=aluno_id)
         aula.delete()
         messages.success(request, 'Aluno removido da aula com sucesso!')
-        return redirect("aula:get_aula", id_aula)
+        return redirect("aula:get_aula", aula_id)
