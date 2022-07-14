@@ -1,4 +1,4 @@
-from users import views
+from users import views, views_password_reset
 from django.urls import path
 
 app_name = 'users'
@@ -13,4 +13,7 @@ urlpatterns = [
     path('prof/add', views.add_prof_template, name='add_prof_template'),
     path('prof/delete/<int:siape>', views.ProfessorTemplate.delete_professor_template, name='delete_prof_template'),
     path('prof/delete/<int:siape>/confirm', views.ProfessorTemplate.delete_professor, name='delete_prof'),
+
+    #password
+    path("password_reset", views_password_reset.resetar_senha, name="resetar_senha")
 ]
