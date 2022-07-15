@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import permission_required
 from django.shortcuts import redirect, render, get_object_or_404
 from users.utils import is_admin
 from avaliacao.utils import alunos_sem_avaliacao_da_aula
+from django.contrib import messages
 from .models import Aula
 from .forms import AulaForm, AulaFormEdit
 from turma.models import Turma
@@ -33,10 +34,10 @@ class AulaTemplate:
             form_aula = AulaForm(request.POST)
             if form_aula.is_valid():
                 form_aula.save()
+                messages.success(request, 'Aula cadastrada com sucesso!')
                 return redirect('aula:index_aula_admin')
             else:
-                pass
-                #message
+                messages.error(request, 'Erro ao cadastrar aula!')
         else:
             form_aula = AulaForm()
         context = {
@@ -67,11 +68,11 @@ class AulaTemplate:
                 turma = dados['turma']
                 assunto = dados['assunto']
                 datetime = dados['datetime']
+                messages.success(request, 'Aula editada com sucesso!')
                 Aula(id=id, turma=turma, assunto=assunto, datetime=datetime).save()
-                # msg
                 return redirect('aula:get_aula', id)
             else:
-                # msg
+                messages.error(request, 'Erro ao editar aula!')
                 return redirect('aula:index_aula_admin')
         else:
             form_aula = AulaFormEdit(instance=aula)
@@ -98,5 +99,6 @@ class AulaTemplate:
     def delete_aula(request, id):
         aula = get_object_or_404(Aula, pk=id)
         aula.delete()
+        messages.success(request, 'Aula deletada com sucesso!')
         return redirect('aula:index_aula_admin')
 
