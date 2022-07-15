@@ -92,6 +92,7 @@ DATABASES = {
         'PASSWORD': config('DB_PASS'),
         'HOST': config('HOST'),
         'PORT': config('PORT'),
+        #'TIME_ZONE': 'America/Fortaleza'
     }
 }
 
