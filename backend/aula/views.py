@@ -3,8 +3,9 @@ from django.shortcuts import redirect, render, get_object_or_404
 from users.utils import is_admin
 from avaliacao.utils import alunos_sem_avaliacao_da_aula
 from django.contrib import messages
+from .utils import datas_recorrentes
 from .models import Aula
-from .forms import AulaForm, AulaFormEdit
+from .forms import AulaForm, AulaFormEdit, AulasRecorrentes
 from turma.models import Turma
 from users.models import Professor
 
@@ -47,6 +48,34 @@ class AulaTemplate:
         }
         context.update(is_admin(request))
         return render(request, 'aula/add_aula.html', context)
+
+    @permission_required('aula.add_aula', login_url='/', raise_exception=True)
+    def add_aulas_recorrentes(request):
+        if request.method == 'POST':
+            form_aula = AulasRecorrentes(request.POST)
+            if form_aula.is_valid():
+                turma = form_aula.cleaned_data['turma']
+                assunto = form_aula.cleaned_data['assunto']
+                data_inicio = form_aula.cleaned_data['data_inicio']
+                data_fim = form_aula.cleaned_data['data_fim']
+                hora = form_aula.cleaned_data['hora']
+                intervalo = form_aula.cleaned_data['intervalo']
+
+                datas = datas_recorrentes(data_inicio=data_inicio, data_fim=data_fim, hora=hora, intervalo=intervalo)
+                Aula.objects.bulk_create(objs = [ Aula(turma=turma, datetime=data, assunto=assunto).save() for data in datas ])
+                messages.success(request, 'Aulas cadastradas com sucesso!')
+                return redirect('login:index')
+            else:
+                messages.error(request, 'Erro ao cadastrar aulas!')
+        else:
+            form_aula = AulasRecorrentes()
+        context = {
+            'form_aula': form_aula,
+            'full_name': request.user.get_full_name(),
+        }
+        context.update(is_admin(request))
+        return render(request, 'aula/add_aulas_recorrentes.html', context)
+
 
     def get_aula(request, id):
         aula = get_object_or_404(Aula, pk=id)
