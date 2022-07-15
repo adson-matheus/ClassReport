@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}{{full_name}} - Adicionar Aulas Recorrentes{% endblock %}
+{% block active_link_aulas_admin %}active-teal{% endblock %}
+{% block active_link_aulas_prof %}active-teal{% endblock %}
+{% block breadcrumb %}
+    {% autoescape off %}
+    <li class="breadcrumb-item">Usuários</li>
+    <li class="breadcrumb-item">{{full_name}}</li>
+    <li class="breadcrumb-item"><a href="{% url 'aula:index_aula_admin' %}" class="teal-color">Aulas</a></li>
+    <li class="breadcrumb-item active">Adicionar Aulas Recorrentes</li>
+    {% endautoescape %}
+{% endblock %}
+{% block card-title %}
+    {% autoescape off %}
+        <a href="{% url 'aula:index_aula_admin' %}">
+            <i class="fa-solid fa-circle-arrow-left teal-color"></i>
+        </a>&nbsp
+    {% endautoescape %}
+    Adicionar Aulas Recorrentes
+{% endblock %}
+{% block content %}
+<form method='POST'>
+    {% csrf_token %}
+    {{form_aula.as_p}}
+    {% comment %} <div class="form-group">
+        <label for="turma">Turma: </label>
+        <select id="turma" type="text" name="turma" class="form-control" required placeholder="Turma">
+            <option value="" selected="">---------</option>
+            {% for turma in turmas %}
+            <option value="{{turma.id}}">{{turma}}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="datetime">Data e Hora da aula: </label>
+        <input id="datetime" type="datetime-local" name="datetime" class="form-control" required placeholder="Data e Hora da aula">
+    </div>
+
+    <div class="form-group">
+        <label for="assunto">Assunto: </label>
+        <textarea
+            id="assunto"
+            type="text"
+            name="assunto"
+            class="form-control"
+            rows=10
+            maxlength=255
+            required
+            placeholder="Assunto da aula, observações, etc..."></textarea>
+    </div> {% endcomment %}
+
+    <div class="d-flex justify-content-center">
+        <a class="mr-3" href="{% url 'aula:index_aula_admin' %}">
+            <button type="button" class="btn btn-md btn-outline-light">Cancelar</button>
+        </a>
+        <button type="submit" class="btn btn-outline-primary btn-outline-teal">Cadastrar</button>
+    </div>
+</form>
+{% endblock %}
