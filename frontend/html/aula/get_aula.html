@@ -47,23 +47,7 @@
 {% endif %}
 <div class="card-body">
     <div class="row">
-        {% if not is_admin %}
-        <div class="col-lg-4"></div>
-        <div class="col-sm-12 col-lg-4">
-            <div class="small-box bg-teal">
-                <div class="inner">
-                    <h3>Avaliar</h3>
-                    <h5>Alunos</h5>
-                </div>
-                <div class="icon">
-                    <i class="fa-solid fa-clipboard-check"></i>
-                </div>
-                <a href="#" class="small-box-footer">
-                    Avaliar <i class="fas fa-arrow-circle-right"></i>
-                </a>
-            </div>
-        </div>
-        {% else %}
+        {% if is_admin %}
         <div class="col-sm-12 col-lg-4">
             <div class="small-box bg-teal">
                 <div class="inner">
@@ -101,7 +85,6 @@
                 <div class="icon">
                     <i class="fa-solid fa-trash-can"></i>
                 </div>
-                {% comment %} add alerta javascript {% endcomment %}
                 <a href="{% url 'aula:delete_aula_template' aula.id %}" class="small-box-footer">
                     Excluir <i class="fas fa-arrow-circle-right"></i>
                 </a>
@@ -131,7 +114,7 @@
             <hr>
             <strong><i class="fas fa-solid fa-file-alt mr-1"></i> Assunto</strong>
             <p class="text-muted">
-                <span class="tag tag-danger">{{aula.assunto}}</span>
+                <span class="tag tag-danger">{% if aula.assunto %}{{aula.assunto}}{% else %}-{% endif %}</span>
             </p>
             <hr>
             {% if alunos_sem_avaliacao %}
