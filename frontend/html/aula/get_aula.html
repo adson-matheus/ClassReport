@@ -21,7 +21,7 @@
 {% block card-title %}
     {% autoescape off %}
     {% if is_admin %}
-        <a href="{% url 'aula:index_aula_admin' %}">
+        <a href="{% url 'turma:listar_aulas_de_turma' aula.turma.id %}">
             <i class="fa-solid fa-circle-arrow-left teal-color"></i>
         </a>&nbsp
     {% else %}
