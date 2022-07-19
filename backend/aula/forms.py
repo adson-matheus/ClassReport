@@ -18,7 +18,7 @@ class AulaFormEdit(ModelForm):
 class AulaDoAlunoForm(Form):
     alunos = MultipleChoiceField(choices=CHOICES, required=True)
 
-class AulasRecorrentes(ModelForm):
+class AulasRecorrentesForm(ModelForm):
     data_inicio = DateField(required=True, label='Data de início', widget=DateInput(attrs={'type': 'date'}))
     data_fim = DateField(required=True, label='Data de fim', widget=DateInput(attrs={'type': 'date'}))
     intervalo = IntegerField(required=True, label='Intervalo de dias', initial=7)
