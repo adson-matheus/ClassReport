@@ -22,6 +22,7 @@
     Turmas
 {% endblock %}
 {% block active_link_turmas_admin %}active-teal{% endblock %}
+{% block active_link_turmas_prof %}active-teal{% endblock %}
 {% block content %}
 {% if messages %}
     {% for message in messages %}
@@ -38,9 +39,18 @@
 
 {% if is_admin %}
     <div class="d-flex justify-content-center">
-        <div class="col-4 mb-2 text-center">
-            <a href="{% url 'aula:add_aula' %}">
-                <button type="button" class="btn btn-lg btn-success btn-teal">Adicionar Aula</button>
+        <div class="text-center">
+            <a href="{% url 'aula:add_aula' %}" class="mr-2">
+                <button type="button" class="btn btn-lg btn-success btn-teal">
+                    Adicionar Aula 
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </a>
+            <a href="{% url 'aula:add_aulas_recorrentes' turma.id %}" class="mr-2">
+                <button type="button" class="btn btn-lg btn-success btn-teal">
+                    Aulas Recorrentes 
+                    <i class="fa-solid fa-plus"></i>
+                </button>
             </a>
         </div>
     </div>
@@ -63,7 +73,7 @@
                     {% for aula in aulas %}
                     <tr class="odd">
                         <td>{{aula.datetime|date:'SHORT_DATE_FORMAT'}} às {{aula.datetime|time:'H:i'}}</td>
-                        <td>{{aula.assunto}}</td>
+                        <td>{% if aula.assunto %}{{aula.assunto}}{% else %}-{% endif %}</td>
                         <td class="text-center">
                             <a class="btn bg-teal btn-sm" href="{% url 'aula:get_aula' aula.id %}">
                                 <i class="fa-solid fa-magnifying-glass"></i>

@@ -1,22 +1,22 @@
 {% extends 'base.html' %}
-{% block title %}{{full_name}} - Editar Aula{% endblock %}
+{% block title %}{{full_name}} - Adicionar Aulas Recorrentes{% endblock %}
 {% block active_link_aulas_admin %}active-teal{% endblock %}
 {% block active_link_aulas_prof %}active-teal{% endblock %}
 {% block breadcrumb %}
     {% autoescape off %}
     <li class="breadcrumb-item">Usuários</li>
     <li class="breadcrumb-item">{{full_name}}</li>
-    <li class="breadcrumb-item"><a href="{% url 'aula:index_aula_prof' request.user.username %}" class="teal-color">Minhas Aulas</a></li>
-    <li class="breadcrumb-item active">Editar Aula</li>
+    <li class="breadcrumb-item"><a href="{% url 'aula:index_aula_admin' %}" class="teal-color">Aulas</a></li>
+    <li class="breadcrumb-item active">Adicionar Aulas Recorrentes</li>
     {% endautoescape %}
 {% endblock %}
 {% block card-title %}
     {% autoescape off %}
-        <a href="{% url 'aula:get_aula' aula.id %}">
+        <a href="{% url 'turma:listar_aulas_de_turma' turma.id %}">
             <i class="fa-solid fa-circle-arrow-left teal-color"></i>
         </a>&nbsp
     {% endautoescape %}
-    Editar Aula
+    Adicionar Aulas Recorrentes
 {% endblock %}
 {% block content %}
 {% if messages %}
@@ -36,15 +36,30 @@
 
     <div class="form-group">
         <label for="turma">Turma: </label>
-        <select id="turma" type="text" name="turma" class="form-control" required placeholder="Turma">
-            <option value="{{aula.turma.id}}" selected>{{aula.turma}}</option>
-            {% for turma in turmas %}
-                {% if turma.id != aula.turma.id %}
-                    <option value="{{turma.id}}">{{turma}}</option>
-                    {% comment %} não mostra duplicado {% endcomment %}
-                {% endif %}
-            {% endfor %}
+        <select id="turma" type="text" name="turma" class="form-control" required disabled placeholder="Turma">
+            <option selected  value="{{turma.id}}">{{turma}}</option>
         </select>
+    </div>
+
+    <div class="form-group">
+        <label for="date">Data Início: </label>
+        <input id="data_inicio" type="date" name="data_inicio" class="form-control" required placeholder="Data Início">
+    </div>
+
+    <div class="form-group">
+        <label for="date">Data Fim: </label>
+        <input id="data_fim" type="date" name="data_fim" class="form-control" required placeholder="Data Fim">
+    </div>
+
+    <div class="form-group">
+        <label for="hora">Horário: </label>
+        <input id="hora" type="time" name="hora" class="form-control" required placeholder="Horário da Aula">
+    </div>
+
+    <div class="form-group">
+        <label for="number">Intervalo de dias: </label>
+        <input id="intervalo" type="number" name="intervalo" class="form-control" required placeholder="Intervalo de dias" value=7>
+        <small>Ex.: Aula a cada 7 dias.</small>
     </div>
 
     <div class="form-group">
@@ -56,17 +71,11 @@
             class="form-control"
             rows=10
             maxlength=255
-            required
-            placeholder="Assunto da aula, observações, etc...">{{ aula.assunto }}</textarea>
-    </div>
-
-    <div class="form-group">
-        <label for="datetime">Data e Hora da Aula: </label>
-        <input id="datetime" type="datetime-local" name="datetime" class="form-control" required placeholder="Data e Hora da Aula" value="{{aula.datetime.date|date:"Y-m-d"}}T{{aula.datetime.time}}">
+            placeholder="Assunto da aula, observações, etc..."></textarea>
     </div>
 
     <div class="d-flex justify-content-center">
-        <a class="mr-3" href="{% url 'aula:get_aula' aula.id %}">
+        <a class="mr-3" href="{% url 'turma:listar_aulas_de_turma' turma.id %}">
             <button type="button" class="btn btn-md btn-outline-light">Cancelar</button>
         </a>
         <button type="submit" class="btn btn-outline-primary btn-outline-teal">Cadastrar</button>

@@ -21,7 +21,7 @@
 {% block card-title %}
     {% autoescape off %}
     {% if is_admin %}
-        <a href="{% url 'aula:index_aula_admin' %}">
+        <a href="{% url 'turma:listar_aulas_de_turma' aula.turma.id %}">
             <i class="fa-solid fa-circle-arrow-left teal-color"></i>
         </a>&nbsp
     {% else %}
@@ -47,23 +47,7 @@
 {% endif %}
 <div class="card-body">
     <div class="row">
-        {% if not is_admin %}
-        <div class="col-lg-4"></div>
-        <div class="col-sm-12 col-lg-4">
-            <div class="small-box bg-teal">
-                <div class="inner">
-                    <h3>Avaliar</h3>
-                    <h5>Alunos</h5>
-                </div>
-                <div class="icon">
-                    <i class="fa-solid fa-clipboard-check"></i>
-                </div>
-                <a href="#" class="small-box-footer">
-                    Avaliar <i class="fas fa-arrow-circle-right"></i>
-                </a>
-            </div>
-        </div>
-        {% else %}
+        {% if is_admin %}
         <div class="col-sm-12 col-lg-4">
             <div class="small-box bg-teal">
                 <div class="inner">
@@ -101,7 +85,6 @@
                 <div class="icon">
                     <i class="fa-solid fa-trash-can"></i>
                 </div>
-                {% comment %} add alerta javascript {% endcomment %}
                 <a href="{% url 'aula:delete_aula_template' aula.id %}" class="small-box-footer">
                     Excluir <i class="fas fa-arrow-circle-right"></i>
                 </a>
@@ -131,11 +114,11 @@
             <hr>
             <strong><i class="fas fa-solid fa-file-alt mr-1"></i> Assunto</strong>
             <p class="text-muted">
-                <span class="tag tag-danger">{{aula.assunto}}</span>
+                <span class="tag tag-danger">{% if aula.assunto %}{{aula.assunto}}{% else %}-{% endif %}</span>
             </p>
             <hr>
             {% if alunos_sem_avaliacao %}
-                <strong><i class="fas fa-solid fa-person-chalkboard mr-1"></i> Alunos sem avaliação! Avalie agora.</strong>
+                <strong><i class="fas fa-solid fa-person-chalkboard mr-1"></i> Alunos sem avaliação!</strong>
                 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                     <div class="row">
                         <div class="col-sm-12">
@@ -183,9 +166,11 @@
                 </div>
             {% endif %}
 
-            <br><br><br><br>
-            <hr>
-            <br><br><br><br>
+            {% if alunos_sem_avaliacao and alunos_com_avaliacao %}
+                <br><br><br>    
+                <hr>
+                <br><br><br>
+            {% endif %}
 
             {% if alunos_com_avaliacao %}
                 <strong><i class="fas fa-solid fa-person-chalkboard mr-1"></i> Alunos avaliados!</strong>
@@ -234,6 +219,10 @@
                         </div>
                     </div>
                 </div>
+            {% endif %}
+            {% if not alunos_com_avaliacao and not alunos_sem_avaliacao %}
+                <strong><i class="fas fa-solid fa-person-chalkboard mr-1"></i> Alunos</strong><br>
+                    Sem alunos cadastrados para esta aula.
             {% endif %}
             <hr>
         </div>
