@@ -4,10 +4,10 @@ from users.utils import is_admin
 from avaliacao.utils import alunos_sem_avaliacao_da_aula
 from django.contrib import messages
 from .utils import datas_recorrentes
-from .models import Aula
+from .models import Aula, AulaDoAluno
 from .forms import AulaForm, AulaFormEdit, AulasRecorrentesForm
 from turma.models import Turma
-from users.models import Professor
+from users.models import Professor, Aluno
 
 class AulaTemplate:
     def index_aula_prof(request, username):
@@ -61,11 +61,19 @@ class AulaTemplate:
                 data_fim = form_aula.cleaned_data['data_fim']
                 hora = form_aula.cleaned_data['hora']
                 intervalo = form_aula.cleaned_data['intervalo']
+                alunos = form_aula.cleaned_data['alunos']
 
                 datas = datas_recorrentes(data_inicio=data_inicio, data_fim=data_fim, hora=hora, intervalo=intervalo)
-                Aula.objects.bulk_create(objs = [ Aula(turma=turma, datetime=data, assunto=assunto) for data in datas ])
-                messages.success(request, 'Aulas cadastradas com sucesso!')
-                return redirect('turma:listar_aulas_de_turma', turma_id)
+                try:
+                    aulas = Aula.objects.bulk_create(objs = [ Aula(turma=turma, datetime=data, assunto=assunto) for data in datas ])
+
+                    for aluno in alunos:
+                        AulaDoAluno.objects.bulk_create(objs = [ AulaDoAluno(aula=aula, aluno=aluno) for aula in aulas ])
+
+                    messages.success(request, 'Aulas cadastradas com sucesso!')
+                    return redirect('turma:listar_aulas_de_turma', turma_id)
+                except:
+                    messages.error(request, 'Erro ao cadastrar aulas!')
             else:
                 messages.error(request, 'Erro ao cadastrar aulas!')
         else:
@@ -74,6 +82,7 @@ class AulaTemplate:
             'form_aula': form_aula,
             'full_name': request.user.get_full_name(),
             'turma': turma,
+            'alunos': Aluno.objects.all(),
         }
         context.update(is_admin(request))
         return render(request, 'aula/add_aulas_recorrentes.html', context)
