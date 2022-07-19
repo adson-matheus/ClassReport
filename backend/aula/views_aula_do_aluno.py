@@ -20,7 +20,7 @@ class AulaDoAlunoView():
             if form.is_valid():
                 id_alunos = form.cleaned_data['alunos']
                 AulaDoAluno.objects.bulk_create(ignore_conflicts=False, objs = [
-                    AulaDoAluno(aula=aula, aluno=Aluno.objects.get(pk=id)).save() for id in id_alunos
+                    AulaDoAluno(aula=aula, aluno=Aluno.objects.get(pk=id)) for id in id_alunos
                 ])
                 messages.success(request, 'Aluno(s) adicionado(s) com sucesso!')
                 return redirect('aula:get_aula', aula_id)
