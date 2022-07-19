@@ -18,6 +18,18 @@
 {% endblock %}
 {% block active_link_alunos %}active-teal{% endblock %}
 {% block content %}
+{% if messages %}
+    {% for message in messages %}
+        <div class="container-fluid p-0">
+            <div class="alert {% if message.tags %} {{ message.tags }} {% endif %} alert-dismissible" role="alert">
+                <button type="button" class="close text-black" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="True">&times;</span>
+                </button>
+                {{ message }}
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
     <form method="post">
         {% csrf_token %}
         {% comment %} {{form}} {% endcomment %}

@@ -101,13 +101,11 @@ class AlunoTemplate:
         if request.method == 'POST':
             form = AlunoForm(request.POST)
             if form.is_valid():
+                messages.success(request, "Aluno adicionado com sucesso!")
                 form.save()
-                # msg
                 return redirect('users:index_aluno')
             else:
-                return HttpResponse("Aluno já existe!")
-                # msg
-                pass
+                messages.error(request, "Erro ao cadastrar aluno")
         else:
             form = AlunoForm()
         context = {
@@ -124,12 +122,11 @@ class AlunoTemplate:
         if request.method == 'POST':
             form = EditarAlunoForm(request.POST, instance=aluno)
             if form.is_valid():
-                # msg
+                messages.success(request, "Aluno editado com sucesso!")
                 form.save()
                 return redirect('users:index_aluno')
             else:
-                # msg
-                pass
+                messages.error(request, "Erro ao editar aluno")
         else:
             form = EditarAlunoForm(instance=aluno)
         context = {
@@ -154,7 +151,7 @@ class AlunoTemplate:
     def delete_aluno(request, matr):
         aluno = get_object_or_404(Aluno, matricula=matr)
         aluno.delete()
-        # msg
+        messages.success(request, "Aluno deletado com sucesso!")
         return redirect('users:index_aluno')
 
 @login_required
