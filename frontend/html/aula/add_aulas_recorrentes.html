@@ -2,6 +2,9 @@
 {% block title %}{{full_name}} - Adicionar Aulas Recorrentes{% endblock %}
 {% block active_link_aulas_admin %}active-teal{% endblock %}
 {% block active_link_aulas_prof %}active-teal{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap4.min.css" integrity="sha512-PT0RvABaDhDQugEbpNMwgYBCnGCiTZMh9yOzUsJHDgl/dMhD9yjHAwoumnUk3JydV3QTcIkNDuN40CJxik5+WQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
 {% block breadcrumb %}
     {% autoescape off %}
     <li class="breadcrumb-item">Usuários</li>
@@ -76,18 +79,18 @@
 
     {% include '../aula_do_aluno/add_aluno_em_aula_template.html' %}
 
-    <select name="alunos" required id="id_alunos" multiple style="visibility: hidden">
-        {% for aluno in alunos %}
-            <option value="{{aluno.id}}">{{aluno.nome}}</option>
-        {% endfor %}
-    </select>
-
     <div class="d-flex justify-content-center">
         <a class="mr-3" href="{% url 'turma:listar_aulas_de_turma' turma.id %}">
             <button type="button" class="btn btn-md btn-outline-light">Cancelar</button>
         </a>
         <button type="submit" class="btn btn-outline-primary btn-outline-teal">Cadastrar</button>
     </div>
+
+    <select name="alunos" required id="id_alunos" multiple style="visibility: hidden">
+        {% for aluno in alunos %}
+            <option value="{{aluno.id}}">{{aluno.nome}}</option>
+        {% endfor %}
+    </select>
 </form>
 {% endblock %}
 {% block scripts %}
