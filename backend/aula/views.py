@@ -5,7 +5,7 @@ from avaliacao.utils import alunos_sem_avaliacao_da_aula
 from django.contrib import messages
 from .utils import datas_recorrentes
 from .models import Aula, AulaDoAluno
-from .forms import AulaForm, AulaFormEdit, AulasRecorrentesForm
+from .forms import AulaDoAlunoForm, AulaForm, AulaFormEdit, AulasRecorrentesForm
 from turma.models import Turma
 from users.models import Professor, Aluno
 
@@ -54,26 +54,26 @@ class AulaTemplate:
         turma = get_object_or_404(Turma, id=turma_id)
         if request.method == 'POST':
             form_aula = AulasRecorrentesForm(request.POST)
-            print(form_aula)
-            if form_aula.is_valid():
+            form_alunos = AulaDoAlunoForm(request.POST)
+            if form_aula.is_valid() and form_alunos.is_valid():
                 assunto = form_aula.cleaned_data['assunto']
                 data_inicio = form_aula.cleaned_data['data_inicio']
                 data_fim = form_aula.cleaned_data['data_fim']
                 hora = form_aula.cleaned_data['hora']
                 intervalo = form_aula.cleaned_data['intervalo']
-                alunos = form_aula.cleaned_data['alunos']
+                id_alunos = form_alunos.cleaned_data['alunos']
 
                 datas = datas_recorrentes(data_inicio=data_inicio, data_fim=data_fim, hora=hora, intervalo=intervalo)
                 try:
                     aulas = Aula.objects.bulk_create(objs = [ Aula(turma=turma, datetime=data, assunto=assunto) for data in datas ])
 
-                    for aluno in alunos:
-                        AulaDoAluno.objects.bulk_create(objs = [ AulaDoAluno(aula=aula, aluno=aluno) for aula in aulas ])
+                    for aula in aulas:
+                        AulaDoAluno.objects.bulk_create([ AulaDoAluno(aula=aula, aluno=Aluno.objects.get(pk=id)) for id in id_alunos ])
 
                     messages.success(request, 'Aulas cadastradas com sucesso!')
                     return redirect('turma:listar_aulas_de_turma', turma_id)
                 except:
-                    messages.error(request, 'Erro ao cadastrar aulas!')
+                    messages.error(request, 'Erro ao cadastrar aulas!!')
             else:
                 messages.error(request, 'Erro ao cadastrar aulas!')
         else:
@@ -86,7 +86,6 @@ class AulaTemplate:
         }
         context.update(is_admin(request))
         return render(request, 'aula/add_aulas_recorrentes.html', context)
-
 
     def get_aula(request, id):
         aula = get_object_or_404(Aula, pk=id)
@@ -140,5 +139,4 @@ class AulaTemplate:
         aula = get_object_or_404(Aula, pk=id)
         aula.delete()
         messages.success(request, 'Aula deletada com sucesso!')
-        return redirect('aula:index_aula_admin')
-
+        return redirect('turma:listar_aulas_de_turma', aula.turma.id)
