@@ -13,7 +13,7 @@ class Avaliacao(models.Model):
             'relacao_med_paciente': args.get('relacao_med_paciente') or 2,
         }
 
-    aula_do_aluno = models.ForeignKey(AulaDoAluno, on_delete=models.CASCADE, null=False)
+    aula_do_aluno = models.OneToOneField(AulaDoAluno, on_delete=models.CASCADE, null=False)
     checklist = models.JSONField(verbose_name='checklist', default=default_checklist)
 
     class Meta:

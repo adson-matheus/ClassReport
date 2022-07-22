@@ -5,11 +5,11 @@ from turma.models import Turma
 # Create your models here.
 class Aula(models.Model):
     turma = models.ForeignKey(Turma, verbose_name="Turma", null=True, blank=True, on_delete=models.PROTECT)
-    assunto = models.CharField(verbose_name='Assunto da aula', max_length=255, null=True)
+    assunto = models.CharField(verbose_name='Assunto da aula', max_length=255, null=True, blank=True)
     datetime = models.DateTimeField(verbose_name='Data e Hora da Aula', auto_now=False, auto_now_add=False)
 
     class Meta:
-        ordering = ('-turma',)
+        ordering = ('datetime',)
     def __str__(self):
         return 'Turma: {}, Assunto: {}'.format(self.turma, self.assunto)
 

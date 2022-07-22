@@ -21,7 +21,7 @@
 {% block card-title %}
     {% autoescape off %}
     {% if is_admin %}
-        <a href="{% url 'aula:index_aula_admin' %}">
+        <a href="{% url 'turma:listar_aulas_de_turma' aula.turma.id %}">
             <i class="fa-solid fa-circle-arrow-left teal-color"></i>
         </a>&nbsp
     {% else %}
@@ -47,23 +47,7 @@
 {% endif %}
 <div class="card-body">
     <div class="row">
-        {% if not is_admin %}
-        <div class="col-lg-4"></div>
-        <div class="col-sm-12 col-lg-4">
-            <div class="small-box bg-teal">
-                <div class="inner">
-                    <h3>Avaliar</h3>
-                    <h5>Alunos</h5>
-                </div>
-                <div class="icon">
-                    <i class="fa-solid fa-clipboard-check"></i>
-                </div>
-                <a href="#" class="small-box-footer">
-                    Avaliar <i class="fas fa-arrow-circle-right"></i>
-                </a>
-            </div>
-        </div>
-        {% else %}
+        {% if is_admin %}
         <div class="col-sm-12 col-lg-4">
             <div class="small-box bg-teal">
                 <div class="inner">
@@ -101,7 +85,6 @@
                 <div class="icon">
                     <i class="fa-solid fa-trash-can"></i>
                 </div>
-                {% comment %} add alerta javascript {% endcomment %}
                 <a href="{% url 'aula:delete_aula_template' aula.id %}" class="small-box-footer">
                     Excluir <i class="fas fa-arrow-circle-right"></i>
                 </a>
@@ -131,10 +114,11 @@
             <hr>
             <strong><i class="fas fa-solid fa-file-alt mr-1"></i> Assunto</strong>
             <p class="text-muted">
-                <span class="tag tag-danger">{{aula.assunto}}</span>
+                <span class="tag tag-danger">{% if aula.assunto %}{{aula.assunto}}{% else %}-{% endif %}</span>
             </p>
             <hr>
-            <strong><i class="fas fa-solid fa-person-chalkboard mr-1"></i> Alunos</strong>
+            {% if alunos_sem_avaliacao %}
+                <strong><i class="fas fa-solid fa-person-chalkboard mr-1"></i> Alunos sem avaliação!</strong>
                 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                     <div class="row">
                         <div class="col-sm-12">
@@ -151,17 +135,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {% for aluno in alunos %}
+                                {% for aluno in alunos_sem_avaliacao %}
                                     <tr class="odd">
                                         <td>{{aluno.aluno.matricula}}</td>
                                         <td>{{aluno.aluno.nome}}</td>
                                         <td class="text-center">
                                             {% if is_admin %}
-                                                <a class="btn bg-danger btn-sm" href="{% url 'aula:remover_aluno_de_aula_template' aula.id aluno.aluno.id %}">
+                                                <a class="btn bg-danger btn-sm" href="{% url 'aula:remover_aluno_de_aula_template' aula_id=aula.id aluno_id=aluno.aluno.id %}">
                                                     <i class="fa-solid fa-trash-can"></i>
                                                 </a>
                                             {% else %}
-                                                <a class="btn bg-teal btn-sm" href="{% url 'avaliacao:adicionar_avaliacao' aula.id aluno.aluno.id %}">
+                                                <a class="btn bg-teal btn-sm" href="{% url 'avaliacao:adicionar_avaliacao' aula_id=aula.id aluno_id=aluno.aluno.id %}">
                                                     <i class="fa-solid fa-clipboard-check"></i>
                                                 </a>
                                             {% endif %}
@@ -180,15 +164,67 @@
                         </div>
                     </div>
                 </div>
-            <hr>
-            <div class="row">
-                <div class="col-12 border-top border-teal">
-                    <a class="btn btn-outline-light mt-3 float-right" href="#">
-                        <i class="fa-solid fa-file-pdf"></i>
-                        Exportar PDF
-                    </a>
+            {% endif %}
+
+            {% if alunos_sem_avaliacao and alunos_com_avaliacao %}
+                <br><br><br>    
+                <hr>
+                <br><br><br>
+            {% endif %}
+
+            {% if alunos_com_avaliacao %}
+                <strong><i class="fas fa-solid fa-person-chalkboard mr-1"></i> Alunos avaliados!</strong>
+                <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="example2" class="table table-bordered dataTable dtr-inline"
+                                aria-describedby="example2_info">
+                                <thead>
+                                    <tr>
+                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                            aria-label="Matrícula: ativar para ordenar ascendente">Matrícula</th>
+                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                            aria-sort="ascending" aria-label="Nome do Aluno: ativar para ordenar ascendente">Nome do Aluno</th>
+                                        <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                            aria-label="Ações: consultar, editar e excluir">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for avaliacao in alunos_com_avaliacao %}
+                                    <tr class="odd">
+                                        <td>{{avaliacao.aula_do_aluno.aluno.matricula}}</td>
+                                        <td>{{avaliacao.aula_do_aluno.aluno.nome}}</td>
+                                        <td class="text-center">
+                                            {% if is_admin %}
+                                                <a class="btn bg-danger btn-sm" href="{% url 'aula:remover_aluno_de_aula_template' aula_id=aula.id aluno_id=avaliacao.aula_do_aluno.aluno.id %}">
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                                </a>
+                                            {% else %}
+                                                <a class="btn bg-teal btn-sm" href="{% url 'avaliacao:detalhar_avaliacao' avaliacao.id %}">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th rowspan="1" colspan="1">Matrícula</th>
+                                        <th rowspan="1" colspan="1">Nome do Aluno</th>
+                                        <th rowspan="1" colspan="1">Ações</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
+            {% if not alunos_com_avaliacao and not alunos_sem_avaliacao %}
+                <strong><i class="fas fa-solid fa-person-chalkboard mr-1"></i> Alunos</strong><br>
+                    Sem alunos cadastrados para esta aula.
+            {% endif %}
+            <hr>
         </div>
     </div>
 </div>
@@ -215,5 +251,13 @@
             }
           }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         });
+        $(function () {
+            $("#example2").DataTable({
+              "responsive": true, "lengthChange": false, "autoWidth": false,
+              "language": {
+                  url: 'https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-BR.json'
+              }
+            }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
+          });
     </script>
 {% endblock %}

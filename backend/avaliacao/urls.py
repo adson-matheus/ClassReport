@@ -6,7 +6,7 @@ urlpatterns = [
     # avaliacao
     path("<int:id_avaliacao>", views.detalhar_avaliacao, name='detalhar_avaliacao'),
     path("<int:id_avaliacao>/editar", views.editar_avaliacao, name='editar_avaliacao'),
-    path("<int:id_aula>/aluno/<int:id_aluno>/add", views.adicionar_avaliacao, name='adicionar_avaliacao'),
+    path("<int:aula_id>/aluno/<int:aluno_id>/add", views.adicionar_avaliacao, name='adicionar_avaliacao'),
     path("<int:id_avaliacao>/excluir", views.excluir_avaliacao_template, name='excluir_avaliacao_template'),
     path("<int:id_avaliacao>/excluir/confirmar", views.excluir_avaliacao, name='excluir_avaliacao'),
     path("<int:id_avaliacao>/pdf", views.exportar_pdf, name='exportar_pdf'),
