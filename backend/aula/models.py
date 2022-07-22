@@ -9,7 +9,7 @@ class Aula(models.Model):
     datetime = models.DateTimeField(verbose_name='Data e Hora da Aula', auto_now=False, auto_now_add=False)
 
     class Meta:
-        ordering = ('-turma',)
+        ordering = ('datetime',)
     def __str__(self):
         return 'Turma: {}, Assunto: {}'.format(self.turma, self.assunto)
 
