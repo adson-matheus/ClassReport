@@ -23,7 +23,6 @@ class AulasRecorrentesForm(ModelForm):
     data_fim = DateField(required=True, label='Data de fim', widget=DateInput(attrs={'type': 'date'}))
     intervalo = IntegerField(required=True, label='Intervalo de dias', initial=7)
     hora = TimeField(required=True, label='Hora', widget=DateInput(attrs={'type': 'time'}))
-    alunos = MultipleChoiceField(choices=CHOICES, required=False)
 
     class Meta:
         model = Aula
