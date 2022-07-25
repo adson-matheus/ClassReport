@@ -13,7 +13,7 @@ class AulaDoAlunoView():
         CRUD para manter um aluno em uma aula
     """
     @permission_required('aula.add_auladoaluno', login_url='/', raise_exception=True)
-    def add_aluno_em_aula(request, aula_id):
+    def adicionar_aluno_em_aula(request, aula_id):
         aula = get_object_or_404(Aula, pk=aula_id)
         if request.method == 'POST':
             form = AulaDoAlunoForm(request.POST)
@@ -35,7 +35,7 @@ class AulaDoAlunoView():
         }
         context.update({'alunos': alunos_nao_participantes_de_aula(aula_id)})
         context.update(is_admin(request))
-        return render(request, 'aula_do_aluno/add_aluno_em_aula.html', context)
+        return render(request, 'aula_do_aluno/adicionar_aluno_em_aula.html', context)
 
     @permission_required('aula.view_auladoaluno', login_url='/', raise_exception=True)
     def aulas_do_aluno(request, matr):
