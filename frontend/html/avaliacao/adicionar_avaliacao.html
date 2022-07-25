@@ -5,13 +5,13 @@
     {% autoescape off %}
     <li class="breadcrumb-item">Usuários</li>
     <li class="breadcrumb-item">{{full_name}}</li>
-    <li class="breadcrumb-item"><a href="{% url 'aula:get_aula' aula_do_aluno.aula.id %}" class="teal-color">Aula</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'aula:detalhar_aula' aula_do_aluno.aula.id %}" class="teal-color">Aula</a></li>
     <li class="breadcrumb-item active">Adicionar Avaliação</li>
     {% endautoescape %}
 {% endblock %}
 {% block card-title %}
     {% autoescape off %}
-        <a href="{% url 'aula:get_aula' aula_do_aluno.aula.id %}">
+        <a href="{% url 'aula:detalhar_aula' aula_do_aluno.aula.id %}">
             <i class="fa-solid fa-circle-arrow-left teal-color"></i>
         </a>&nbsp
     {% endautoescape %}

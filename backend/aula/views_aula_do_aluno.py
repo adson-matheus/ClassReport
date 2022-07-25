@@ -23,7 +23,7 @@ class AulaDoAlunoView():
                     AulaDoAluno(aula=aula, aluno=Aluno.objects.get(pk=id)) for id in id_alunos
                 ])
                 messages.success(request, 'Aluno(s) adicionado(s) com sucesso!')
-                return redirect('aula:get_aula', aula_id)
+                return redirect('aula:detalhar_aula', aula_id)
             else:
                 messages.error(request, 'Erro ao adicionar aluno(s)')
         else:
@@ -63,4 +63,4 @@ class AulaDoAlunoView():
         aula = get_object_or_404(AulaDoAluno, aula=aula_id, aluno=aluno_id)
         aula.delete()
         messages.success(request, 'Aluno removido da aula com sucesso!')
-        return redirect("aula:get_aula", aula_id)
+        return redirect("aula:detalhar_aula", aula_id)

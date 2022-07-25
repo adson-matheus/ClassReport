@@ -20,7 +20,7 @@ def adicionar_avaliacao(request, aluno_id, aula_id):
             return redirect('avaliacao:detalhar_avaliacao', avaliacao.id)
         else:
             messages.error(request, 'Erro ao adicionar avaliação!')
-            return redirect('aula:get_aula', aula_do_aluno.aula.id)
+            return redirect('aula:detalhar_aula', aula_do_aluno.aula.id)
     else:
         form = AvaliacaoForm()
     context = {
@@ -80,7 +80,7 @@ def excluir_avaliacao(request, id_avaliacao):
     avaliacao = get_object_or_404(Avaliacao, pk=id_avaliacao)
     avaliacao.delete()
     messages.success(request, f'Avaliação de {avaliacao.aula_do_aluno.aluno} excluída com sucesso!')
-    return redirect('aula:get_aula', avaliacao.aula_do_aluno.aula.id)
+    return redirect('aula:detalhar_aula', avaliacao.aula_do_aluno.aula.id)
 
 @permission_required('avaliacao.view_avaliacao', login_url='/', raise_exception=True)
 def exportar_pdf(request, id_avaliacao):

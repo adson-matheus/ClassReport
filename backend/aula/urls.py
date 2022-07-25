@@ -11,7 +11,7 @@ urlpatterns = [
     path("edit/<int:id>", views.AulaTemplate.edit_aula, name='edit_aula'),
     path("delete/<int:id>", views.AulaTemplate.delete_aula_template, name='delete_aula_template'),
     path("delete/<int:id>/confirm", views.AulaTemplate.delete_aula, name='delete_aula'),
-    path("detail/<int:id>", views.AulaTemplate.get_aula, name='get_aula'),
+    path("detail/<int:id>", views.AulaTemplate.detalhar_aula, name='detalhar_aula'),
 
     # aula do aluno
     path("<int:matr>/detail", views_aula_do_aluno.AulaDoAlunoView.aulas_do_aluno, name='aulas_do_aluno'),

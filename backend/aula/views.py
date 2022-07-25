@@ -87,7 +87,7 @@ class AulaTemplate:
         context.update(is_admin(request))
         return render(request, 'aula/adicionar_aulas_recorrentes.html', context)
 
-    def get_aula(request, id):
+    def detalhar_aula(request, id):
         aula = get_object_or_404(Aula, pk=id)
         context = {
             'full_name': request.user.get_full_name(),
@@ -95,7 +95,7 @@ class AulaTemplate:
         }
         context.update(alunos_sem_avaliacao_da_aula(aula))
         context.update(is_admin(request))
-        return render(request, 'aula/get_aula.html', context)
+        return render(request, 'aula/detalhar_aula.html', context)
 
     @permission_required('aula.change_aula', login_url='/', raise_exception=True)
     def edit_aula(request, id):
@@ -109,7 +109,7 @@ class AulaTemplate:
                 datetime = dados['datetime']
                 messages.success(request, 'Aula editada com sucesso!')
                 Aula(id=id, turma=turma, assunto=assunto, datetime=datetime).save()
-                return redirect('aula:get_aula', id)
+                return redirect('aula:detalhar_aula', id)
             else:
                 messages.error(request, 'Erro ao editar aula!')
                 return redirect('aula:index_aula_admin')

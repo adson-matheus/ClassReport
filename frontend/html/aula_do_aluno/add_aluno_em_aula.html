@@ -16,7 +16,7 @@
 {% block card-title %}
     {% autoescape off %}
     {% if is_admin %}
-        <a href="{% url 'aula:get_aula' aula.id %}">
+        <a href="{% url 'aula:detalhar_aula' aula.id %}">
             <i class="fa-solid fa-circle-arrow-left teal-color"></i>
         </a>&nbsp
     {% else %}
