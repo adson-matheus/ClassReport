@@ -9,8 +9,8 @@ urlpatterns = [
     path("add", views.AulaTemplate.adicionar_aula, name='adicionar_aula'),
     path("add/recorrentes/<int:turma_id>", views.AulaTemplate.adicionar_aulas_recorrentes, name='adicionar_aulas_recorrentes'),
     path("edit/<int:id>", views.AulaTemplate.editar_aula, name='editar_aula'),
-    path("delete/<int:id>", views.AulaTemplate.delete_aula_template, name='delete_aula_template'),
-    path("delete/<int:id>/confirm", views.AulaTemplate.delete_aula, name='delete_aula'),
+    path("delete/<int:id>", views.AulaTemplate.deletar_aula_template, name='deletar_aula_template'),
+    path("delete/<int:id>/confirm", views.AulaTemplate.deletar_aula, name='deletar_aula'),
     path("detail/<int:id>", views.AulaTemplate.detalhar_aula, name='detalhar_aula'),
 
     # aula do aluno

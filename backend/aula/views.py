@@ -125,17 +125,17 @@ class AulaTemplate:
         return render(request, 'aula/editar_aula.html', context)
 
     @permission_required('aula.delete_aula', login_url='/', raise_exception=True)
-    def delete_aula_template(request, id):
+    def deletar_aula_template(request, id):
         aula = get_object_or_404(Aula, pk=id)
         context = {
             'full_name': request.user.get_full_name(),
             'aula': aula,
         }
         context.update(is_admin(request))
-        return render(request, 'aula/delete_aula.html', context)
+        return render(request, 'aula/deletar_aula.html', context)
 
     @permission_required('aula.delete_aula', login_url='/', raise_exception=True)
-    def delete_aula(request, id):
+    def deletar_aula(request, id):
         aula = get_object_or_404(Aula, pk=id)
         aula.delete()
         messages.success(request, 'Aula deletada com sucesso!')
