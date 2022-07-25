@@ -50,7 +50,7 @@ class AulaTemplate:
         return render(request, 'aula/adicionar_aula.html', context)
 
     @permission_required('aula.add_aula', login_url='/', raise_exception=True)
-    def add_aulas_recorrentes(request, turma_id):
+    def adicionar_aulas_recorrentes(request, turma_id):
         turma = get_object_or_404(Turma, id=turma_id)
         if request.method == 'POST':
             form_aula = AulasRecorrentesForm(request.POST)
@@ -85,7 +85,7 @@ class AulaTemplate:
             'alunos': Aluno.objects.all(),
         }
         context.update(is_admin(request))
-        return render(request, 'aula/add_aulas_recorrentes.html', context)
+        return render(request, 'aula/adicionar_aulas_recorrentes.html', context)
 
     def get_aula(request, id):
         aula = get_object_or_404(Aula, pk=id)
