@@ -98,7 +98,7 @@ class AulaTemplate:
         return render(request, 'aula/detalhar_aula.html', context)
 
     @permission_required('aula.change_aula', login_url='/', raise_exception=True)
-    def edit_aula(request, id):
+    def editar_aula(request, id):
         aula = get_object_or_404(Aula, pk=id)
         if request.method == 'POST':
             form_aula = AulaFormEdit(request.POST, instance=aula)
@@ -122,7 +122,7 @@ class AulaTemplate:
             'full_name': request.user.get_full_name(),
         }
         context.update(is_admin(request))
-        return render(request, 'aula/edit_aula.html', context)
+        return render(request, 'aula/editar_aula.html', context)
 
     @permission_required('aula.delete_aula', login_url='/', raise_exception=True)
     def delete_aula_template(request, id):
