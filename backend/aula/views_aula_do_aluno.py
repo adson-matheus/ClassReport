@@ -49,14 +49,14 @@ class AulaDoAlunoView():
         return render(request, 'aula_do_aluno/aulas_do_aluno.html', context)
 
     @permission_required('aula.delete_auladoaluno', login_url='/', raise_exception=True)
-    def remover_aluno_de_aula_template(request, aluno_id, aula_id):
+    def deletar_aluno_de_aula_template(request, aluno_id, aula_id):
         aula = get_object_or_404(AulaDoAluno, aula=aula_id, aluno=aluno_id)
         context = {
             'aula':aula,
             'full_name': request.user.get_full_name(),
             'is_admin': True,
         }
-        return render(request, 'aula_do_aluno/remover_aluno_de_aula_template.html', context)
+        return render(request, 'aula_do_aluno/deletar_aluno_de_aula_template.html', context)
 
     @permission_required('aula.delete_auladoaluno', login_url='/', raise_exception=True)
     def remover_aluno_de_aula(request, aluno_id, aula_id):
