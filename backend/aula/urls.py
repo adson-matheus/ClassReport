@@ -6,7 +6,7 @@ urlpatterns = [
     # /aulas/
     path("prof/<username>", views.AulaTemplate.index_aula_prof, name='index_aula_prof'),
     path("list", views.AulaTemplate.index_aula_admin, name='index_aula_admin'),
-    path("add", views.AulaTemplate.add_aula, name='add_aula'),
+    path("add", views.AulaTemplate.adicionar_aula, name='adicionar_aula'),
     path("add/recorrentes/<int:turma_id>", views.AulaTemplate.add_aulas_recorrentes, name='add_aulas_recorrentes'),
     path("edit/<int:id>", views.AulaTemplate.edit_aula, name='edit_aula'),
     path("delete/<int:id>", views.AulaTemplate.delete_aula_template, name='delete_aula_template'),
