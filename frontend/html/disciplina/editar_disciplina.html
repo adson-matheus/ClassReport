@@ -24,7 +24,7 @@
         <b>O novo nome da disciplina será atualizado em TODO o sistema!</b><br>
         É recomendado que só edite o nome da disciplina se tiver certeza da sua ação e/ou se houver erro de digitação!
     </p>
-    <p>Talvez você esteja procurando por <a class="link-primary teal-color" href="{% url 'disciplina:add_disciplina' %}">adicionar uma nova disciplina</a>?</p>
+    <p>Talvez você esteja procurando por <a class="link-primary teal-color" href="{% url 'disciplina:adicionar_disciplina' %}">adicionar uma nova disciplina</a>?</p>
 </div>
 <form method='POST'>
     {% csrf_token %}

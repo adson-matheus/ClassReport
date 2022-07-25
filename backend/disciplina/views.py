@@ -16,7 +16,7 @@ def listar_disciplinas(request):
     return render(request, 'disciplina/disciplina.html', context)
 
 @permission_required('disciplina.add_disciplina', login_url='/', raise_exception=True)
-def add_disciplina(request):
+def adicionar_disciplina(request):
     if request.method == 'POST':
         form = DisciplinaForm(request.POST)
         if form.is_valid():
@@ -32,7 +32,7 @@ def add_disciplina(request):
         'full_name': request.user.get_full_name(),
         'is_admin': True,
     }
-    return render(request, 'disciplina/add_disciplina.html', context)
+    return render(request, 'disciplina/adicionar_disciplina.html', context)
 
 @permission_required('disciplina.change_disciplina', login_url='/', raise_exception=True)
 def editar_disciplina(request, id):
