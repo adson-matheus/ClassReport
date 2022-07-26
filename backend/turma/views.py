@@ -111,7 +111,6 @@ def deletar_turma(request, id):
         messages.success(request, '{} deletada com sucesso!'.format(turma))
         return redirect('turma:listar_turmas')
 
-    except ProtectedError as e:
-        for aula in e.protected_objects:
-            messages.error(request, "Não é possível deletar a turma {}. A aula '{}' está cadastrada e faz parte desta turma!".format(turma, aula.assunto))
+    except ProtectedError:
+        messages.error(request, "Não é possível deletar a turma {}. Há aula(s) cadastrada(s) que faz(em) parte desta turma!".format(turma))
         return redirect('turma:deletar_turma_template', id)
