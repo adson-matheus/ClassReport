@@ -55,7 +55,7 @@ def editar_disciplina(request, id):
     return render(request, 'disciplina/editar_disciplina.html', context)
 
 @permission_required('disciplina.delete_disciplina', login_url='/', raise_exception=True)
-def excluir_disciplina_template(request, id):
+def deletar_disciplina_template(request, id):
     disciplina = get_object_or_404(Disciplina, pk=id)
     context = {
         'full_name': request.user.get_full_name(),
@@ -75,4 +75,4 @@ def excluir_disciplina(request, id):
     except ProtectedError as e:
         turmas = [ turma.__str__() for turma in e.protected_objects ]
         messages.error(request, '{} não pode ser excluída. A(s) seguinte(s) turma(s) usa(m) essa disciplina: {}!'.format(disciplina, turmas))
-        return redirect('disciplina:excluir_disciplina_template', disciplina.id)
+        return redirect('disciplina:deletar_disciplina_template', disciplina.id)
