@@ -13,7 +13,7 @@ class AulaDoAlunoView():
         CRUD para manter um aluno em uma aula
     """
     @permission_required('aula.add_auladoaluno', login_url='/', raise_exception=True)
-    def add_aluno_em_aula(request, aula_id):
+    def adicionar_aluno_em_aula(request, aula_id):
         aula = get_object_or_404(Aula, pk=aula_id)
         if request.method == 'POST':
             form = AulaDoAlunoForm(request.POST)
@@ -23,7 +23,7 @@ class AulaDoAlunoView():
                     AulaDoAluno(aula=aula, aluno=Aluno.objects.get(pk=id)) for id in id_alunos
                 ])
                 messages.success(request, 'Aluno(s) adicionado(s) com sucesso!')
-                return redirect('aula:get_aula', aula_id)
+                return redirect('aula:detalhar_aula', aula_id)
             else:
                 messages.error(request, 'Erro ao adicionar aluno(s)')
         else:
@@ -35,7 +35,7 @@ class AulaDoAlunoView():
         }
         context.update({'alunos': alunos_nao_participantes_de_aula(aula_id)})
         context.update(is_admin(request))
-        return render(request, 'aula_do_aluno/add_aluno_em_aula.html', context)
+        return render(request, 'aula_do_aluno/adicionar_aluno_em_aula.html', context)
 
     @permission_required('aula.view_auladoaluno', login_url='/', raise_exception=True)
     def aulas_do_aluno(request, matr):
@@ -49,18 +49,18 @@ class AulaDoAlunoView():
         return render(request, 'aula_do_aluno/aulas_do_aluno.html', context)
 
     @permission_required('aula.delete_auladoaluno', login_url='/', raise_exception=True)
-    def remover_aluno_de_aula_template(request, aluno_id, aula_id):
+    def deletar_aluno_de_aula_template(request, aluno_id, aula_id):
         aula = get_object_or_404(AulaDoAluno, aula=aula_id, aluno=aluno_id)
         context = {
             'aula':aula,
             'full_name': request.user.get_full_name(),
             'is_admin': True,
         }
-        return render(request, 'aula_do_aluno/remover_aluno_de_aula_template.html', context)
+        return render(request, 'aula_do_aluno/deletar_aluno_de_aula_template.html', context)
 
     @permission_required('aula.delete_auladoaluno', login_url='/', raise_exception=True)
-    def remover_aluno_de_aula(request, aluno_id, aula_id):
+    def deletar_aluno_de_aula(request, aluno_id, aula_id):
         aula = get_object_or_404(AulaDoAluno, aula=aula_id, aluno=aluno_id)
         aula.delete()
         messages.success(request, 'Aluno removido da aula com sucesso!')
-        return redirect("aula:get_aula", aula_id)
+        return redirect("aula:detalhar_aula", aula_id)

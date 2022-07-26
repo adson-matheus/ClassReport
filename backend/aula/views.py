@@ -30,7 +30,7 @@ class AulaTemplate:
         return render(request, 'aula/index_aula_admin.html', context)
 
     @permission_required('aula.add_aula', login_url='/', raise_exception=True)
-    def add_aula(request):
+    def adicionar_aula(request):
         if request.method == 'POST':
             form_aula = AulaForm(request.POST)
             if form_aula.is_valid():
@@ -47,10 +47,10 @@ class AulaTemplate:
             'full_name': request.user.get_full_name(),
         }
         context.update(is_admin(request))
-        return render(request, 'aula/add_aula.html', context)
+        return render(request, 'aula/adicionar_aula.html', context)
 
     @permission_required('aula.add_aula', login_url='/', raise_exception=True)
-    def add_aulas_recorrentes(request, turma_id):
+    def adicionar_aulas_recorrentes(request, turma_id):
         turma = get_object_or_404(Turma, id=turma_id)
         if request.method == 'POST':
             form_aula = AulasRecorrentesForm(request.POST)
@@ -85,9 +85,9 @@ class AulaTemplate:
             'alunos': Aluno.objects.all(),
         }
         context.update(is_admin(request))
-        return render(request, 'aula/add_aulas_recorrentes.html', context)
+        return render(request, 'aula/adicionar_aulas_recorrentes.html', context)
 
-    def get_aula(request, id):
+    def detalhar_aula(request, id):
         aula = get_object_or_404(Aula, pk=id)
         context = {
             'full_name': request.user.get_full_name(),
@@ -95,10 +95,10 @@ class AulaTemplate:
         }
         context.update(alunos_sem_avaliacao_da_aula(aula))
         context.update(is_admin(request))
-        return render(request, 'aula/get_aula.html', context)
+        return render(request, 'aula/detalhar_aula.html', context)
 
     @permission_required('aula.change_aula', login_url='/', raise_exception=True)
-    def edit_aula(request, id):
+    def editar_aula(request, id):
         aula = get_object_or_404(Aula, pk=id)
         if request.method == 'POST':
             form_aula = AulaFormEdit(request.POST, instance=aula)
@@ -109,7 +109,7 @@ class AulaTemplate:
                 datetime = dados['datetime']
                 messages.success(request, 'Aula editada com sucesso!')
                 Aula(id=id, turma=turma, assunto=assunto, datetime=datetime).save()
-                return redirect('aula:get_aula', id)
+                return redirect('aula:detalhar_aula', id)
             else:
                 messages.error(request, 'Erro ao editar aula!')
                 return redirect('aula:index_aula_admin')
@@ -122,20 +122,20 @@ class AulaTemplate:
             'full_name': request.user.get_full_name(),
         }
         context.update(is_admin(request))
-        return render(request, 'aula/edit_aula.html', context)
+        return render(request, 'aula/editar_aula.html', context)
 
     @permission_required('aula.delete_aula', login_url='/', raise_exception=True)
-    def delete_aula_template(request, id):
+    def deletar_aula_template(request, id):
         aula = get_object_or_404(Aula, pk=id)
         context = {
             'full_name': request.user.get_full_name(),
             'aula': aula,
         }
         context.update(is_admin(request))
-        return render(request, 'aula/delete_aula.html', context)
+        return render(request, 'aula/deletar_aula.html', context)
 
     @permission_required('aula.delete_aula', login_url='/', raise_exception=True)
-    def delete_aula(request, id):
+    def deletar_aula(request, id):
         aula = get_object_or_404(Aula, pk=id)
         aula.delete()
         messages.success(request, 'Aula deletada com sucesso!')

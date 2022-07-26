@@ -77,7 +77,7 @@
             placeholder="Assunto da aula, observações, etc..."></textarea>
     </div>
 
-    {% include '../aula_do_aluno/add_aluno_em_aula_template.html' %}
+    {% include '../aula_do_aluno/adicionar_aluno_em_aula_template.html' %}
 
     <div class="d-flex justify-content-center">
         <a class="mr-3" href="{% url 'turma:listar_aulas_de_turma' turma.id %}">
@@ -106,5 +106,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-buttons/2.2.3/js/buttons.html5.min.js" integrity="sha512-BdN+kHA7QfWIcQE3WMwSj5QAvVUrSGxJLv7/yuEEypMOZBSJ1VKGr9BSpOew+6va9yfGUACw/8Yt7LKNn3RKRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-buttons/2.2.3/js/buttons.print.min.js" integrity="sha512-UthH9WkvNUixebk8yKEFm3Sy+Rm8GbuvxiIMCDs9Cepl+YxhY+LUijPFZshcW7+PHa/HcSFLfSX3fGq1AcglWg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    {% include '../aula_do_aluno/add_aluno_em_aula_scripts.html' %}
+    {% include '../aula_do_aluno/adicionar_aluno_em_aula_scripts.html' %}
 {% endblock %}

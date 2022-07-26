@@ -15,7 +15,7 @@
 {% block h1 %}Aulas de {{turma}}{% endblock h1 %}
 {% block card-title %}
     {% autoescape off %}
-        <a href='#' onclick="history.back()">
+        <a href="{% url 'turma:listar_turmas' %}">
             <i class="fa-solid fa-circle-arrow-left teal-color"></i>
         </a>&nbsp
     {% endautoescape %}
@@ -40,13 +40,13 @@
 {% if is_admin %}
     <div class="d-flex justify-content-center">
         <div class="text-center">
-            <a href="{% url 'aula:add_aula' %}" class="mr-2">
+            <a href="{% url 'aula:adicionar_aula' %}" class="mr-2">
                 <button type="button" class="btn btn-lg btn-success btn-teal">
                     Adicionar Aula 
                     <i class="fa-solid fa-plus"></i>
                 </button>
             </a>
-            <a href="{% url 'aula:add_aulas_recorrentes' turma.id %}" class="mr-2">
+            <a href="{% url 'aula:adicionar_aulas_recorrentes' turma.id %}" class="mr-2">
                 <button type="button" class="btn btn-lg btn-success btn-teal">
                     Aulas Recorrentes 
                     <i class="fa-solid fa-plus"></i>
@@ -75,7 +75,7 @@
                         <td>{{aula.datetime|date:'SHORT_DATE_FORMAT'}} às {{aula.datetime|time:'H:i'}}</td>
                         <td>{% if aula.assunto %}{{aula.assunto}}{% else %}-{% endif %}</td>
                         <td class="text-center">
-                            <a class="btn bg-teal btn-sm" href="{% url 'aula:get_aula' aula.id %}">
+                            <a class="btn bg-teal btn-sm" href="{% url 'aula:detalhar_aula' aula.id %}">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </a>
                         </td>

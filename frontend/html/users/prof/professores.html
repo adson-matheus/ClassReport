@@ -39,7 +39,7 @@
 {% endif %}
 <div class="d-flex justify-content-center">
     <div class="col-4 mb-2 text-center">
-        <a href="{% url 'users:add_prof_template' %}">
+        <a href="{% url 'users:adicionar_professor' %}">
             <button type="button" class="btn btn-lg btn-success btn-teal">Adicionar Professor</button>
         </a>
     </div>
@@ -87,7 +87,7 @@
                             <a class="btn bg-teal btn-sm" href="#">
                                 <i class="fas fa-pen-to-square"></i>
                             </a>
-                            <a class="btn bg-danger btn-sm" href="{% url 'users:delete_prof_template' professor.siape %}">
+                            <a class="btn bg-danger btn-sm" href="{% url 'users:deletar_professor_template' professor.siape %}">
                                 <i class="fa-solid fa-trash-can"></i>
                             </a>
                         </td>

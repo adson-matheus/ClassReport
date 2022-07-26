@@ -12,7 +12,7 @@
 {% endblock %}
 {% block card-title %}
     {% autoescape off %}
-        <a href="{% url 'aula:get_aula' aula.id %}">
+        <a href="{% url 'aula:detalhar_aula' aula.id %}">
             <i class="fa-solid fa-circle-arrow-left teal-color"></i>
         </a>&nbsp
     {% endautoescape %}
@@ -24,10 +24,10 @@
         <p>Você está prestes a excluir uma aula. Deseja realmente excluir?</p>
     </div>
     <div class="d-flex justify-content-center">
-        <a class="p-3" href="{% url 'aula:get_aula' aula.id %}">
+        <a class="p-3" href="{% url 'aula:detalhar_aula' aula.id %}">
             <button type="submit" class="btn btn-md btn-outline-light">Cancelar</button>
         </a>
-        <a class="p-3" href="{% url 'aula:delete_aula' aula.id %}">
+        <a class="p-3" href="{% url 'aula:deletar_aula' aula.id %}">
             <button type="submit" class="btn btn-md btn-outline-danger">Excluir</button>
         </a>
     </div>

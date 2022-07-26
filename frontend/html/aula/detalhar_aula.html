@@ -20,15 +20,9 @@
 {% block h1 %}Detalhar Aula{% endblock h1 %}
 {% block card-title %}
     {% autoescape off %}
-    {% if is_admin %}
-        <a href="{% url 'turma:listar_aulas_de_turma' aula.turma.id %}">
-            <i class="fa-solid fa-circle-arrow-left teal-color"></i>
-        </a>&nbsp
-    {% else %}
-        <a href="{% url 'aula:index_aula_prof' request.user.username %}">
-            <i class="fa-solid fa-circle-arrow-left teal-color"></i>
-        </a>&nbsp
-    {% endif %}
+    <a href="{% url 'turma:listar_aulas_de_turma' aula.turma.id %}">
+        <i class="fa-solid fa-circle-arrow-left teal-color"></i>
+    </a>&nbsp
     {% endautoescape %}
     Aula de {{aula.turma}}
 {% endblock %}
@@ -57,7 +51,7 @@
                 <div class="icon">
                     <i class="fas fa-user-plus"></i>
                 </div>
-                <a href="{% url 'aula:add_aluno_em_aula' aula.id %}" class="small-box-footer">
+                <a href="{% url 'aula:adicionar_aluno_em_aula' aula.id %}" class="small-box-footer">
                     Adicionar <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
@@ -71,7 +65,7 @@
                 <div class="icon">
                     <i class="fas fa-pen-to-square"></i>
                 </div>
-                <a href="{% url 'aula:edit_aula' aula.id %}" class="small-box-footer">
+                <a href="{% url 'aula:editar_aula' aula.id %}" class="small-box-footer">
                     Editar <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
@@ -85,7 +79,7 @@
                 <div class="icon">
                     <i class="fa-solid fa-trash-can"></i>
                 </div>
-                <a href="{% url 'aula:delete_aula_template' aula.id %}" class="small-box-footer">
+                <a href="{% url 'aula:deletar_aula_template' aula.id %}" class="small-box-footer">
                     Excluir <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
@@ -141,7 +135,7 @@
                                         <td>{{aluno.aluno.nome}}</td>
                                         <td class="text-center">
                                             {% if is_admin %}
-                                                <a class="btn bg-danger btn-sm" href="{% url 'aula:remover_aluno_de_aula_template' aula_id=aula.id aluno_id=aluno.aluno.id %}">
+                                                <a class="btn bg-danger btn-sm" href="{% url 'aula:deletar_aluno_de_aula_template' aula_id=aula.id aluno_id=aluno.aluno.id %}">
                                                     <i class="fa-solid fa-trash-can"></i>
                                                 </a>
                                             {% else %}
@@ -196,7 +190,7 @@
                                         <td>{{avaliacao.aula_do_aluno.aluno.nome}}</td>
                                         <td class="text-center">
                                             {% if is_admin %}
-                                                <a class="btn bg-danger btn-sm" href="{% url 'aula:remover_aluno_de_aula_template' aula_id=aula.id aluno_id=avaliacao.aula_do_aluno.aluno.id %}">
+                                                <a class="btn bg-danger btn-sm" href="{% url 'aula:deletar_aluno_de_aula_template' aula_id=aula.id aluno_id=avaliacao.aula_do_aluno.aluno.id %}">
                                                     <i class="fa-solid fa-trash-can"></i>
                                                 </a>
                                             {% else %}

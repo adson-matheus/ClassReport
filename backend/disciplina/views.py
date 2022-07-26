@@ -13,10 +13,10 @@ def listar_disciplinas(request):
         'full_name': request.user.get_full_name(),
     }
     context.update(is_admin(request))
-    return render(request, 'disciplina/disciplina.html', context)
+    return render(request, 'disciplina/listar_disciplinas.html', context)
 
 @permission_required('disciplina.add_disciplina', login_url='/', raise_exception=True)
-def add_disciplina(request):
+def adicionar_disciplina(request):
     if request.method == 'POST':
         form = DisciplinaForm(request.POST)
         if form.is_valid():
@@ -32,7 +32,7 @@ def add_disciplina(request):
         'full_name': request.user.get_full_name(),
         'is_admin': True,
     }
-    return render(request, 'disciplina/add_disciplina.html', context)
+    return render(request, 'disciplina/adicionar_disciplina.html', context)
 
 @permission_required('disciplina.change_disciplina', login_url='/', raise_exception=True)
 def editar_disciplina(request, id):
@@ -55,17 +55,17 @@ def editar_disciplina(request, id):
     return render(request, 'disciplina/editar_disciplina.html', context)
 
 @permission_required('disciplina.delete_disciplina', login_url='/', raise_exception=True)
-def excluir_disciplina_template(request, id):
+def deletar_disciplina_template(request, id):
     disciplina = get_object_or_404(Disciplina, pk=id)
     context = {
         'full_name': request.user.get_full_name(),
         'disciplina': disciplina,
     }
     context.update(is_admin(request))
-    return render(request, 'disciplina/excluir_disciplina.html', context)
+    return render(request, 'disciplina/deletar_disciplina.html', context)
 
 @permission_required('disciplina.delete_disciplina', login_url='/', raise_exception=True)
-def excluir_disciplina(request, id):
+def deletar_disciplina(request, id):
     disciplina = Disciplina.objects.get(pk=id)
     try:
         disciplina.delete()
@@ -75,4 +75,4 @@ def excluir_disciplina(request, id):
     except ProtectedError as e:
         turmas = [ turma.__str__() for turma in e.protected_objects ]
         messages.error(request, '{} não pode ser excluída. A(s) seguinte(s) turma(s) usa(m) essa disciplina: {}!'.format(disciplina, turmas))
-        return redirect('disciplina:excluir_disciplina_template', disciplina.id)
+        return redirect('disciplina:deletar_disciplina_template', disciplina.id)
