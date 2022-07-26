@@ -10,7 +10,7 @@ def index_aluno(request):
     context = listar_alunos()
     context.update({"full_name": request.user.get_full_name()})
     context.update(is_admin(request))
-    return render(request, 'users/aluno/alunos.html', context)
+    return render(request, 'users/aluno/listar_alunos.html', context)
 
 @permission_required('users.add_aluno', login_url='/', raise_exception=True)
 def adicionar_aluno(request):
@@ -57,17 +57,17 @@ def editar_aluno(request, matr):
     return render(request, 'users/aluno/editar_aluno.html', context)
 
 @permission_required('users.delete_aluno', login_url='/', raise_exception=True)
-def delete_aluno_template(request, matr):
+def deletar_aluno_template(request, matr):
     aluno = Aluno.objects.get(matricula=matr)
     context = {
         'full_name': request.user.get_full_name(),
         'aluno': aluno,
     }
     context.update(is_admin(request))
-    return render(request, 'users/aluno/delete_aluno.html', context)
+    return render(request, 'users/aluno/deletar_aluno.html', context)
 
 @permission_required('users.delete_aluno', login_url='/', raise_exception=True)
-def delete_aluno(request, matr):
+def deletar_aluno(request, matr):
     aluno = get_object_or_404(Aluno, matricula=matr)
     aluno.delete()
     messages.success(request, "Aluno deletado com sucesso!")

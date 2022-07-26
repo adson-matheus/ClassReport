@@ -10,8 +10,8 @@ urlpatterns = [
     path('alunos', views_aluno.index_aluno, name='index_aluno'),
     path('alunos/add', views_aluno.adicionar_aluno, name='adicionar_aluno'),
     path('alunos/edit/<int:matr>', views_aluno.editar_aluno, name='editar_aluno'),
-    path('alunos/delete/<int:matr>', views_aluno.delete_aluno_template, name='delete_aluno_template'),
-    path('alunos/delete/<int:matr>/confirm', views_aluno.delete_aluno, name='delete_aluno'),
+    path('alunos/delete/<int:matr>', views_aluno.deletar_aluno_template, name='deletar_aluno_template'),
+    path('alunos/delete/<int:matr>/confirm', views_aluno.deletar_aluno, name='deletar_aluno'),
 
     # professores
     path('prof', views_professor.index_professor, name='index_prof'),
