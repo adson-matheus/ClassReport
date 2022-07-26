@@ -56,8 +56,7 @@
             class="form-control"
             rows=10
             maxlength=255
-            required
-            placeholder="Assunto da aula, observações, etc...">{{ aula.assunto }}</textarea>
+            placeholder="Assunto da aula, observações, etc...">{% if aula.assunto %}{{aula.assunto}}{% endif %}</textarea>
     </div>
 
     <div class="form-group">
