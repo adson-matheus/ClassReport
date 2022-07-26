@@ -15,6 +15,6 @@ urlpatterns = [
 
     # professores
     path('prof', views_professor.index_professor, name='index_prof'),
-    path('prof/delete/<int:siape>', views_professor.delete_professor_template, name='delete_prof_template'),
-    path('prof/delete/<int:siape>/confirm', views_professor.delete_professor, name='delete_prof'),
+    path('prof/delete/<int:siape>', views_professor.deletar_professor_template, name='deletar_professor_template'),
+    path('prof/delete/<int:siape>/confirm', views_professor.deletar_professor, name='deletar_professor'),
 ]

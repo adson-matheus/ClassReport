@@ -11,16 +11,16 @@ def index_professor(request):
     }
     return render(request, 'users/prof/professores.html', context)
 
-def delete_professor_template(request, siape):
+def deletar_professor_template(request, siape):
     professor = get_object_or_404(Professor, siape=siape)
     context = {
         'full_name': request.user.get_full_name(),
         'professor': professor,
     }
     context.update(is_admin(request))
-    return render(request, 'users/prof/delete_prof.html', context)
+    return render(request, 'users/prof/deletar_professor.html', context)
 
-def delete_professor(request, siape):
+def deletar_professor(request, siape):
     professor = get_object_or_404(Professor, siape=siape)
     professor.user.is_active = False
     professor.user.save()
