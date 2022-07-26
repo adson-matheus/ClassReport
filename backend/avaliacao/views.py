@@ -76,7 +76,7 @@ def deletar_avaliacao_template(request, id_avaliacao):
     return render(request, 'avaliacao/deletar_avaliacao_template.html', context)
 
 @permission_required('avaliacao.delete_avaliacao', login_url='/', raise_exception=True)
-def excluir_avaliacao(request, id_avaliacao):
+def deletar_avaliacao(request, id_avaliacao):
     avaliacao = get_object_or_404(Avaliacao, pk=id_avaliacao)
     avaliacao.delete()
     messages.success(request, f'Avaliação de {avaliacao.aula_do_aluno.aluno} excluída com sucesso!')
