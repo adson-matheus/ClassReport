@@ -8,5 +8,5 @@ urlpatterns = [
     path('add', views.adicionar_disciplina, name='adicionar_disciplina'),
     path('editar/<int:id>/', views.editar_disciplina, name='editar_disciplina'),
     path('excluir/<int:id>', views.deletar_disciplina_template, name='deletar_disciplina_template'),
-    path('excluir/<int:id>/confirmar', views.excluir_disciplina, name='excluir_disciplina'),
+    path('excluir/<int:id>/confirmar', views.deletar_disciplina, name='deletar_disciplina'),
 ]

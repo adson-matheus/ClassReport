@@ -13,7 +13,7 @@ def listar_disciplinas(request):
         'full_name': request.user.get_full_name(),
     }
     context.update(is_admin(request))
-    return render(request, 'disciplina/disciplina.html', context)
+    return render(request, 'disciplina/listar_disciplinas.html', context)
 
 @permission_required('disciplina.add_disciplina', login_url='/', raise_exception=True)
 def adicionar_disciplina(request):
@@ -62,10 +62,10 @@ def deletar_disciplina_template(request, id):
         'disciplina': disciplina,
     }
     context.update(is_admin(request))
-    return render(request, 'disciplina/excluir_disciplina.html', context)
+    return render(request, 'disciplina/deletar_disciplina.html', context)
 
 @permission_required('disciplina.delete_disciplina', login_url='/', raise_exception=True)
-def excluir_disciplina(request, id):
+def deletar_disciplina(request, id):
     disciplina = Disciplina.objects.get(pk=id)
     try:
         disciplina.delete()
