@@ -15,7 +15,7 @@
 {% block h1 %}Aulas de {{turma}}{% endblock h1 %}
 {% block card-title %}
     {% autoescape off %}
-        <a href='#' onclick="history.back()">
+        <a href="{% url 'turma:listar_turmas' %}">
             <i class="fa-solid fa-circle-arrow-left teal-color"></i>
         </a>&nbsp
     {% endautoescape %}
