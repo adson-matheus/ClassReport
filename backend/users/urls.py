@@ -3,8 +3,8 @@ from django.urls import path
 
 app_name = 'users'
 urlpatterns = [
-    path('admin/add', views.add_admin_template, name='add_admin_template'),
-    path('prof/add', views.add_prof_template, name='add_prof_template'),
+    path('admin/add', views.adicionar_administrador, name='adicionar_administrador'),
+    path('prof/add', views.adicionar_professor, name='adicionar_professor'),
 
     # alunos
     path('alunos', views_aluno.index_aluno, name='index_aluno'),

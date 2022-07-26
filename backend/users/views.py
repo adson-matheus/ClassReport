@@ -6,7 +6,7 @@ from .controller import add_admin_controller, add_prof_controller
 from .forms import AdministradorForm, ProfessorForm, UserForm
 
 @permission_required('users.add_administrador', login_url='/', raise_exception=True)
-def add_admin_template(request):
+def adicionar_administrador(request):
     if request.method == 'POST':
         form_user = UserForm(request.POST)
         form_admin = AdministradorForm(request.POST)
@@ -25,10 +25,10 @@ def add_admin_template(request):
         'form_user': form_user
     }
     context.update(is_admin(request))
-    return render(request, 'users/add_admin_template.html', context)
+    return render(request, 'users/adicionar_administrador.html', context)
 
 @permission_required('users.add_professor', login_url='/', raise_exception=True)
-def add_prof_template(request):
+def adicionar_professor(request):
     if request.method == 'POST':
         form_user = UserForm(request.POST)
         form_prof = ProfessorForm(request.POST)
@@ -42,4 +42,4 @@ def add_prof_template(request):
         form_user = UserForm()
         form_prof = ProfessorForm()
     context = is_admin(request)
-    return render(request, 'users/add_prof_template.html', context)
+    return render(request, 'users/adicionar_professor.html', context)
