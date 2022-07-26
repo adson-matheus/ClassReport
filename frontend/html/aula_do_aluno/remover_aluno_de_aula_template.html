@@ -27,7 +27,7 @@
         <a class="p-3" href="{% url 'aula:detalhar_aula' aula.aula.id %}">
             <button type="submit" class="btn btn-md btn-outline-light">Cancelar</button>
         </a>
-        <a class="p-3" href="{% url 'aula:remover_aluno_de_aula' aula.aula.id aula.aluno.id %}">
+        <a class="p-3" href="{% url 'aula:deletar_aluno_de_aula' aula.aula.id aula.aluno.id %}">
             <button type="submit" class="btn btn-md btn-outline-danger">Excluir</button>
         </a>
     </div>
