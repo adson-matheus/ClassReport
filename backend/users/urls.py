@@ -8,7 +8,7 @@ urlpatterns = [
 
     # alunos
     path('alunos', views_aluno.index_aluno, name='index_aluno'),
-    path('alunos/add', views_aluno.add_aluno, name='add_aluno'),
+    path('alunos/add', views_aluno.adicionar_aluno, name='adicionar_aluno'),
     path('alunos/edit/<int:matr>', views_aluno.edit_aluno, name='edit_aluno'),
     path('alunos/delete/<int:matr>', views_aluno.delete_aluno_template, name='delete_aluno_template'),
     path('alunos/delete/<int:matr>/confirm', views_aluno.delete_aluno, name='delete_aluno'),

@@ -13,7 +13,7 @@ def index_aluno(request):
     return render(request, 'users/aluno/alunos.html', context)
 
 @permission_required('users.add_aluno', login_url='/', raise_exception=True)
-def add_aluno(request):
+def adicionar_aluno(request):
     """
         Administrador adiciona aluno
     """
@@ -33,7 +33,7 @@ def add_aluno(request):
         'full_name': request.user.get_full_name()
     }
     context.update(is_admin(request))
-    return render(request, 'users/aluno/add_aluno.html', context)
+    return render(request, 'users/aluno/adicionar_aluno.html', context)
 
 @permission_required('users.change_aluno', login_url='/', raise_exception=True)
 def edit_aluno(request, matr):
