@@ -36,7 +36,7 @@ def adicionar_aluno(request):
     return render(request, 'users/aluno/adicionar_aluno.html', context)
 
 @permission_required('users.change_aluno', login_url='/', raise_exception=True)
-def edit_aluno(request, matr):
+def editar_aluno(request, matr):
     aluno = get_object_or_404(Aluno, matricula=matr)
     if request.method == 'POST':
         form = EditarAlunoForm(request.POST, instance=aluno)
@@ -54,7 +54,7 @@ def edit_aluno(request, matr):
         'full_name': request.user.get_full_name()
     }
     context.update(is_admin(request))
-    return render(request, 'users/aluno/edit_aluno.html', context)
+    return render(request, 'users/aluno/editar_aluno.html', context)
 
 @permission_required('users.delete_aluno', login_url='/', raise_exception=True)
 def delete_aluno_template(request, matr):
