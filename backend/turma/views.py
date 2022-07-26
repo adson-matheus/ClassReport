@@ -94,17 +94,17 @@ def listar_aulas_de_turma(request, id):
     return render(request, 'turma/listar_aulas_de_turma.html', context)
 
 @permission_required('turma.delete_turma', login_url='/', raise_exception=True)
-def excluir_turma_template(request, id):
+def deletar_turma_template(request, id):
     turma = get_object_or_404(Turma, pk=id)
     context = {
         'full_name': request.user.get_full_name(),
         'turma': turma,
     }
     context.update(is_admin(request))
-    return render(request, 'turma/excluir_turma.html', context)
+    return render(request, 'turma/deletar_turma.html', context)
 
 @permission_required('turma.delete_turma', login_url='/', raise_exception=True)
-def excluir_turma(request, id):
+def deletar_turma(request, id):
     turma = get_object_or_404(Turma, pk=id)
     try:
         turma.delete()
@@ -113,5 +113,5 @@ def excluir_turma(request, id):
 
     except ProtectedError as e:
         for aula in e.protected_objects:
-            messages.error(request, "Não é possível excluir a turma {}. A aula '{}' está cadastrada e faz parte desta turma!".format(turma, aula.assunto))
-        return redirect('turma:excluir_turma_template', id)
+            messages.error(request, "Não é possível deletar a turma {}. A aula '{}' está cadastrada e faz parte desta turma!".format(turma, aula.assunto))
+        return redirect('turma:deletar_turma_template', id)
