@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 from django.shortcuts import redirect, render, get_object_or_404
+from django.db.models import Q
 from users.utils import is_admin
 from users.models import Aluno
 from .utils import alunos_nao_participantes_de_aula
@@ -40,10 +41,19 @@ class AulaDoAlunoView():
     @permission_required('aula.view_auladoaluno', login_url='/', raise_exception=True)
     def aulas_do_aluno(request, matr):
         aluno = get_object_or_404(Aluno, matricula=matr)
+        data_inicio = request.GET.get('data_inicio')
+        data_fim = request.GET.get('data_fim')
+        if data_inicio and data_fim:
+            aulas = AulaDoAluno.objects.filter(
+                Q(aula__datetime__range=(data_inicio, data_fim)) |
+                Q(aula__datetime__icontains=data_fim),
+                aluno=aluno).order_by('aula__datetime')
+        else:
+            aulas = AulaDoAluno.objects.filter(aluno=aluno)
         context = {
             'full_name': request.user.get_full_name(),
             'aluno': aluno,
-            'aulas': AulaDoAluno.objects.filter(aluno=aluno)
+            'aulas': aulas,
         }
         context.update(is_admin(request))
         return render(request, 'aula_do_aluno/aulas_do_aluno.html', context)
