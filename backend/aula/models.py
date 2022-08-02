@@ -16,6 +16,7 @@ class Aula(models.Model):
 class AulaDoAluno(models.Model):
     aula = models.ForeignKey(Aula, on_delete=models.CASCADE, null=False)
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE, null=False)
+    presenca = models.BooleanField(verbose_name='Presença', default=True, blank=True, null=True)
 
     class Meta:
         ordering = ('-id',)
