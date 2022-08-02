@@ -28,7 +28,7 @@
     Aulas de {{aluno}}
 {% endblock %}
 {% block content %}
-<h1>Filtrar por data:</h1>
+<h3>Filtrar por data:</h3>
 <form action="{% url 'aula:aulas_do_aluno' aluno.matricula %}">
     <div class="form-group">
         <label for="data_inicio">Data de início</label>
@@ -41,6 +41,30 @@
     <button type="submit" class="btn btn-primary btn-teal">Filtrar</button>
 </form>
 
+<div class="col-sm-12 col-lg-4 m-auto">
+    <div class="card card-widget widget-user-2 shadow-sm">
+
+        <div class="widget-user-header bg-teal">
+            <h3 class="widget-user-username">{{aluno.nome}}</h3>
+            <h5 class="widget-user-desc">{{aluno.matricula}}</h5>
+        </div>
+        <div class="card-footer p-0">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <span class="nav-link">
+                        Frequência no período selecionado <span class="float-right badge bg-teal">{{presenca}}/{{aulas.count}} aulas</span>
+                    </span>
+                </li>
+                <li class="nav-item">
+                    <span class="nav-link">
+                        Avaliações feitas pelo professor <span class="float-right badge bg-teal">{{avaliacoes.count}}/{{aulas.count}} avaliações</span>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
     <div class="row">
         <div class="col-sm-12">
@@ -48,11 +72,15 @@
                 aria-describedby="example1_info">
                 <thead class="text-center">
                     <tr>
-                        <th class="w-25" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                        <th tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                             aria-label="Turma: ativar para ordenar ascendente">Turma</th>
-                        <th class="sorting w-50" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                             aria-sort="ascending" aria-label="Aula/Assunto: ativar para ordenar ascendente">Aula/Assunto</th>
-                        <th class="sorting w-50" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                            aria-sort="ascending" aria-label="Presente: ativar para ordenar ascendente">Presente?</th>
+                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                            aria-sort="ascending" aria-label="Avaliado: ativar para ordenar ascendente">Avaliado?</th>
+                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                             aria-sort="ascending" aria-label="Data: ativar para ordenar ascendente">Data</th>
                     </tr>
                 </thead>
@@ -70,6 +98,8 @@
                                 <i class="fa-solid fa-arrow-up-right-from-square"></i>
                             </a>
                         </td>
+                        <td class="text-center">{% if aula.presenca %}Sim{% else %}Não{% endif %}</td>
+                        <td class="text-center">{% if aula in avaliacao.aula_do_aluno.aula %}</td>
                         <td class="text-center">{{aula.aula.datetime|date:'SHORT_DATE_FORMAT'}} às {{aula.aula.datetime|time:'H:i'}}</td>
                     </tr>
                 {% endfor %}
@@ -78,6 +108,8 @@
                     <tr>
                         <th rowspan="1" colspan="1">Turma</th>
                         <th rowspan="1" colspan="1">Aula/Assunto</th>
+                        <th rowspan="1" colspan="1">Presente</th>
+                        <th rowspan="1" colspan="1">Avaliado</th>
                         <th rowspan="1" colspan="1">Data</th>
                     </tr>
                 </tfoot>
