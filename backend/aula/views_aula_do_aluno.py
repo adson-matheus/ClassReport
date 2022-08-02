@@ -4,6 +4,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.db.models import Q
 from users.utils import is_admin
 from users.models import Aluno
+from avaliacao.models import Avaliacao
 from .utils import alunos_nao_participantes_de_aula
 from .models import Aula, AulaDoAluno
 from .forms import AulaDoAlunoForm
@@ -50,10 +51,15 @@ class AulaDoAlunoView():
                 aluno=aluno).order_by('aula__datetime')
         else:
             aulas = AulaDoAluno.objects.filter(aluno=aluno)
+        aulas_id = [aula.aula.id for aula in aulas]
+        avaliacoes = Avaliacao.objects.filter(aula_do_aluno__aula__in=aulas_id, aula_do_aluno__aluno=aluno)
+        presenca = aulas.filter(presenca=True).count()
         context = {
             'full_name': request.user.get_full_name(),
             'aluno': aluno,
             'aulas': aulas,
+            'presenca': presenca,
+            'avaliacoes': avaliacoes,
         }
         context.update(is_admin(request))
         return render(request, 'aula_do_aluno/aulas_do_aluno.html', context)
