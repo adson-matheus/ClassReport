@@ -28,6 +28,19 @@
     Aulas de {{aluno}}
 {% endblock %}
 {% block content %}
+<h1>Filtrar por data:</h1>
+<form action="{% url 'aula:aulas_do_aluno' aluno.matricula %}">
+    <div class="form-group">
+        <label for="data_inicio">Data de início</label>
+        <input id="data_inicio" type="date" name="data_inicio" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="data_fim">Data de Fim</label>
+        <input id="data_fim" type="date" name="data_fim" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary btn-teal">Filtrar</button>
+</form>
+
 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
     <div class="row">
         <div class="col-sm-12">
