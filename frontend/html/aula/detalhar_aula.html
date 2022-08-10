@@ -108,7 +108,7 @@
             <hr>
             <strong><i class="fas fa-solid fa-file-alt mr-1"></i> Assunto</strong>
             <p class="text-muted">
-                <span class="tag tag-danger">{% if aula.assunto %}{{aula.assunto}}{% else %}-{% endif %}</span>
+                <span class="tag tag-danger">{{aula.assunto|default_if_none:"-"}}</span>
             </p>
             <hr>
             {% if alunos_sem_avaliacao %}
