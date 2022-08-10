@@ -93,13 +93,22 @@
                                 <i class="fa-solid fa-arrow-up-right-from-square"></i>
                             </a>
                         </td>
-                        <td>{% if aula.aula.assunto %}{{aula.aula.assunto}}{% else %}-{% endif %}
+                        <td>{{aula.aula.assunto|default_if_none:"-"}}
                             <a href="{% url 'aula:detalhar_aula' aula.aula.id %}">
                                 <i class="fa-solid fa-arrow-up-right-from-square"></i>
                             </a>
                         </td>
                         <td class="text-center">{% if aula.presenca %}Sim{% else %}Não{% endif %}</td>
-                        <td class="text-center">{% if aula in avaliacao.aula_do_aluno.aula %}</td>
+                        <td class="text-center">
+                            {% for avaliacao in avaliacoes %}
+                                {% if aula.aula == avaliacao.aula_do_aluno.aula %}
+                                    Sim
+                                    {% comment %} parar o loop {% endcomment %}
+                                {% else %}
+                                    Não
+                                {% endif %}
+                            {% endfor %}
+                        </td>
                         <td class="text-center">{{aula.aula.datetime|date:'SHORT_DATE_FORMAT'}} às {{aula.aula.datetime|time:'H:i'}}</td>
                     </tr>
                 {% endfor %}
@@ -109,7 +118,7 @@
                         <th rowspan="1" colspan="1">Turma</th>
                         <th rowspan="1" colspan="1">Aula/Assunto</th>
                         <th rowspan="1" colspan="1">Presente</th>
-                        <th rowspan="1" colspan="1">Avaliado</th>
+                        <th rowspan="1" colspan="1">Avaliado?</th>
                         <th rowspan="1" colspan="1">Data</th>
                     </tr>
                 </tfoot>
