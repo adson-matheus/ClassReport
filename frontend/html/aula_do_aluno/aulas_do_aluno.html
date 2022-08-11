@@ -102,10 +102,10 @@
                         <td class="text-center">
                             {% for avaliacao in avaliacoes %}
                                 {% if aula.aula == avaliacao.aula_do_aluno.aula %}
-                                    Sim
-                                    {% comment %} parar o loop {% endcomment %}
-                                {% else %}
-                                    Não
+                                    Sim 
+                                    <a href="{% url 'avaliacao:detalhar_avaliacao' avaliacao.id %}">
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </a>
                                 {% endif %}
                             {% endfor %}
                         </td>
