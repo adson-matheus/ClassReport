@@ -28,39 +28,90 @@
     Aulas de {{aluno}}
 {% endblock %}
 {% block content %}
-<h3>Filtrar por data:</h3>
-<form action="{% url 'aula:aulas_do_aluno' aluno.matricula %}">
-    <div class="form-group">
-        <label for="data_inicio">Data de início</label>
-        <input id="data_inicio" type="date" name="data_inicio" class="form-control">
+<div class="container-fluid">
+    <div class="col-sm-12">
+        <h3>Filtrar por data:</h3>
+        <form action="{% url 'aula:aulas_do_aluno' aluno.matricula %}">
+            <div class="form-group">
+                <label for="data_inicio">Data de início</label>
+                <input id="data_inicio" type="date" name="data_inicio" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="data_fim">Data de Fim</label>
+                <input id="data_fim" type="date" name="data_fim" class="form-control">
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary btn-teal">Filtrar</button>
+                <a href="{% url 'aula:aulas_do_aluno' aluno.matricula %}" class="ml-3">
+                    <button type="button" class="btn btn-primary btn-teal">Limpar Filtros</button>
+                </a>
+            </div>
+        </form>
     </div>
-    <div class="form-group">
-        <label for="data_fim">Data de Fim</label>
-        <input id="data_fim" type="date" name="data_fim" class="form-control">
-    </div>
-    <button type="submit" class="btn btn-primary btn-teal">Filtrar</button>
-</form>
-
-<div class="col-sm-12 col-lg-4 m-auto">
-    <div class="card card-widget widget-user-2 shadow-sm">
-
-        <div class="widget-user-header bg-teal">
-            <h3 class="widget-user-username">{{aluno.nome}}</h3>
-            <h5 class="widget-user-desc">{{aluno.matricula}}</h5>
+</div>
+<hr>
+<div class="container-fluid mt-3">
+    <div class="col-sm-12 m-auto">
+        <div class="card">
+            <div class="card-header bg-teal">
+                <h3 class="card-title">{{aluno.nome}} - {{aluno.matricula}}</h3>
+            </div>
+            <div class="card-body">
+                <strong>
+                    <i class="fas fa-book mr-1"></i> 
+                    Frequência no período selecionado: 
+                    <span class="float-right">{{presenca}}/{{aulas.count}} aulas</span>
+                </strong>
+                <hr>
+                <strong>
+                    <i class="fas fa-book mr-1"></i> 
+                    Avaliações feitas pelo professor: 
+                    <span class="float-right">{{avaliacoes.count}}/{{aulas.count}} avaliações</span>
+                </strong>
+            </div>
         </div>
-        <div class="card-footer p-0">
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <span class="nav-link">
-                        Frequência no período selecionado <span class="float-right badge bg-teal">{{presenca}}/{{aulas.count}} aulas</span>
-                    </span>
-                </li>
-                <li class="nav-item">
-                    <span class="nav-link">
-                        Avaliações feitas pelo professor <span class="float-right badge bg-teal">{{avaliacoes.count}}/{{aulas.count}} avaliações</span>
-                    </span>
-                </li>
-            </ul>
+    </div>
+
+    <div class="col-sm-12 m-auto">
+        <div class="card">
+            <div class="card-header bg-teal">
+                <h3 class="card-title">Média nos Critérios de Avaliação 
+                    {% if data_inicio %}
+                    - De <b>{{data_inicio|date:'SHORT_DATE_FORMAT'}}</b> até <b>{{data_fim|date:'SHORT_DATE_FORMAT'}}</b>
+                    {% endif %}
+                </h3>
+            </div>
+            <div class="card-body">
+                <strong>
+                    <i class="fas fa-book mr-1"></i> 
+                    Assiduidade e Pontualidade: 
+                    <span class="float-right">{{criterios_avaliacao.assiduidade}}</span>
+                </strong>
+                <hr>
+                <strong>
+                    <i class="fas fa-book mr-1"></i> 
+                    Iniciativa e Interesse: 
+                    <span class="float-right">{{criterios_avaliacao.iniciativa}}</span>
+                </strong>
+                <hr>
+                <strong>
+                    <i class="fas fa-book mr-1"></i> 
+                    Profissionalismo: 
+                    <span class="float-right">{{criterios_avaliacao.profissionalismo}}</span>
+                </strong>
+                <hr>
+                <strong>
+                    <i class="fas fa-book mr-1"></i> 
+                    Raciocínio Clínico: 
+                    <span class="float-right">{{criterios_avaliacao.raciocinio_clinico}}</span>
+                </strong>
+                <hr>
+                <strong>
+                    <i class="fas fa-book mr-1"></i> 
+                    Relação Médico-Paciente: 
+                    <span class="float-right">{{criterios_avaliacao.relacao_med_paciente}}</span>
+                </strong>
+            </div>
         </div>
     </div>
 </div>
@@ -93,7 +144,7 @@
                                 <i class="fa-solid fa-arrow-up-right-from-square"></i>
                             </a>
                         </td>
-                        <td>{{aula.aula.assunto|default_if_none:"-"}}
+                        <td class="text-center">{{aula.aula.assunto|default_if_none:"-"}}&nbsp;&nbsp;
                             <a href="{% url 'aula:detalhar_aula' aula.aula.id %}">
                                 <i class="fa-solid fa-arrow-up-right-from-square"></i>
                             </a>
