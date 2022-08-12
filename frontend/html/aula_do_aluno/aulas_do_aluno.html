@@ -15,15 +15,9 @@
 {% block active_link_alunos %}active-teal{% endblock %}
 {% block card-title %}
     {% autoescape off %}
-    {% if is_admin %}
         <a href="#" onclick="history.back()">
             <i class="fa-solid fa-circle-arrow-left teal-color"></i>
         </a>&nbsp
-    {% else %}
-        <a href="#" onclick="history.back()">
-            <i class="fa-solid fa-circle-arrow-left teal-color"></i>
-        </a>&nbsp
-    {% endif %}
     {% endautoescape %}
     Aulas de {{aluno}}
 {% endblock %}
@@ -33,12 +27,21 @@
         <h3>Filtrar por data:</h3>
         <form action="{% url 'aula:aulas_do_aluno' aluno.matricula %}">
             <div class="form-group">
-                <label for="data_inicio">Data de início</label>
-                <input id="data_inicio" type="date" name="data_inicio" class="form-control">
+                <label for="data_inicio">Data de início:</label>
+                <input id="data_inicio" type="date" name="data_inicio" class="form-control" value="{{data_inicio|default_if_none:""}}">
             </div>
             <div class="form-group">
-                <label for="data_fim">Data de Fim</label>
-                <input id="data_fim" type="date" name="data_fim" class="form-control">
+                <label for="data_fim">Data de Fim:</label>
+                <input id="data_fim" type="date" name="data_fim" class="form-control" value="{{data_fim|default_if_none:""}}">
+            </div>
+            <div class="form-group">
+                <label for="turma">Turma: </label>
+                <select id="turma" type="text" name="turma" class="form-control" placeholder="Turma">
+                    <option value="" selected="">---------</option>
+                    {% for turma in turmas %}
+                    <option value="{{turma.id}}">{{turma}}</option>
+                    {% endfor %}
+                </select>
             </div>
             <div class="d-flex justify-content-center">
                 <button type="submit" class="btn btn-primary btn-teal">Filtrar</button>
