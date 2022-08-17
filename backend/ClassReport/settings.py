@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'login.apps.LoginConfig',
     'disciplina.apps.DisciplinaConfig',
     'turma.apps.TurmaConfig',
+    'relatorio.apps.RelatorioConfig',
     'rest_framework'
 ]
 

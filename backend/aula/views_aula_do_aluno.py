@@ -1,11 +1,15 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 from django.shortcuts import redirect, render, get_object_or_404
+from django.db.models import Q
 from users.utils import is_admin
 from users.models import Aluno
-from .utils import alunos_nao_participantes_de_aula
+from avaliacao.models import Avaliacao
+from turma.models import Turma
+from .utils import alunos_nao_participantes_de_aula, media_criterios_avaliacao
 from .models import Aula, AulaDoAluno
 from .forms import AulaDoAlunoForm
+from datetime import datetime
 
 
 class AulaDoAlunoView():
@@ -40,10 +44,44 @@ class AulaDoAlunoView():
     @permission_required('aula.view_auladoaluno', login_url='/', raise_exception=True)
     def aulas_do_aluno(request, matr):
         aluno = get_object_or_404(Aluno, matricula=matr)
+        data_inicio = request.GET.get('data_inicio')
+        data_fim = request.GET.get('data_fim')
+        turma = request.GET.get('turma')
+        if data_inicio and data_fim and turma:
+            aulas = AulaDoAluno.objects.filter(
+                Q(aula__datetime__range=(data_inicio, data_fim)) |
+                Q(aula__datetime__icontains=data_fim),
+                aula__turma=turma,
+                aluno=aluno).order_by('aula__datetime')
+            data_inicio = datetime.strptime(data_inicio, '%Y-%m-%d')
+            data_fim = datetime.strptime(data_fim, '%Y-%m-%d')
+        elif data_inicio and data_fim:
+            aulas = AulaDoAluno.objects.filter(
+                Q(aula__datetime__range=(data_inicio, data_fim)) |
+                Q(aula__datetime__icontains=data_fim),
+                aluno=aluno).order_by('aula__datetime')
+            data_inicio = datetime.strptime(data_inicio, '%Y-%m-%d')
+            data_fim = datetime.strptime(data_fim, '%Y-%m-%d')
+        elif turma and not data_inicio and not data_fim:
+            aulas = AulaDoAluno.objects.filter(
+                aula__turma=turma,
+                aluno=aluno).order_by('aula__datetime')
+        else:
+            aulas = AulaDoAluno.objects.filter(aluno=aluno).order_by('aula__datetime')
+        aulas_id = [aula.aula.id for aula in aulas]
+        avaliacoes = Avaliacao.objects.filter(aula_do_aluno__aula__in=aulas_id, aula_do_aluno__aluno=aluno)
+        criterios_avaliacao = media_criterios_avaliacao(avaliacoes)
+        presenca = aulas.filter(presenca=True).count()
         context = {
             'full_name': request.user.get_full_name(),
             'aluno': aluno,
-            'aulas': AulaDoAluno.objects.filter(aluno=aluno)
+            'aulas': aulas,
+            'presenca': presenca,
+            'data_inicio': data_inicio,
+            'data_fim': data_fim,
+            'avaliacoes': avaliacoes,
+            'criterios_avaliacao': criterios_avaliacao,
+            'turmas': Turma.objects.all(),
         }
         context.update(is_admin(request))
         return render(request, 'aula_do_aluno/aulas_do_aluno.html', context)

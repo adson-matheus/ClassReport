@@ -55,7 +55,7 @@
         </div>
         <div class="card-body">
             <p class="text-center">{{aula.turma.professor}}</p>
-            <p class="text-center">{{aula.turma.disciplina}}:<br>{% if aula.assunto %}{{aula.assunto}}{% else %}-{% endif %}</p>
+            <p class="text-center">{{aula.turma.disciplina}}:<br>{{aula.assunto|default_if_none:"-"}}</p>
             <p class="text-right mb-0"><small>{{aula.datetime|date:'SHORT_DATE_FORMAT'}} - {{aula.datetime|time:'H:i'}}</small></p>
         </div>
     </div>

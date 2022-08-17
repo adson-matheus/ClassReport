@@ -60,7 +60,7 @@
         </div>
         <div class="card-body">
             <p class="text-center">{{avaliacao.aula_do_aluno.aula.turma}}</p>
-            <p class="text-center">Aula: {% if avaliacao.aula_do_aluno.aula.assunto %}{{avaliacao.aula_do_aluno.aula.assunto}}{% else %}-{% endif %}</p>
+            <p class="text-center">Aula: {{avaliacao.aula_do_aluno.aula.assunto|default_if_none:"-"}}</p>
             <p class="text-center">Aluno: {{avaliacao.aula_do_aluno.aluno}}</p>
             <p class="text-right mb-0"><small>{{avaliacao.aula_do_aluno.aula.datetime|date:'SHORT_DATE_FORMAT'}} - {{avaliacao.aula_do_aluno.aula.datetime|time:'H:i'}}</small></p>
         </div>
