@@ -41,6 +41,18 @@ class AulaDoAlunoView():
         context.update(is_admin(request))
         return render(request, 'aula_do_aluno/adicionar_aluno_em_aula.html', context)
 
+    @permission_required('users.change_aluno', login_url='/', raise_exception=True)
+    def registrar_presenca(request, aula_do_aluno_id):
+        aula_do_aluno = get_object_or_404(AulaDoAluno, id=aula_do_aluno_id)
+        try:
+            aula_do_aluno.presenca = False if aula_do_aluno.presenca else True
+            aula_do_aluno.save()
+            messages.success(request, "Presença registrada com sucesso!")
+            return redirect('aula:detalhar_aula', aula_do_aluno.aula.id)
+        except:
+            messages.error(request, "Erro ao registrar presença")
+            return redirect('users:index_aluno')
+
     @permission_required('aula.view_auladoaluno', login_url='/', raise_exception=True)
     def aulas_do_aluno(request, matr):
         aluno = get_object_or_404(Aluno, matricula=matr)
