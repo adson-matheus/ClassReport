@@ -134,7 +134,12 @@
                                     <tr class="odd">
                                         <td>{{aluno.aluno.matricula}}</td>
                                         <td>{{aluno.aluno.nome}}</td>
-                                        <td>{% if aluno.presenca %}Sim{% else %}Não{% endif %}</td>
+                                        <td>{% if aluno.presenca %}Sim{% else %}Não{% endif %}
+                                            &nbsp;&nbsp; 
+                                            <a class="float-right" href="{% url 'aula:registrar_presenca' aluno.id %}">
+                                                <i class="fas fa-hand-point-up white-color"></i>
+                                            </a>
+                                        </td>
                                         <td class="text-center">
                                             {% if is_admin %}
                                                 <a class="btn bg-danger btn-sm" href="{% url 'aula:deletar_aluno_de_aula_template' aula_id=aula.id aluno_id=aluno.aluno.id %}">
@@ -192,7 +197,12 @@
                                     <tr class="odd">
                                         <td>{{avaliacao.aula_do_aluno.aluno.matricula}}</td>
                                         <td>{{avaliacao.aula_do_aluno.aluno.nome}}</td>
-                                        <td>{% if avaliacao.aula_do_aluno.presenca %}Sim{% else %}Não{% endif %}</td>
+                                        <td>{% if avaliacao.aula_do_aluno.presenca %}Sim{% else %}Não{% endif %}
+                                            &nbsp;&nbsp; 
+                                            <a class="float-right" href="{% url 'aula:registrar_presenca' avaliacao.aula_do_aluno.id %}">
+                                                <i class="fas fa-hand-point-up white-color"></i>
+                                            </a>
+                                        </td>
                                         <td class="text-center">
                                             <a class="btn bg-teal btn-sm" href="{% url 'avaliacao:detalhar_avaliacao' avaliacao.id %}">
                                                 <i class="fas fa-eye"></i>
