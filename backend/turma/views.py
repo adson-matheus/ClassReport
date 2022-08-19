@@ -66,10 +66,16 @@ def listar_turmas(request):
     '''
     is_admin_dict = is_admin(request)
     if is_admin_dict['is_admin'] == True:
-        turmas = Turma.objects.all()
+        professor = request.GET.get('professor')
+        if professor:
+            turmas = Turma.objects.filter(professor__siape=professor)
+        else:
+            turmas = Turma.objects.all()
+        professores = Professor.objects.exclude(user__is_active=False)
         context = {
             'turmas': turmas,
             'full_name': request.user.get_full_name(),
+            'professores': professores,
         }
         context.update(is_admin_dict)
     else:
