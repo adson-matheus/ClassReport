@@ -35,15 +35,31 @@
         </div>
     {% endfor %}
 {% endif %}
-<div class="d-flex justify-content-center">
-    {% if is_admin %}
-    <div class="col-4 mb-2 text-center">
-        <a href="{% url 'turma:adicionar_turma' %}">
-            <button type="button" class="btn btn-lg btn-success btn-teal">Adicionar Turma</button>
-        </a>
+
+<div class="container-fluid">
+    <div class="col-sm-12">
+        <h3>Filtrar turmas</h3>
+        <form action="{% url 'turma:listar_turmas' %}">
+            <div class="form-group">
+                <label for="professor">Professor:</label>
+                <select id="professor" type="text" name="professor" class="form-control" placeholder="Professor">
+                    <option value="" selected="">---------</option>
+                    {% for professor in professores %}
+                    <option value="{{professor.siape}}">{{professor}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary btn-teal">Filtrar</button>
+                <a href="{% url 'turma:listar_turmas' %}" class="ml-3">
+                    <button type="button" class="btn btn-primary btn-teal">Limpar Filtros</button>
+                </a>
+            </div>
+        </form>
     </div>
-    {% endif %}
 </div>
+<hr>
+
 
 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
     <div class="row">
@@ -72,14 +88,14 @@
                         <td>{{turma.ano}}.{{turma.periodo}}</td>
                         <td>{% if turma.descricao %} {{turma.descricao}} {% else %} - {% endif %}</td>
                         <td class="text-center">
-                            <a class="btn bg-teal btn-sm" href="{% url 'turma:listar_aulas_de_turma' turma.id %}">
+                            <a class="btn bg-teal btn-sm" href="{% url 'turma:listar_aulas_de_turma' turma.id %}" data-toggle="tooltip" title="Aulas da turma">
                                 <i class="fas fa-eye"></i>
                             </a>
                             {% if is_admin %}
-                            <a class="btn bg-teal btn-sm" href="{% url 'turma:editar_turma' turma.id %}">
+                            <a class="btn bg-teal btn-sm" href="{% url 'turma:editar_turma' turma.id %}" data-toggle="tooltip" title="Editar turma">
                                 <i class="fas fa-pen-to-square"></i>
                             </a>
-                            <a class="btn bg-danger btn-sm" href="{% url 'turma:deletar_turma_template' turma.id %}">
+                            <a class="btn bg-danger btn-sm" href="{% url 'turma:deletar_turma_template' turma.id %}" data-toggle="tooltip" title="Deletar turma">
                                 <i class="fa-solid fa-trash-can"></i>
                             </a>
                             {% endif %}
@@ -100,6 +116,17 @@
         </div>
     </div>
 </div>
+
+<div class="d-flex justify-content-center">
+    {% if is_admin %}
+    <div class="col-4 mb-2 text-center">
+        <a href="{% url 'turma:adicionar_turma' %}">
+            <button type="button" class="btn btn-lg btn-success btn-teal">Adicionar Turma</button>
+        </a>
+    </div>
+    {% endif %}
+</div>
+
 {% endblock %}
 {% block scripts %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js" integrity="sha512-BkpSL20WETFylMrcirBahHfSnY++H2O1W+UnEEO4yNIl+jI2+zowyoGJpbtk6bx97fBXf++WJHSSK2MV4ghPcg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
