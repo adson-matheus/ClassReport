@@ -63,10 +63,10 @@
                         <td>{{disciplina.nome}}</td>
                         <td class="text-center">
                             {% if is_admin %}
-                                <a class="btn bg-teal btn-sm" href="{% url 'disciplina:editar_disciplina' disciplina.id %}">
+                                <a class="btn bg-teal btn-sm" href="{% url 'disciplina:editar_disciplina' disciplina.id %}" data-toggle="tooltip" title="Editar Disciplina">
                                     <i class="fas fa-pen-to-square"></i>
                                 </a>
-                                <a class="btn bg-danger btn-sm" href="{% url 'disciplina:deletar_disciplina_template' disciplina.id %}">
+                                <a class="btn bg-danger btn-sm" href="{% url 'disciplina:deletar_disciplina_template' disciplina.id %}" data-toggle="tooltip" title="Deletar Disciplina">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>
                             {% else %}
