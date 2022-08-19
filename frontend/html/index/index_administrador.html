@@ -21,19 +21,19 @@
     </div>
 {% endfor %}
 {% endif %}
-<a class="btn btn-app" href="{% url 'users:index_aluno' %}">
-    <i class="fas fa-solid fa-user-graduate"></i> Alunos
-</a>
-<a class="btn btn-app" href="{% url 'aula:index_aula_admin' %}">
-    <i class="fas fa-graduation-cap"></i> Aulas
+<a class="btn btn-app" href="{% url 'turma:listar_turmas' %}">
+    <i class="nav-icon fas fa-solid fa-users-rectangle"></i> Turmas
 </a>
 <a class="btn btn-app" href="{% url 'users:index_prof' %}">
     <i class="fas fa-solid fa-person-chalkboard"></i> Professores
 </a>
+<a class="btn btn-app" href="{% url 'users:index_aluno' %}">
+    <i class="fas fa-solid fa-user-graduate"></i> Alunos
+</a>
 <a class="btn btn-app" href="{% url 'disciplina:listar_disciplinas' %}">
     <i class="fas fa-solid fa-book-medical"></i> Disciplinas
 </a>
-<a class="btn btn-app" href="{% url 'turma:listar_turmas' %}">
-    <i class="nav-icon fas fa-solid fa-users-rectangle"></i> Turmas
+<a class="btn btn-app" href="{% url 'aula:index_aula_admin' %}">
+    <i class="fas fa-graduation-cap"></i> Aulas
 </a>
 {% endblock %}

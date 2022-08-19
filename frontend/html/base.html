@@ -30,48 +30,9 @@
             </ul>
 
             <ul class="navbar-nav ml-auto">
-
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                        <i class="fas fa-search"></i>
-                    </a>
-                    <div class="navbar-search-block">
-                        <form class="form-inline">
-                            <div class="input-group input-group-sm">
-                                <input class="form-control form-control-navbar" type="search" placeholder="Pesquisar"
-                                    aria-label="Pesquisar">
-                                <div class="input-group-append">
-                                    <button class="btn btn-navbar" type="submit">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="far fa-bell"></i>
-                        <!-- <span class="badge badge-warning navbar-badge">0</span> -->
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <span class="dropdown-item dropdown-header">Notificações</span>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-file mr-2"></i> 3 fichas de avaliação
-                            <span class="float-right text-muted text-sm">Há 2 dias</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item dropdown-footer">Ver todas as notificações</a>
-                    </div>
-                </li>
                 {% if request.user.is_authenticated %}
                 <li class="nav-item">
-                    <a href="{% url 'login:logout_usuario' %}">
+                    <a href="{% url 'login:logout_usuario' %}" data-toggle="tooltip" title="Sair">
                         <button type="button" class="btn btn-outline-danger">
                             <i class="fa-solid fa-arrow-right-from-bracket color-red"></i>
                         </button>
@@ -80,7 +41,6 @@
                 {% endif %}
             </ul>
         </nav>
-
 
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
@@ -109,15 +69,9 @@
                         {% if request.user.is_authenticated and is_admin %}
                         <li class="nav-header">AÇÕES</li>
                         <li class="nav-item">
-                            <a href="{% url 'users:index_aluno' %}" class="nav-link {% block active_link_alunos %}{% endblock %}">
-                                <i class="nav-icon fas fa-solid fa-user-graduate"></i>
-                                <p>Alunos</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{% url 'aula:index_aula_admin' %}" class="nav-link {% block active_link_aulas_admin %}{% endblock %}">
-                                <i class="nav-icon fas fa-solid fa-graduation-cap"></i>
-                                <p>Aulas</p>
+                            <a href="{% url 'turma:listar_turmas' %}" class="nav-link {% block active_link_turmas_admin %}{% endblock %}">
+                                <i class="nav-icon fas fa-solid fa-users-rectangle"></i>
+                                <p>Turmas</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -127,15 +81,21 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{% url 'users:index_aluno' %}" class="nav-link {% block active_link_alunos %}{% endblock %}">
+                                <i class="nav-icon fas fa-solid fa-user-graduate"></i>
+                                <p>Alunos</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{% url 'disciplina:listar_disciplinas' %}" class="nav-link {% block active_link_disciplinas %}{% endblock %}">
                                 <i class="nav-icon fas fa-solid fa-book-medical"></i>
                                 <p>Disciplinas</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'turma:listar_turmas' %}" class="nav-link {% block active_link_turmas_admin %}{% endblock %}">
-                                <i class="nav-icon fas fa-solid fa-users-rectangle"></i>
-                                <p>Turmas</p>
+                            <a href="{% url 'aula:index_aula_admin' %}" class="nav-link {% block active_link_aulas_admin %}{% endblock %}">
+                                <i class="nav-icon fas fa-solid fa-graduation-cap"></i>
+                                <p>Aulas</p>
                             </a>
                         </li>
                         <li class="nav-header">CADASTRO</li>
