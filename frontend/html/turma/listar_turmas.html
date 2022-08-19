@@ -71,6 +71,8 @@
                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                             aria-label="Turma: ativar para ordenar ascendente">Turma</th>
                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                            aria-label="Disciplina: ativar para ordenar ascendente">Disciplina</th>
+                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                             aria-label="Professor: ativar para ordenar ascendente">Professor</th>
                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                             aria-label="Período: ativar para ordenar ascendente">Período</th>
@@ -83,6 +85,7 @@
                 <tbody>
                 {% for turma in turmas %}
                     <tr class="odd">
+                        <td>{{turma}}</td>
                         <td>{{turma.disciplina}}</td>
                         <td>{{turma.professor}}</td>
                         <td>{{turma.ano}}.{{turma.periodo}}</td>
@@ -105,7 +108,8 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th rowspan="1" colspan="1">Nome da Turma</th>
+                        <th rowspan="1" colspan="1">Turma</th>
+                        <th rowspan="1" colspan="1">Disciplina</th>
                         <th rowspan="1" colspan="1">Professor</th>
                         <th rowspan="1" colspan="1">Período</th>
                         <th rowspan="1" colspan="1">Código/Descrição</th>
