@@ -41,7 +41,7 @@ class AulaDoAlunoView():
         context.update(is_admin(request))
         return render(request, 'aula_do_aluno/adicionar_aluno_em_aula.html', context)
 
-    @permission_required('users.change_aluno', login_url='/', raise_exception=True)
+    @permission_required('aula.change_auladoaluno', login_url='/', raise_exception=True)
     def registrar_presenca(request, aula_do_aluno_id):
         aula_do_aluno = get_object_or_404(AulaDoAluno, id=aula_do_aluno_id)
         try:
