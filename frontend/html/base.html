@@ -92,12 +92,12 @@
                                 <p>Disciplinas</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {% comment %} <li class="nav-item">
                             <a href="{% url 'aula:index_aula_admin' %}" class="nav-link {% block active_link_aulas_admin %}{% endblock %}">
                                 <i class="nav-icon fas fa-solid fa-graduation-cap"></i>
                                 <p>Aulas</p>
                             </a>
-                        </li>
+                        </li> {% endcomment %}
                         <li class="nav-header">CADASTRO</li>
                         <li class="nav-item {% block menu_cadastro_open %}{% endblock %}">
                             <a href="#" class="nav-link {% block active_cadastro_nav %}{% endblock %}">
