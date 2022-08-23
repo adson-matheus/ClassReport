@@ -10,9 +10,10 @@
     <li class="breadcrumb-item active">Adicionar Aula</li>
     {% endautoescape %}
 {% endblock %}
+{% block h1 %}Adicionar Aula{% endblock %}
 {% block card-title %}
     {% autoescape off %}
-        <a href="{% url 'aula:index_aula_admin' %}">
+        <a href="#" onclick="history.back()">
             <i class="fa-solid fa-circle-arrow-left teal-color"></i>
         </a>&nbsp
     {% endautoescape %}
