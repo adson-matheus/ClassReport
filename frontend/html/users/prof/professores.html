@@ -59,9 +59,7 @@
                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                             aria-sort="ascending" aria-label="Email do Professor: ativar para ordenar ascendente" style="">Email</th>
                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                            aria-sort="ascending" aria-label="Disciplina(s) do Professor: ativar para ordenar ascendente" style="">Disciplina(s)</th>
-                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                            aria-sort="ascending" aria-label="Aula(s) do Professor: ativar para ordenar ascendente" style="">Aula(s) Ministrada(s)</th>
+                            aria-sort="ascending" aria-label="Turma(s) do Professor: ativar para ordenar ascendente" style="">Turma(s)</th>
                         <th tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                             aria-label="Ações: consultar, editar e excluir" style="">Ações</th>
                     </tr>
@@ -69,16 +67,11 @@
                 <tbody>
                 {% for professor in professores %}
                     <tr class="odd">
-                        <td class="">{{professor.siape}}</td>
-                        <td class="">{{professor}}</td>
-                        <td class="">{{professor.user.email}}</td>
+                        <td>{{professor.siape}}</td>
+                        <td>{{professor}}</td>
+                        <td>{{professor.user.email}}</td>
                         <td class="text-center">
-                            <a class="btn bg-teal btn-sm" href="#">
-                                <i class="fas fa-eye"></i>
-                            </a>
-                        </td>
-                        <td class="text-center">
-                            <a class="btn bg-teal btn-sm" href="#">
+                            <a class="btn bg-teal btn-sm" href="/turmas/list?professor={{professor.siape}}" data-toggle="tooltip" title="Turmas de {{professor}}">
                                 <i class="fas fa-eye"></i>
                             </a>
                         </td>
@@ -96,12 +89,11 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th rowspan="1" colspan="1" style="">SIAPE</th>
-                        <th rowspan="1" colspan="1" style="">Nome do Professor</th>
-                        <th rowspan="1" colspan="1" style="">Email</th>
-                        <th rowspan="1" colspan="1" style="">Disciplina(s)</th>
-                        <th rowspan="1" colspan="1" style="">Aula(s) Ministrada(s)</th>
-                        <th rowspan="1" colspan="1" style="">Ações</th>
+                        <th rowspan="1" colspan="1">SIAPE</th>
+                        <th rowspan="1" colspan="1">Nome do Professor</th>
+                        <th rowspan="1" colspan="1">Email</th>
+                        <th rowspan="1" colspan="1">Turma(s)</th>
+                        <th rowspan="1" colspan="1">Ações</th>
                     </tr>
                 </tfoot>
             </table>

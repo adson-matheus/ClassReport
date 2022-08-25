@@ -1,0 +1,49 @@
+.active-teal {
+    background-color: teal !important;
+}
+.teal-color {
+    color: teal !important;
+}
+.white-color {
+    color: white !important;
+}
+.card-teal{
+    border-top: 3px solid teal !important;
+}
+.border-teal{
+    border-color: teal !important;
+}
+.no-border-bottom{
+    border-bottom: 0 !important;
+}
+.btn-teal {
+    background-color: teal !important;
+    border-color: teal !important;
+}
+.btn-teal:hover {
+    color: teal !important;
+    border-color: teal !important;
+    background-color: #343a40 !important;
+}
+.btn-outline-teal {
+    color: teal !important;
+    border-color: teal !important;
+}
+.btn-outline-teal:hover {
+    color: #fff !important;
+    background-color: teal !important;
+    border-color: teal !important;
+}
+.bg-teal{
+    background-color: teal !important;
+    color: #fff !important;
+}
+.bg-teal:hover{
+    border-color: teal !important;
+}
+input:-webkit-autofill {
+    -webkit-text-fill-color: #000 !important;
+}
+input:autofill {
+    -webkit-text-fill-color: #000 !important;
+}
