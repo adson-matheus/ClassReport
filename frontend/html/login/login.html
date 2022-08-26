@@ -34,7 +34,7 @@
                 <form action="#" method="post">
                     {% csrf_token %}
                     <div class="input-group mb-3">
-                        <input type="text" name="username" class="form-control" placeholder="Usuário" required autofocus>
+                        <input type="number" name="siape" class="form-control" placeholder="Siape" required autofocus>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-user"></span>
@@ -55,12 +55,6 @@
                         </div>
                     </div>
                 </form>
-                <p class="mb-1">
-                    <a href="#" class="teal-color">Esqueci minha senha</a>
-                </p>
-                <p class="mb-0">
-                    <a href="#" class="teal-color">Novo usuário? Cadastre-se</a>
-                </p>
             </div>
         </div>
     </div>
