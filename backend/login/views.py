@@ -31,22 +31,17 @@ def login_usuario(request):
         try:
             try:
                 user = Administrador.objects.get(siape=siape)
-                print("eh admin")
             except:
                 user = Professor.objects.get(siape=siape)
-                print("eh prof")
             username = user.user.get_username()
             usuario = authenticate(request, username=username, password=password)
             if usuario is not None:
                 login(request, usuario)
-                print("senha e user ok")
                 return redirect('login:index')
             else:
-                print("senha errada")
                 user_login_failed.connect(login_failed_message)
                 return redirect('login:index')
         except:
-            print("nem admin nem prof")
             user_login_failed.connect(login_failed_message)
             return redirect('login:index')
     else:
