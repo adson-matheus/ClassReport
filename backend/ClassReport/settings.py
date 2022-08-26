@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 from decouple import config
-import os
+import os, socket, netifaces as ni
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,11 +27,19 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+def get_ipaddress():
+    ip_address = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
+    return "http://{}".format(ip_address)
+
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+]
+
 CSRF_TRUSTED_ORIGINS = [
-    'http://172.25.52.237',
     'http://localhost',
     'http://127.0.0.1',
+    get_ipaddress()
 ]
 
 
