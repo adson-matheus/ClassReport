@@ -4,7 +4,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.signals import user_logged_in, user_login_failed, user_logged_out
+from django.contrib import messages
 from .signals import *
+from users.models import Administrador, Professor
+from django.db.models import Model
 
 # Create your views here.
 @login_required()
@@ -23,13 +26,27 @@ def index(request):
 
 def login_usuario(request):
     if request.method == "POST":
-        user = request.POST["username"]
+        siape = request.POST["siape"]
         password = request.POST["password"]
-        usuario = authenticate(request, username=user, password=password)
-        if usuario is not None:
-            login(request, usuario)
-            return redirect('login:index')
-        else:
+        try:
+            try:
+                user = Administrador.objects.get(siape=siape)
+                print("eh admin")
+            except:
+                user = Professor.objects.get(siape=siape)
+                print("eh prof")
+            username = user.user.get_username()
+            usuario = authenticate(request, username=username, password=password)
+            if usuario is not None:
+                login(request, usuario)
+                print("senha e user ok")
+                return redirect('login:index')
+            else:
+                print("senha errada")
+                user_login_failed.connect(login_failed_message)
+                return redirect('login:index')
+        except:
+            print("nem admin nem prof")
             user_login_failed.connect(login_failed_message)
             return redirect('login:index')
     else:
