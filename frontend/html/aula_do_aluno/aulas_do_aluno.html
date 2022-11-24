@@ -119,6 +119,13 @@
     </div>
 </div>
 
+<div id="btn_exportar" class="d-flex justify-content-center">
+    <a class="btn btn-primary btn-teal mt-3" onclick="exportar()">
+        <i class="fa-solid fa-file-pdf"></i>
+        Exportar PDF
+    </a>
+</div>
+
 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
     <div class="row">
         <div class="col-sm-12">
@@ -204,5 +211,17 @@
             }
           }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         });
+
+        function exportar() {
+            document.body.classList.toggle("dark-mode");
+            document.getElementById("btn_exportar").classList.add("invisible");
+            setTimeout(function(){
+                window.print();
+            }, 1000);
+            setTimeout(function(){
+                document.getElementById("btn_exportar").classList.remove("invisible");
+                document.body.classList.toggle("dark-mode");
+            }, 2000);
+         }
       </script>
 {% endblock %}
